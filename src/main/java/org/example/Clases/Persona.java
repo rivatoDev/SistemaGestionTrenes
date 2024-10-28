@@ -1,6 +1,9 @@
-package org.example;
+package org.example.Clases;
 
-public class Persona {
+import org.example.Interfaces.JSON;
+import org.json.JSONObject;
+
+public class Persona  {
     //Atributos
     protected StringBuilder dni;
     protected StringBuilder nombre;
@@ -66,8 +69,8 @@ public class Persona {
         return
                 "-------------------------------------------------------------------------------------------------------\n" +
                 "DNI: " + this.dni + '\n' +
-                "DNI: " + this.nombre + '\n' +
-                "DNI: " + this.apellido + '\n';
+                "Nombre: " + this.nombre + '\n' +
+                "Apellido: " + this.apellido + '\n';
     }
     //Mostrar
 }
