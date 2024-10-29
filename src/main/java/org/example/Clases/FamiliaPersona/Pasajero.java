@@ -1,4 +1,4 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaPersona;
 
 public class Pasajero {
     //Atributos

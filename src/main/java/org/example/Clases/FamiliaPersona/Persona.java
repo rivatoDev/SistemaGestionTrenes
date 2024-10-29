@@ -1,9 +1,9 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaPersona;
 
 import org.example.Interfaces.JSON;
 import org.json.JSONObject;
 
-public class Persona  {
+public class Persona {
     //Atributos
     protected StringBuilder dni;
     protected StringBuilder nombre;
@@ -51,11 +51,11 @@ public class Persona  {
     }
 
     public void setNombre(String nombre) {
-        this.nombre.replace(0, this.dni.length(), nombre);
+        this.nombre.replace(0, this.nombre.length(), nombre);
     }
 
     public void setApellido(String apellido) {
-        this.apellido.replace(0, this.dni.length(), apellido);
+        this.apellido.replace(0, this.apellido.length(), apellido);
     }
 
     public void setEstado(boolean estado) {

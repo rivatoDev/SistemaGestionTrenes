@@ -39,7 +39,7 @@ public class Tren {
 
     //Setter
 
-    public void setModelo(String modelo) {this.modelo.replace(0,this.patente.length(), modelo);}
+    public void setModelo(String modelo) {this.modelo.replace(0,this.modelo.length(), modelo);}
 
     public void setPatente(String patente) {this.patente.replace(0,this.patente.length(),patente);}
 
