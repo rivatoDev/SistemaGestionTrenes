@@ -17,7 +17,7 @@ public final class Usuario extends Persona {
     //Atributos
 
     //Constructores
-    public Usuario(String dni, String nombre, String apellido, String nombreUsuario, String contrasenia, Object tipoUsuario) {
+    public Usuario() {
         super();
         this.nombreUsuario = new StringBuilder();
         this.contrasenia = new StringBuilder();
@@ -25,7 +25,7 @@ public final class Usuario extends Persona {
 
     public Usuario(String dni, String nombre, String apellido, String nombreUsuario, String contrasenia, TipoUsuario tipoUsuario) {
         super(dni, nombre, apellido);
-        this.nombreUsuario = new StringBuilder(nombre);
+        this.nombreUsuario = new StringBuilder(nombreUsuario);
         this.contrasenia = new StringBuilder(contrasenia);
         this.tipoUsuario = tipoUsuario;
     }
@@ -77,7 +77,7 @@ public final class Usuario extends Persona {
     public String toString() {
         return super.toString() +
                "Nombre de Usuario: " + this.nombreUsuario + '\n' +
-                "-------------------------------------------------------------------------------------------------------\n";
+                "-------------------------------------------------------------------------------------\n";
     }
     //Mostrar
 
@@ -121,11 +121,11 @@ public final class Usuario extends Persona {
                                json.getString("apellido"),
                                json.getString("nombreUsuario"),
                                json.getString("contrasenia"),
-                               json.get("tipoUsuario"));
+                 (TipoUsuario) json.get("tipoUsuario"));
         } else if (!json.getBoolean("estado")){
-            throw new JSONObjectEliminatedException("El usuario esta eliminado.");
+            throw new JSONObjectEliminatedException();
         } else {
-            throw new IllegalArgumentException("El registro seleccionado no es del tipo especificado.");
+            throw new IllegalArgumentException();
         }
     }
     //JSON
