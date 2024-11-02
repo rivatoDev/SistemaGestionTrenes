@@ -1,11 +1,18 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Excepciones.HeightOffLimitsException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Clase que hereda de Vagon y representa a los vagones que transportan
+ * todo lo que no sean personas.
+ */
 public class VagonDeCarga extends Vagon {
     //Atributos
     protected double pesoMax;
@@ -76,21 +83,38 @@ public class VagonDeCarga extends Vagon {
     //Mostrar
 
     //Alta
+
+    /**
+     * Carga un Cargamento en el vagon.
+     * @param cargamento Cargamento a introducir.
+     * @return true si se pudo agregar el Cargamento sin problema.
+     * @throws HeightOffLimitsException si el peso total supera al pesoMax del vagon.
+     */
     public boolean agregarCargamento (Cargamento cargamento) throws HeightOffLimitsException {
         if (cargamento.CalcularPeso() > this.pesoMax - this.calcularPesoTotal()) {
-            throw new HeightOffLimitsException("No hay espacio suficiente para el cargamento.");
+            throw new HeightOffLimitsException();
         } else {
-            this.contenido.add(cargamento);
-            return true;
+            return this.contenido.add(cargamento);
         }
     }
     //Alta
 
     //Baja
+
+    /**
+     * Quita el cargamento del vagon.
+     * @param cargamento el cargamento a quitar.
+     * @return true si se pudo eliminar el cargamento, sino false.
+     */
     public boolean quitarCargamento(Cargamento cargamento){
         return this.contenido.remove(cargamento);
     }
 
+    /**
+     * Vacia todos los cargamentos del vagon.
+     * @return true si el vagon se pudo vaciar sin problema,
+     * si no lanza la excepcion NullPointerExcepcion
+     */
     @Override
     public boolean vaciarVagon() {
         if(this.contenido.isEmpty()) {
@@ -105,6 +129,11 @@ public class VagonDeCarga extends Vagon {
     //Baja
 
     //Verificacion
+
+    /**
+     * Cuenta el peso total del vagon contando todos los cargamentos.
+     * @return el peso total del vagon.
+     */
     public double calcularPesoTotal(){
         double pesoTotal = 0;
         for(Cargamento c: this.contenido) {
@@ -114,4 +143,74 @@ public class VagonDeCarga extends Vagon {
     }
     //Verificacion
 
+    //JSON
+    /**
+     * Transforma al VagonDeCarga en un JSONArray.
+     * @return El VagonDeCarga como un JSONArray.
+     */
+    public JSONArray contenidoAJSONArray () {
+        JSONArray json = new JSONArray();
+        for(Cargamento c: this.contenido) {
+            json.put(c.convertirAJSONObject());
+        }
+        return json;
+    }
+
+    /**
+     * Transforma al VagonDeCarga en un JSONObject.
+     * @return El VagonDeCarga como un JSONObject.
+     */
+    @Override
+    public JSONObject convertirAJSONObject() {
+        JSONObject json = super.convertirAJSONObject();
+        json.put("pesoMax", this.pesoMax);
+        json.put("contenido", this.contenidoAJSONArray());
+        return json;
+    }
+
+    /**
+     * Verifica que el JSON sea del tipo correcto.
+     * @param json JSONObject que se quiere comprobar.
+     * @return true si el JSON es del tipo correcto.
+     */
+    public static boolean verificarJSON (JSONObject json) {
+        return json.has("idVagon") &&
+               json.has("capacidad") &&
+               json.has("estado") &&
+               json.has("pesoMax") &&
+               json.has("contenido");
+    }
+
+    /**
+     * Transforma al JSONArray en una linkedList.
+     * @param json El JSONArray que se quiere convertir
+     * @return El JSONArray en forma de LinkedList
+     */
+    public static LinkedList<Cargamento> getJSONArray (JSONArray json) {
+        LinkedList<Cargamento> ll = new LinkedList<>();
+        for (int i = 0; i < json.length(); i++) {
+            if(verificarJSON(json.getJSONObject(i))){
+                ll.add(Cargamento.JSONxCargamento(json.getJSONObject(i)));
+            } else {
+                throw new IllegalArgumentException();
+            }
+        }
+        return ll;
+    }
+
+    /**
+     * Pasa un JSONObject a un VagonDeCarga.
+     * @param json Un cargamento con los datos del JSONObject.
+     */
+    public static VagonDeCarga getJSONObject (JSONObject json){
+        if(VagonDeCarga.verificarJSON(json)) {
+            return new VagonDeCarga(json.getString("idVagon"),
+                                    json.getString("capacidad"),
+                                    json.getDouble("pesoMax"),
+                                    getJSONArray(json.getJSONArray("contenido")));
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+    //JSON
 }
