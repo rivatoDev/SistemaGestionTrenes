@@ -1,7 +1,7 @@
 package org.example.Clases.FamiliaVagon;
 
-import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Excepciones.HeightOffLimitsException;
+import org.example.Excepciones.JSONObjectEliminatedException;
+import org.example.Excepciones.OffLimitsException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -83,16 +83,15 @@ public class VagonDeCarga extends Vagon {
     //Mostrar
 
     //Alta
-
     /**
      * Carga un Cargamento en el vagon.
      * @param cargamento Cargamento a introducir.
      * @return true si se pudo agregar el Cargamento sin problema.
-     * @throws HeightOffLimitsException si el peso total supera al pesoMax del vagon.
+     * @throws OffLimitsException si el peso total supera al pesoMax del vagon.
      */
-    public boolean agregarCargamento (Cargamento cargamento) throws HeightOffLimitsException {
+    public boolean agregarCargamento (Cargamento cargamento) throws OffLimitsException {
         if (cargamento.CalcularPeso() > this.pesoMax - this.calcularPesoTotal()) {
-            throw new HeightOffLimitsException();
+            throw new OffLimitsException();
         } else {
             return this.contenido.add(cargamento);
         }
@@ -129,7 +128,6 @@ public class VagonDeCarga extends Vagon {
     //Baja
 
     //Verificacion
-
     /**
      * Cuenta el peso total del vagon contando todos los cargamentos.
      * @return el peso total del vagon.
@@ -189,7 +187,7 @@ public class VagonDeCarga extends Vagon {
     public static LinkedList<Cargamento> getJSONArray (JSONArray json) {
         LinkedList<Cargamento> ll = new LinkedList<>();
         for (int i = 0; i < json.length(); i++) {
-            if(verificarJSON(json.getJSONObject(i))){
+            if(Cargamento.verificarJSON(json.getJSONObject(i))){
                 ll.add(Cargamento.JSONxCargamento(json.getJSONObject(i)));
             } else {
                 throw new IllegalArgumentException();
@@ -203,13 +201,15 @@ public class VagonDeCarga extends Vagon {
      * @param json Un cargamento con los datos del JSONObject.
      */
     public static VagonDeCarga getJSONObject (JSONObject json){
-        if(VagonDeCarga.verificarJSON(json)) {
+        if(VagonDeCarga.verificarJSON(json) && json.getBoolean("estado")) {
             return new VagonDeCarga(json.getString("idVagon"),
                                     json.getString("capacidad"),
                                     json.getDouble("pesoMax"),
                                     getJSONArray(json.getJSONArray("contenido")));
-        } else {
+        } else if (VagonDeCarga.verificarJSON(json)){
             throw new IllegalArgumentException();
+        } else {
+            throw new JSONObjectEliminatedException();
         }
     }
     //JSON
