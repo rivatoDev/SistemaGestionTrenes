@@ -1,11 +1,10 @@
 package org.example.Clases;
 
+import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Interfaces.GestionCarga;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class TrenDeCarga extends Tren implements GestionCarga {
     //Peso maximo

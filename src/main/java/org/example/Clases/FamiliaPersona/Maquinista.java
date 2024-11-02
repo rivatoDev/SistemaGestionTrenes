@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public final class Maquinista extends Persona{
     //Atributos
-    private StringBuilder idMaquinista;
+    private final StringBuilder idMaquinista;
     //Atributos
 
     //Constructor
@@ -59,7 +59,7 @@ public final class Maquinista extends Persona{
     public String toString() {
         return super.toString() +
                "ID: " + this.idMaquinista + '\n' +
-               "-------------------------------------------------------------------------------------------------------\n";
+               "----------------------------------------------------------------------------------------------------\n";
     }
     //Mostrar
 
@@ -101,9 +101,9 @@ public final class Maquinista extends Persona{
                     json.getString("apellido"),
                     json.getString("idMaquinista"));
         } else if (!json.getBoolean("estado")) {
-            throw new JSONObjectEliminatedException("El maquinista esta eliminado.");
+            throw new JSONObjectEliminatedException();
         } else {
-            throw new IllegalArgumentException("El registro seleccionado no es del tipo especificado.");
+            throw new IllegalArgumentException();
         }
     }
     //JSON

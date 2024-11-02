@@ -33,16 +33,16 @@ public abstract class Persona implements JSON{
     //Constructores
 
     //Getter
-    public StringBuilder getDni() {
-        return dni;
+    public String getDni() {
+        return dni.toString();
     }
 
-    public StringBuilder getNombre() {
-        return nombre;
+    public String getNombre() {
+        return nombre.toString();
     }
 
-    public StringBuilder getApellido() {
-        return apellido;
+    public String getApellido() {
+        return apellido.toString();
     }
 
     public boolean isEstado() {
@@ -90,7 +90,7 @@ public abstract class Persona implements JSON{
     @Override
     public String toString() {
         return
-                "-------------------------------------------------------------------------------------------------------\n" +
+                "-------------------------------------------------------------------------------------\n" +
                 "DNI: " + this.dni + '\n' +
                 "Nombre: " + this.nombre + '\n' +
                 "Apellido: " + this.apellido + '\n';
