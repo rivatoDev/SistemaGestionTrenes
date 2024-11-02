@@ -5,6 +5,9 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * Clase padre abstracta de VagonDeCarga y VagonComercial que representa a los vagones.
+ */
 public abstract class Vagon implements JSON {
     //Atributos
     protected StringBuilder idVagon;
@@ -81,6 +84,10 @@ public abstract class Vagon implements JSON {
     //Mostrar
 
     //JSON
+    /**
+     * Transforma al vagonDeCarga en un JSONObject.
+     * @return El VagonDeCarga como un JSONObject.
+     */
     @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();

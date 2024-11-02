@@ -117,6 +117,10 @@ public class Cargamento implements JSON, GestionCarga {
     }
 
     //JSON
+    /**
+     * Transforma al cargamento en un JSONObject.
+     * @return El cargamento como un JSONObject.
+     */
     @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
@@ -128,6 +132,11 @@ public class Cargamento implements JSON, GestionCarga {
         return json;
     }
 
+    /**
+     * Verifica que el JSON pasado por parametro sea del tipo correcto.
+     * @param json JSONObject a comprobar.
+     * @return true si el JSON contiene los datos de un cargamento y false si es al contrario.
+     */
     public static boolean verificarJSON (JSONObject json) {
         return json.has("titular") &&
                 json.has("nombre") &&
@@ -136,6 +145,10 @@ public class Cargamento implements JSON, GestionCarga {
                 json.has("unidades");
     }
 
+    /**
+     * Transforma al un JSONObject con los datos de un cargamento.
+     * @return El JSONObject como un cargamento.
+     */
     public static Cargamento JSONxCargamento (JSONObject json){
         if(Cargamento.verificarJSON(json)) {
             return new Cargamento((Usuario)json.get("titular"),
