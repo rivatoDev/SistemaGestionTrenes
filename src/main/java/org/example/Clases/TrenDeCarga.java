@@ -1,0 +1,91 @@
+package org.example.Clases;
+
+import org.example.Interfaces.GestionCarga;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+public class TrenDeCarga extends Tren implements GestionCarga {
+    //Peso maximo
+    private static double pesoMax = 100;
+    //Lista
+    List<VagonDeCarga> vagones;
+
+    //Constructor
+    public TrenDeCarga(StringBuilder modelo, StringBuilder patente, StringBuilder ubicacion, boolean estado) {
+        super(modelo, patente, ubicacion, estado);
+        this.estado = true;
+        this.vagones = new List<VagonDeCarga>();
+        this.pesoActual = pesoActual;
+    }
+
+    //Getter
+    public static double getPesoMax() {
+        return pesoMax;
+    }
+
+    public List<VagonDeCarga> getVagones() {
+        return vagones;
+    }
+
+    //Setter
+    public static void setPesoMax(double pesoMax) {
+        TrenDeCarga.pesoMax = pesoMax;
+    }
+
+    public void setVagones(List<VagonDeCarga> vagones) {
+        this.vagones = vagones;
+    }
+
+    //Mostrar
+    @Override
+    public String toString() {
+        return "TrenDeCarga{" +
+                "vagones=" + vagones +
+                ", modelo=" + modelo +
+                ", patente=" + patente +
+                ", ubicacion=" + ubicacion +
+                ", estado=" + estado +
+                "} " + super.toString();
+    }
+
+
+    //Metodos
+    //Iniciar un viaje
+    @Override
+    public void iniciarViaje(String destino) {
+        super.iniciarViaje(destino);
+        this.estado = true;
+    }
+
+    //Finalizar un viaje
+    @Override
+    public void finalizarViaje() {
+        super.finalizarViaje();
+        this.estado = false;
+    }
+
+    //Agregar un vagon
+    @Override
+    public void agregarVagon(Vagon a){
+        if(CalcularPeso()>pesoMax){
+            return
+        }
+    }
+
+    @Override
+    public double CalcularPeso() {
+
+        return 0;
+    }
+
+    @Override
+    public boolean sacarVagon(String idVagon){
+
+        return
+    }
+
+
+}

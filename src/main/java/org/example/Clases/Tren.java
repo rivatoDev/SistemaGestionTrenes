@@ -1,5 +1,7 @@
 package org.example.Clases;
 
+import netscape.javascript.JSObject;
+
 public class Tren {
     //Atributos
     protected StringBuilder modelo;
@@ -48,6 +50,7 @@ public class Tren {
     public void setEstado(boolean estado) {this.estado = estado;}
 
     //Setter
+
 
     //Mostrar
 
