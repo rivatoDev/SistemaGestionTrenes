@@ -1,9 +1,14 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaPersona;
 
 import org.example.Interfaces.JSON;
 import org.json.JSONObject;
 
-public class Persona  {
+import java.util.Objects;
+
+/**
+ * Clase abstracta padre de {@link Usuario} y Maquinista.
+ */
+public abstract class Persona implements JSON{
     //Atributos
     protected StringBuilder dni;
     protected StringBuilder nombre;
@@ -51,17 +56,35 @@ public class Persona  {
     }
 
     public void setNombre(String nombre) {
-        this.nombre.replace(0, this.dni.length(), nombre);
+        this.nombre.replace(0, this.nombre.length(), nombre);
     }
 
     public void setApellido(String apellido) {
-        this.apellido.replace(0, this.dni.length(), apellido);
+        this.apellido.replace(0, this.apellido.length(), apellido);
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
     //Setter
+
+    //Comparacion
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return estado == persona.estado &&
+               Objects.equals(dni.toString(), persona.dni.toString()) &&
+               Objects.equals(nombre.toString(), persona.nombre.toString()) &&
+               Objects.equals(apellido.toString(), persona.apellido.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, nombre, apellido, estado);
+    }
+    //Comparacion
 
     //Mostrar
     @Override
@@ -73,4 +96,20 @@ public class Persona  {
                 "Apellido: " + this.apellido + '\n';
     }
     //Mostrar
+
+    //JSON
+    /**
+     * Transforma a la persona en un JSONObject.
+     * @return La persona como un JSONObject.
+     */
+    @Override
+    public JSONObject convertirAJSONObject() {
+        JSONObject json = new JSONObject();
+        json.put("dni", this.dni);
+        json.put("nombre", this.nombre);
+        json.put("apellido", this.apellido);
+        json.put("estado", this.estado);
+        return json;
+    }
+    //JSON
 }
