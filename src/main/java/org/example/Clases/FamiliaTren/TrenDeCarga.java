@@ -1,4 +1,4 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaTren;
 
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonDeCarga;

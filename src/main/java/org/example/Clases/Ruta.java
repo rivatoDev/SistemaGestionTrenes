@@ -1,6 +1,7 @@
 package org.example.Clases;
 
 import org.example.Clases.FamiliaPersona.Maquinista;
+import org.example.Clases.FamiliaTren.Tren;
 
 public class Ruta {
     //Atributos

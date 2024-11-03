@@ -5,6 +5,9 @@ import org.example.Excepciones.OffLimitsException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -99,7 +102,6 @@ public class VagonDeCarga extends Vagon {
     //Alta
 
     //Baja
-
     /**
      * Quita el cargamento del vagon.
      * @param cargamento el cargamento a quitar.
