@@ -1,7 +1,6 @@
-package org.example.Clases.Gestion;
+package org.example.Clases.FamiliaPersona;
 
 
-import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Main;
 import org.json.JSONArray;
 
