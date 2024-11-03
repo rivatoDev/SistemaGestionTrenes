@@ -1,6 +1,4 @@
-package org.example.Clases;
-
-import netscape.javascript.JSObject;
+package org.example.Clases.FamiliaTren;
 
 public class Tren {
     //Atributos

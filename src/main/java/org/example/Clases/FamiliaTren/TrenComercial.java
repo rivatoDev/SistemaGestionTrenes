@@ -1,10 +1,9 @@
-package org.example.Clases.FamiliaVagon;
+package org.example.Clases.FamiliaTren;
 
-import org.example.Clases.Tren;
+import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Interfaces.GestionCarga;
 
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 public class TrenComercial extends Tren implements GestionCarga {
     //Lista de vagones

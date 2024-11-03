@@ -63,8 +63,8 @@ public abstract class Persona implements JSON{
         this.apellido.replace(0, this.apellido.length(), apellido);
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setEstado() {
+        this.estado = !this.estado;
     }
     //Setter
 
