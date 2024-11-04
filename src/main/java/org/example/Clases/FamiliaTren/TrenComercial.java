@@ -1,11 +1,12 @@
 package org.example.Clases.FamiliaTren;
 
+import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Interfaces.GestionCarga;
 
 import java.util.LinkedHashSet;
 
-public class TrenComercial extends Tren implements GestionCarga {
+public class TrenComercial extends Tren {
     //Lista de vagones
     LinkedHashSet<VagonComercial> vagones = null;
 
@@ -57,7 +58,7 @@ public class TrenComercial extends Tren implements GestionCarga {
 
     //Agregar un vagon
     @Override
-    public void agregarVagon(VagonComercial a){
+    public void agregarVagon(){
 
     }
 
@@ -65,16 +66,5 @@ public class TrenComercial extends Tren implements GestionCarga {
     @Override
     public void sacarVagon(String idVagon){
 
-    }
-
-    //Calcular el peso
-    @Override
-    public double CalcularPeso() {
-        int peso = 0;
-        int flag = 0;
-
-        for(VagonComercial a : vagones){
-
-        }
     }
 }

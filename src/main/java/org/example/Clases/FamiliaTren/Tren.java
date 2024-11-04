@@ -1,6 +1,9 @@
 package org.example.Clases.FamiliaTren;
 
-public class Tren {
+import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
+
+public abstract class Tren <T extends Vagon>{
     //Atributos
     protected StringBuilder modelo;
     protected StringBuilder patente;
@@ -75,4 +78,6 @@ public class Tren {
         this.estado = false;
     }
 
+    public abstract void agregarVagon ();
+    public abstract void sacarVagon (String idVagon);
 }

@@ -52,8 +52,8 @@ public abstract class Vagon implements JSON {
         this.capacidad.replace(0, this.capacidad.length(), capacidad);
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setEstado() {
+        this.estado = !this.estado;
     }
     //Setter
 

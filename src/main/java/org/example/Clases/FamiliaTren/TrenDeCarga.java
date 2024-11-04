@@ -68,10 +68,8 @@ public class TrenDeCarga extends Tren implements GestionCarga {
 
     //Agregar un vagon
     @Override
-    public void agregarVagon(Vagon a){
-        if(CalcularPeso()>pesoMax){
-            return
-        }
+    public void agregarVagon(){
+        if(CalcularPeso()>pesoMax){}
     }
 
     @Override
@@ -81,7 +79,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     }
 
     @Override
-    public boolean sacarVagon(String idVagon){
+    public void sacarVagon(String idVagon){
 
         return
     }

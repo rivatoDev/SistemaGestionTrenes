@@ -75,10 +75,10 @@ public class GestionUsuario {
 
     //Modificacion
     public boolean modificarUsuario (Usuario usuarioViejo, Usuario usuarioNuevo) {
-        if(!this.usuarios.contains(usuarioViejo) || !usuarioViejo.isEstado()) {
+        if(!this.usuarios.remove(usuarioViejo) || !usuarioViejo.isEstado()) {
             throw new NoSuchElementException();
         } else {
-            return this.usuarios.remove(usuarioViejo) && this.usuarios.add(usuarioNuevo);
+            return this.usuarios.add(usuarioNuevo);
         }
     }
     //Modificacion
@@ -114,7 +114,7 @@ public class GestionUsuario {
         return true;
     }
 
-    public boolean eliminarRegistro (Usuario usuario, String archivo) {
+    public static boolean eliminarRegistro (Usuario usuario, String archivo) {
         GestionUsuario gu = new GestionUsuario(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo))));
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             if (gu.eliminarUsuario(usuario)) {
@@ -126,7 +126,7 @@ public class GestionUsuario {
         return true;
     }
 
-    public boolean modificarRegistro (Usuario usuarioViejo, Usuario usuarioNuevo, String archivo) {
+    public static boolean modificarRegistro (Usuario usuarioViejo, Usuario usuarioNuevo, String archivo) {
         GestionUsuario gu = new GestionUsuario(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo))));
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             if (gu.modificarUsuario(usuarioViejo, usuarioNuevo)) {

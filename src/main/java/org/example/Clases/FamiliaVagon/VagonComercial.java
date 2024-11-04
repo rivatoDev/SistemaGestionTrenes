@@ -209,7 +209,7 @@ public class VagonComercial extends Vagon{
         return pasajeros;
     }
 
-    public static VagonComercial getJSONvagonComercial (JSONObject json) throws JSONObjectEliminatedException {
+    public static VagonComercial getJSONObject (JSONObject json) throws JSONObjectEliminatedException {
         if(VagonComercial.verificarJSON(json) && json.getBoolean("estado")) {
             return new VagonComercial(json.getString("idVagon"),
                                       json.getString("capacidad"),
