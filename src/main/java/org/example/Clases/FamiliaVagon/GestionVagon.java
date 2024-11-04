@@ -1,10 +1,15 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Main;
 import org.json.JSONArray;
-
+import org.json.JSONObject;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * Clase generica para gestionar a los vagones
@@ -88,12 +93,50 @@ public class GestionVagon<T extends Vagon> {
         return json;
     }
 
-    public  HashSet<T> getJSONArray(JSONArray json) {
-        HashSet<T> hs = new HashSet<>();
-
+    public static HashSet<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> vagon) {
+        HashSet<Vagon> hs = new HashSet<>();
         for (int i = 0; i < json.length(); i++) {
-            hs.add()
+            hs.add(vagon.apply(json.getJSONObject(i)));
         }
+        return hs;
     }
     //JSON
+
+    //Archivos
+    public static boolean agregarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
+        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            if(gv.agregarVagon(vagon)) {
+                bf.write(gv.convertirJSONArray().toString(2));
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean eliminarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
+        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            if(gv.eliminarVagon(vagon)) {
+                bf.write(gv.convertirJSONArray().toString(2));
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean modificarRegistro (Vagon vagonViejo, Vagon vagonNuevo, Function<JSONObject, Vagon> tipoVagon, String archivo) {
+        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            if (gv.modificarVagon(vagonViejo, vagonNuevo)) {
+                bf.write(gv.convertirJSONArray().toString(2));
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+    //Archivos
 }
