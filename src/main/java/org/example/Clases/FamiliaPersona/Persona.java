@@ -1,6 +1,5 @@
 package org.example.Clases.FamiliaPersona;
 
-import org.example.Interfaces.JSON;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -8,7 +7,7 @@ import java.util.Objects;
 /**
  * Clase abstracta padre de {@link Usuario} y Maquinista.
  */
-public abstract class Persona implements JSON{
+public abstract class Persona{
     //Atributos
     protected StringBuilder dni;
     protected StringBuilder nombre;
@@ -98,11 +97,6 @@ public abstract class Persona implements JSON{
     //Mostrar
 
     //JSON
-    /**
-     * Transforma a la persona en un JSONObject.
-     * @return La persona como un JSONObject.
-     */
-    @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("dni", this.dni);

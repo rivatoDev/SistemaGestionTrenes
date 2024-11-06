@@ -3,6 +3,7 @@ package org.example.Clases.FamiliaPersona;
 
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,7 +26,7 @@ public class GestionUsuario {
     }
 
     public GestionUsuario(HashSet<Usuario> usuarios) {
-        this.usuarios = usuarios;
+        this.usuarios = (usuarios == null) ? new HashSet<>() : usuarios;
     }
     //Constructor
 
@@ -94,10 +95,14 @@ public class GestionUsuario {
 
     public static HashSet<Usuario> getJSONArray(JSONArray json) {
         HashSet<Usuario> hs = new HashSet<>();
+        try {
             for(int i = 0; i < json.length(); i++) {
                 hs.add(Usuario.JSONxUsuario(json.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            return new HashSet<>();
         }
-            return hs;
+        return hs;
     }
     //JSON
 

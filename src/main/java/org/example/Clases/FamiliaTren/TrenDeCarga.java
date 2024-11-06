@@ -4,6 +4,7 @@ import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Interfaces.GestionCarga;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrenDeCarga extends Tren implements GestionCarga {
@@ -16,8 +17,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     public TrenDeCarga(StringBuilder modelo, StringBuilder patente, StringBuilder ubicacion, boolean estado) {
         super(modelo, patente, ubicacion, estado);
         this.estado = true;
-        this.vagones = new List<VagonDeCarga>();
-        this.pesoActual = pesoActual;
+        this.vagones = new ArrayList<>();
     }
 
     //Getter
@@ -80,8 +80,6 @@ public class TrenDeCarga extends Tren implements GestionCarga {
 
     @Override
     public void sacarVagon(String idVagon){
-
-        return
     }
 
 

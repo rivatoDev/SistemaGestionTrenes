@@ -1,6 +1,5 @@
 package org.example.Clases.FamiliaVagon;
 
-import org.example.Interfaces.JSON;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -8,7 +7,7 @@ import java.util.Objects;
 /**
  * Clase padre abstracta de VagonDeCarga y VagonComercial que representa a los vagones.
  */
-public abstract class Vagon implements JSON {
+public abstract class Vagon{
     //Atributos
     protected StringBuilder idVagon;
     protected StringBuilder capacidad;
@@ -84,11 +83,6 @@ public abstract class Vagon implements JSON {
     //Mostrar
 
     //JSON
-    /**
-     * Transforma al vagonDeCarga en un JSONObject.
-     * @return El VagonDeCarga como un JSONObject.
-     */
-    @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("idVagon", this.idVagon);

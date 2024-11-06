@@ -121,7 +121,7 @@ public final class Usuario extends Persona {
                                json.getString("apellido"),
                                json.getString("nombreUsuario"),
                                json.getString("contrasenia"),
-                 (TipoUsuario) json.get("tipoUsuario"));
+                               TipoUsuario.valueOf(json.getString("tipoUsuario")));
         } else if (!json.getBoolean("estado")){
             throw new JSONObjectEliminatedException();
         } else {

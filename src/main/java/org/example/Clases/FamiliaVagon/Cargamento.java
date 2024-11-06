@@ -2,7 +2,6 @@ package org.example.Clases.FamiliaVagon;
 
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Interfaces.GestionCarga;
-import org.example.Interfaces.JSON;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Objects;
 /**
  * Clase que representa a los distintos tipos de cargamento que va a tener un vagon.
  */
-public class Cargamento implements JSON, GestionCarga {
+public class Cargamento implements GestionCarga {
     //Atributos
     private Usuario titular;
     private final StringBuilder nombre;
@@ -117,11 +116,6 @@ public class Cargamento implements JSON, GestionCarga {
     }
 
     //JSON
-    /**
-     * Transforma al cargamento en un JSONObject.
-     * @return El cargamento como un JSONObject.
-     */
-    @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("titular", this.titular.convertirAJSONObject());
@@ -151,7 +145,7 @@ public class Cargamento implements JSON, GestionCarga {
      */
     public static Cargamento JSONxCargamento (JSONObject json){
         if(Cargamento.verificarJSON(json)) {
-            return new Cargamento((Usuario)json.get("titular"),
+            return new Cargamento(Usuario.JSONxUsuario((JSONObject) json.get("titular")),
                                            json.getString("nombre"),
                                            json.getString("tipo"),
                                            json.getDouble("peso"),

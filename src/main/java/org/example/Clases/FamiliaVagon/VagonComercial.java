@@ -65,6 +65,7 @@ public class VagonComercial extends Vagon{
         StringBuilder sb = new StringBuilder(super.toString());
         sb.append("----------------------------------------------------------------------------------------------------\n");
         for(Map.Entry<StringBuilder, Usuario> pasajero: pasajeros.entrySet()) {
+            sb.append("Ticket: "). append(pasajero.getKey()).append('\n');
             sb.append(pasajero.getValue().toString());
         }
         sb.append("----------------------------------------------------------------------------------------------------\n");

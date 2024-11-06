@@ -1,11 +1,13 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Excepciones.FileDoesntExistException;
+import org.example.Excepciones.JSONEmptyFileException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -26,7 +28,7 @@ public class GestionVagon<T extends Vagon> {
     }
 
     public GestionVagon(HashSet<T> vagones) {
-        this.vagones = vagones;
+        this.vagones = (vagones == null) ? new HashSet<>() : vagones;
     }
     //Constructor
 
@@ -104,10 +106,23 @@ public class GestionVagon<T extends Vagon> {
 
     //Archivos
     public static boolean agregarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        boolean flag = false;
+        GestionVagon<Vagon> gv = new GestionVagon<>();
+
+        do {
+            try {
+                gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+            } catch (JSONEmptyFileException e) {
+                gv.setVagones(new HashSet<>());
+            } catch (FileDoesntExistException e) {
+                File f = new File(archivo);
+                flag = true;
+            }
+        } while (!flag);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             if(gv.agregarVagon(vagon)) {
-                bf.write(gv.convertirJSONArray().toString(2));
+                bf.write(gv.convertirJSONArray().toString(5));
             }
         } catch (IOException e) {
             return false;
