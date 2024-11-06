@@ -13,9 +13,8 @@ import org.example.Excepciones.JSONEmptyFileException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -28,22 +27,36 @@ public class Main {
         VagonComercial vagon = new VagonComercial("123", "50", new HashMap<>());
         vagon.cargarPasajero(new Usuario("44336431", "Tomas", "Rivara", "rivato", "tomatoli", TipoUsuario.CLIENTE), "12345");
 
-        VagonDeCarga vagoncito = new VagonDeCarga("12345", "55,7", 108.7, new LinkedList<>());
-        vagoncito.agregarCargamento(new Cargamento(new Usuario("44336431", "Tomas", "Rivara", "rivato", "tomatoli", TipoUsuario.CLIENTE), "Samot", "Comida", 23.7, 3));
-        Usuario usuario = new Usuario("44336431", "Tomas", "Rivara", "rivato", "tomatoli", TipoUsuario.CLIENTE);
+        VagonDeCarga vagoncito = new VagonDeCarga("12345678", "57,7", 109.7, new LinkedList<>());
+        vagoncito.agregarCargamento(new Cargamento(new Usuario("44336478", "Samot", "Rivara", "rivato", "tomatoli", TipoUsuario.CLIENTE), "Samot", "Alimento", 23.7, 3));
+        Usuario usuario = new Usuario("44336430", "Tomas", "Rivara", "rivato", "tomatoli", TipoUsuario.CLIENTE);
         try {
-            //GestionVagon.agregarRegistro(vagoncito, VagonDeCarga::getJSONObject, archivo);
+            GestionVagon.agregarRegistro(vagoncito, VagonDeCarga::getJSONObject, archivo);
             System.out.println(GestionVagon.getJSONArray(new JSONArray(leerArchivo(archivo)), VagonDeCarga::getJSONObject));
         } catch (JSONEmptyFileException e) {
             System.out.println("El archivo esta vacio");
         }
     }
 
-    public static JSONTokener leerArchivo (String archivo) throws FileDoesntExistException {
+    //Archivos
+    public static boolean crearArchivo (String nombre) {
+        try {
+            if (!new File(nombre).createNewFile()) {
+                throw new FileAlreadyExistsException(nombre);
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static JSONTokener leerArchivo (String archivo) throws FileDoesntExistException, JSONEmptyFileException {
         JSONTokener json;
         try {
             json = new JSONTokener(new BufferedReader(new FileReader(archivo)));
-            if(!json.more()) {
+            System.out.println(new File(archivo));
+            if (new File(archivo).length() == 0) {
+                System.out.println("Hola");
                 throw new JSONEmptyFileException();
             }
         } catch (FileNotFoundException e) {
@@ -51,4 +64,5 @@ public class Main {
         }
         return json;
     }
+    //Archivos
 }

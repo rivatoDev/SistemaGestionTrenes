@@ -1,21 +1,44 @@
-[{
-     "estado": true,
-     "contenido": [{
-          "tipo": "Comida",
-          "peso": 23.7,
-          "unidades": 3,
-          "nombre": "Samot",
-          "titular": {
-               "estado": true,
-               "apellido": "Rivara",
-               "contrasenia": "tomatoli",
-               "tipoUsuario": "CLIENTE",
-               "nombreUsuario": "rivato",
+[
+     {
+          "estado": true,
+          "contenido": [{
+               "tipo": "Alimento",
+               "peso": 23.7,
+               "unidades": 3,
                "nombre": "Samot",
-               "dni": "44336431"
-          }
-     }],
-     "pesoMax": 100.7,
-     "idVagon": "123",
-     "capacidad": "50,7"
-}]
+               "titular": {
+                    "estado": true,
+                    "apellido": "Rivara",
+                    "contrasenia": "tomatoli",
+                    "tipoUsuario": "CLIENTE",
+                    "nombreUsuario": "rivato",
+                    "nombre": "Samot",
+                    "dni": "44336478"
+               }
+          }],
+          "pesoMax": 109.7,
+          "idVagon": "12345678",
+          "capacidad": "57,7"
+     },
+     {
+          "estado": true,
+          "contenido": [{
+               "tipo": "Alimento",
+               "peso": 23.7,
+               "unidades": 3,
+               "nombre": "Samot",
+               "titular": {
+                    "estado": true,
+                    "apellido": "Rivara",
+                    "contrasenia": "tomatoli",
+                    "tipoUsuario": "CLIENTE",
+                    "nombreUsuario": "rivato",
+                    "nombre": "Samot",
+                    "dni": "44336478"
+               }
+          }],
+          "pesoMax": 109.7,
+          "idVagon": "12345678",
+          "capacidad": "57,7"
+     }
+]

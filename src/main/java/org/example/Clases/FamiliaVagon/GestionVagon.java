@@ -106,19 +106,17 @@ public class GestionVagon<T extends Vagon> {
 
     //Archivos
     public static boolean agregarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        boolean flag = false;
+        boolean flag;
         GestionVagon<Vagon> gv = new GestionVagon<>();
 
-        do {
-            try {
-                gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
-            } catch (JSONEmptyFileException e) {
-                gv.setVagones(new HashSet<>());
-            } catch (FileDoesntExistException e) {
-                File f = new File(archivo);
-                flag = true;
-            }
-        } while (!flag);
+        try {
+            gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        } catch (JSONEmptyFileException e) {
+            System.out.println("hola");
+            gv.setVagones(new HashSet<>());
+        } catch (FileDoesntExistException e) {
+            Main.crearArchivo(archivo);
+        }
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             if(gv.agregarVagon(vagon)) {
