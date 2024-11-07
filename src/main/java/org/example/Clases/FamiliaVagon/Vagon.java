@@ -2,8 +2,6 @@ package org.example.Clases.FamiliaVagon;
 
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 /**
  * Clase padre abstracta de VagonDeCarga y VagonComercial que representa a los vagones.
  */
@@ -56,32 +54,19 @@ public abstract class Vagon{
     }
     //Setter
 
-    //Comparacion
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vagon vagon = (Vagon) o;
-        return estado == vagon.estado &&
-               Objects.equals(idVagon.toString(), vagon.idVagon.toString()) &&
-               Objects.equals(capacidad.toString(), vagon.capacidad.toString());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idVagon, capacidad, estado);
-    }
-    //Comparacion
-
     //Mostrar
     @Override
     public String toString() {
-        return "\n-------------------------------------------------------------------------------------------------------------------\n" +
+        return "\n------------------------------------------------------------VAGON------------------------------------------------------------\n" +
                 "ID: " + this.idVagon + '\n' +
                 "Capacidad: " + this.capacidad + '\n';
     }
     //Mostrar
 
+    /**
+     * Convierte al Vagon en un JSONObject
+     * @return el JSONObject con los datos del Vagon.
+     */
     //JSON
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();

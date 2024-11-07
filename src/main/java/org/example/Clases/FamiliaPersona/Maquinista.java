@@ -57,9 +57,10 @@ public final class Maquinista extends Persona{
     //Mostrar
     @Override
     public String toString() {
-        return super.toString() +
+        return "--------------------------------------------------MAQUINISTA--------------------------------------------------\n" +
+                super.toString() +
                "ID: " + this.idMaquinista + '\n' +
-               "----------------------------------------------------------------------------------------------------\n";
+               "--------------------------------------------------MAQUINISTA--------------------------------------------------\n";
     }
     //Mostrar
 

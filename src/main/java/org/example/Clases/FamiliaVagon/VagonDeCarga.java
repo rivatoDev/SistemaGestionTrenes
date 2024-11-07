@@ -4,17 +4,12 @@ import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Clase que hereda de Vagon y representa a los vagones que transportan
- * todo lo que no sean personas.
+ * Clase que hereda de Vagon y representa a los vagones que transportan cargamento.
  */
 public class VagonDeCarga extends Vagon {
     //Atributos
@@ -61,14 +56,13 @@ public class VagonDeCarga extends Vagon {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         VagonDeCarga that = (VagonDeCarga) o;
-        return Double.compare(pesoMax, that.pesoMax) == 0 && Objects.equals(contenido, that.contenido);
+        return this.estado && that.estado && Objects.equals(this.idVagon.toString(), that.idVagon.toString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), pesoMax, contenido);
+        return Objects.hash(estado, idVagon);
     }
     //Comparacion
 
@@ -80,7 +74,7 @@ public class VagonDeCarga extends Vagon {
         for(Cargamento c: contenido) {
             sb.append(c.toString());
         }
-        sb.append("-------------------------------------------------------------------------------------------------------------------\n");
+        sb.append("\n------------------------------------------------------------VAGON------------------------------------------------------------\n");
         return sb.toString();
     }
     //Mostrar
@@ -95,9 +89,8 @@ public class VagonDeCarga extends Vagon {
     public boolean agregarCargamento (Cargamento cargamento) throws OffLimitsException {
         if (cargamento.CalcularPeso() > this.pesoMax - this.calcularPesoTotal()) {
             throw new OffLimitsException();
-        } else {
-            return this.contenido.add(cargamento);
         }
+        return this.contenido.add(cargamento);
     }
     //Alta
 

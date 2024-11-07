@@ -1,0 +1,20 @@
+[
+  {
+    "estado": true,
+    "apellido": "Rivara",
+    "contrasenia": "tomatoli",
+    "tipoUsuario": "CLIENTE",
+    "nombreUsuario": "rivato",
+    "nombre": "Tomas",
+    "dni": "44336430"
+  },
+  {
+    "estado": true,
+    "apellido": "Rivara",
+    "contrasenia": "tomatoli",
+    "tipoUsuario": "CLIENTE",
+    "nombreUsuario": "rivato",
+    "nombre": "Tomas",
+    "dni": "44336430"
+  }
+]

@@ -106,13 +106,13 @@ public class Cargamento implements GestionCarga {
     //Mostrar
     @Override
     public String toString() {
-        return "----------------------------------------------------------------------------------------------------\n" +
-               "Titular: " + this.titular.toString() +
+        return "--------------------------------------------------CARGAMENTO--------------------------------------------------\n" +
+               "Titular: " + this.titular.getNombreUsuario() + '\n' +
                "Nombre: " + this.nombre + '\n' +
                "Tipo: " + this.tipo + '\n' +
                "Peso(kg): " + this.peso + '\n' +
-               "Unidades: " + this.nombre + '\n' +
-               "----------------------------------------------------------------------------------------------------\n";
+               "Unidades: " + this.unidades + '\n' +
+               "--------------------------------------------------CARGAMENTO--------------------------------------------------\n";
     }
 
     //JSON

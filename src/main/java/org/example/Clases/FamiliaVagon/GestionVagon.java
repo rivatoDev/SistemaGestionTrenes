@@ -4,7 +4,6 @@ import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.JSONEmptyFileException;
 import org.example.Main;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -47,7 +46,7 @@ public class GestionVagon<T extends Vagon> {
     //Mostrar
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("-------------------------------------------------------------------------------------------------------------------\n");
+        StringBuilder sb = new StringBuilder("\n-------------------------------------------------------------------------------------------------------------------\n");
         for(T t: this.vagones) {
             if(t.isEstado()) {
                 sb.append(t);
@@ -58,12 +57,22 @@ public class GestionVagon<T extends Vagon> {
     }
     //Mostrar
 
+    /**
+     * Carga un Vagon.
+     * @param t Vagon a agregar.
+     * @return true si se pudo agregar sin problemas, false de lo contrario.
+     */
     //Alta
     public boolean agregarVagon(T t) {
         return this.vagones.add(t);
     }
     //Alta
 
+    /**
+     * Elimina un Vagon.
+     * @param t Vagon a eliminar.
+     * @return true si se pudo eliminar el vagon sin problemas, sino devuelve false
+     */
     //Baja
     public boolean eliminarVagon (T t) {
         if(!this.vagones.remove(t) || !t.isEstado()) {
@@ -76,16 +85,26 @@ public class GestionVagon<T extends Vagon> {
     }
     //Baja
 
+    /**
+     * Modifica un Vagon.
+     * @param vagonViejo Vagon a modificar.
+     * @param vagonNuevo Vagon modificado.
+     * @return true si se pudo modificar el vagon sin problemas, sino devuelve false
+     */
     //Modificacion
     public boolean modificarVagon (T vagonViejo, T vagonNuevo) {
         if(!this.vagones.remove(vagonViejo) || !vagonNuevo.isEstado()) {
             throw new NoSuchElementException();
         } else {
-            return this.vagones.add(vagonNuevo);
+            return this.eliminarVagon(vagonViejo) && this.agregarVagon(vagonNuevo);
         }
     }
     //Modificacion
 
+    /**
+     * Convierte al objeto en un JSONArray
+     * @return el objeto como un JSONArray.
+     */
     //JSON
     public JSONArray convertirJSONArray () {
         JSONArray json = new JSONArray();
@@ -95,6 +114,12 @@ public class GestionVagon<T extends Vagon> {
         return json;
     }
 
+    /**
+     * Convierte el JSONArray en un HashSet.
+     * @param json JSONArray a convertir.
+     * @param vagon Function a utilizar, tiene que ser el metodo estatico de convertirAJSONObject de algun Vagon.
+     * @return un HashSet con los datos del JSONArray
+     */
     public static HashSet<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> vagon) {
         HashSet<Vagon> hs = new HashSet<>();
         for (int i = 0; i < json.length(); i++) {
@@ -105,20 +130,27 @@ public class GestionVagon<T extends Vagon> {
     //JSON
 
     //Archivos
+    /**
+     * Carga un vagon en un archivo.
+     * Si el archivo no existe lo crea.
+     * @param vagon Vagon a agregar.
+     * @param tipoVagon Function que debe contener el metodo estatico de ConvertirAJSONObject de un Vagon.
+     * @param archivo Nombre del archivo que se va a agregar el Vagon.
+     * @return true si se pudo agregar sin problema, sino false.
+     */
     public static boolean agregarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        boolean flag;
         GestionVagon<Vagon> gv = new GestionVagon<>();
 
         try {
             gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
         } catch (JSONEmptyFileException e) {
-            System.out.println("hola");
             gv.setVagones(new HashSet<>());
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
         }
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            System.out.println(gv);
             if(gv.agregarVagon(vagon)) {
                 bf.write(gv.convertirJSONArray().toString(5));
             }
@@ -128,6 +160,13 @@ public class GestionVagon<T extends Vagon> {
         return true;
     }
 
+    /**
+     * Elimina un vagon en un archivo.
+     * @param vagon Vagon a eliminar.
+     * @param tipoVagon Function que debe contener el metodo estatico de ConvertirAJSONObject de un Vagon.
+     * @param archivo Nombre del archivo que se va a eliminar el Vagon.
+     * @return true si se pudo eliminar sin problema, sino false.
+     */
     public static boolean eliminarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
@@ -140,6 +179,13 @@ public class GestionVagon<T extends Vagon> {
         return true;
     }
 
+    /**
+     * Modifica un vagon en un archivo.
+     * @param vagonViejo Vagon a modificar.
+     * @param tipoVagon Function que debe contener el metodo estatico de ConvertirAJSONObject de un Vagon.
+     * @param archivo Nombre del archivo que se va a modificar el Vagon.
+     * @return true si se pudo modificar sin problema, sino false.
+     */
     public static boolean modificarRegistro (Vagon vagonViejo, Vagon vagonNuevo, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {

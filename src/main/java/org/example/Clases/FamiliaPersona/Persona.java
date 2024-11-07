@@ -73,7 +73,7 @@ public abstract class Persona{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persona persona = (Persona) o;
-        return estado == persona.estado &&
+        return estado && persona.estado &&
                Objects.equals(dni.toString(), persona.dni.toString()) &&
                Objects.equals(nombre.toString(), persona.nombre.toString()) &&
                Objects.equals(apellido.toString(), persona.apellido.toString());
@@ -89,7 +89,6 @@ public abstract class Persona{
     @Override
     public String toString() {
         return
-                "-------------------------------------------------------------------------------------\n" +
                 "DNI: " + this.dni + '\n' +
                 "Nombre: " + this.nombre + '\n' +
                 "Apellido: " + this.apellido + '\n';
@@ -97,6 +96,10 @@ public abstract class Persona{
     //Mostrar
 
     //JSON
+    /**
+     * Convierte a la persona en un JSONOBJECT.
+     * @return el JSONObject con los datos de las personas.
+     */
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("dni", this.dni);

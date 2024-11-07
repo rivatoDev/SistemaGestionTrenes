@@ -58,26 +58,23 @@ public final class Usuario extends Persona {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Usuario usuario = (Usuario) o;
-        return super.equals(o) &&
-               Objects.equals(nombreUsuario.toString(), usuario.nombreUsuario.toString()) &&
-               Objects.equals(contrasenia.toString(), usuario.contrasenia.toString()) &&
-               tipoUsuario == usuario.tipoUsuario;
+        return this.estado && usuario.isEstado() && Objects.equals(nombreUsuario.toString(), usuario.nombreUsuario.toString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), nombreUsuario, contrasenia, tipoUsuario);
+        return Objects.hash(estado, nombreUsuario);
     }
     //Comparacion
 
     //Mostrar
     @Override
     public String toString() {
-        return super.toString() +
-               "Nombre de Usuario: " + this.nombreUsuario + '\n' +
-                "-------------------------------------------------------------------------------------\n";
+        return "--------------------------------------------------USUARIO--------------------------------------------------\n" +
+                "Nombre de Usuario: " + this.nombreUsuario + '\n' +
+                super.toString() +
+               "--------------------------------------------------USUARIO--------------------------------------------------\n";
     }
     //Mostrar
 
