@@ -1,12 +1,13 @@
 package org.example.Clases.FamiliaPersona;
 
 
+import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
-import org.example.Excepciones.JSONEmptyFileException;
 import org.example.Main;
 import org.json.JSONArray;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
@@ -18,16 +19,12 @@ import java.util.Set;
  */
 public class GestionUsuario {
     //Atributos
-    private Set<Usuario> usuarios;
+    private final Set<Usuario> usuarios;
     //Atributos
 
     //Constructor
     public GestionUsuario() {
         this.usuarios = new HashSet<>();
-    }
-
-    public GestionUsuario(HashSet<Usuario> usuarios) {
-        this.usuarios = usuarios;
     }
     //Constructor
 
@@ -37,16 +34,10 @@ public class GestionUsuario {
     }
     //Getter
 
-    //Setter
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-    //Setter
-
     //Mostrar
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("-------------------------------------------------------------------------------------------------------------------\n");
+        StringBuilder sb = new StringBuilder("\n-------------------------------------------------------------------------------------------------------------------\n");
         for(Usuario u: this.usuarios) {
             if(u.isEstado()) {
                 sb.append(u);
@@ -65,7 +56,10 @@ public class GestionUsuario {
      * @return true si se pudo agregar sin problema al Usuario, sino false.
      */
     public boolean agregarUsuario(Usuario usuario) {
-        return this.usuarios.add(usuario);
+        if(!this.usuarios.add(usuario)) {
+            throw new ElementAlreadyExistsException();
+        }
+        return true;
     }
     //Alta
 
@@ -96,9 +90,8 @@ public class GestionUsuario {
     public boolean modificarUsuario (Usuario usuarioViejo, Usuario usuarioNuevo) {
         if(!this.usuarios.remove(usuarioViejo) || !usuarioViejo.isEstado()) {
             throw new NoSuchElementException();
-        } else {
-            return this.eliminarUsuario(usuarioViejo) && this.agregarUsuario(usuarioNuevo);
         }
+         return this.agregarUsuario(usuarioNuevo);
     }
     //Modificacion
 
@@ -123,7 +116,9 @@ public class GestionUsuario {
     public static HashSet<Usuario> getJSONArray(JSONArray json) {
         HashSet<Usuario> hs = new HashSet<>();
         for(int i = 0; i < json.length(); i++) {
-            hs.add(Usuario.JSONxUsuario(json.getJSONObject(i)));
+            if(json.getJSONObject(i).getBoolean("estado")) {
+                hs.add(Usuario.JSONxUsuario(json.getJSONObject(i)));
+            }
         }
         return hs;
     }
@@ -139,20 +134,20 @@ public class GestionUsuario {
      * @return true si se pudo guardar el Usuario sin problemas, sino false.
      */
     public static boolean agregarRegistro (Usuario usuario, String archivo) {
-        GestionUsuario gu;
+        GestionUsuario gu = new GestionUsuario();
         try {
-            gu = new GestionUsuario(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo))));
-        } catch (JSONEmptyFileException e) {
-            gu = new GestionUsuario();
+            if (new File(archivo).length() > 0) {
+                for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+                    gu.agregarUsuario(u);
+                }
+            }
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
-            gu = new GestionUsuario();
         }
-        System.out.println(gu);
+        gu.agregarUsuario(usuario);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            if(gu.agregarUsuario(usuario)) {
-                bf.write(gu.convertirAJSONArray().toString(2));
-            }
+            bf.write(gu.convertirAJSONArray().toString(2));
         }
         catch (IOException e) {
             return false;
@@ -167,11 +162,15 @@ public class GestionUsuario {
      * @return true si se pudo eliminar el Usuario sin problemas, sino false.
      */
     public static boolean eliminarRegistro (Usuario usuario, String archivo) {
-        GestionUsuario gu = new GestionUsuario(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo))));
+        GestionUsuario gu = new GestionUsuario();
+
+        for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+            gu.agregarUsuario(u);
+        }
+        gu.eliminarUsuario(usuario);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            if (gu.eliminarUsuario(usuario)) {
-                bf.write(gu.convertirAJSONArray().toString(2));
-            }
+            bf.write(gu.convertirAJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }
@@ -185,11 +184,15 @@ public class GestionUsuario {
      * @return true si se pudo modificar el Usuario sin problemas, sino false.
      */
     public static boolean modificarRegistro (Usuario usuarioViejo, Usuario usuarioNuevo, String archivo) {
-        GestionUsuario gu = new GestionUsuario(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo))));
+        GestionUsuario gu = new GestionUsuario();
+
+        for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+            gu.agregarUsuario(u);
+        }
+        gu.modificarUsuario(usuarioViejo, usuarioNuevo);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            if (gu.modificarUsuario(usuarioViejo, usuarioNuevo)) {
-                bf.write(gu.convertirAJSONArray().toString());
-            }
+            bf.write(gu.convertirAJSONArray().toString());
         } catch (IOException e) {
             return false;
         }
