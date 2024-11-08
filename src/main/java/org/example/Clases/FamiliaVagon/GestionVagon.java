@@ -1,7 +1,6 @@
 package org.example.Clases.FamiliaVagon;
 
 import org.example.Excepciones.FileDoesntExistException;
-import org.example.Excepciones.JSONEmptyFileException;
 import org.example.Main;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -143,8 +142,6 @@ public class GestionVagon<T extends Vagon> {
 
         try {
             gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
-        } catch (JSONEmptyFileException e) {
-            gv.setVagones(new HashSet<>());
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
         }

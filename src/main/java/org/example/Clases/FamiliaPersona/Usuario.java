@@ -64,7 +64,7 @@ public final class Usuario extends Persona {
 
     @Override
     public int hashCode() {
-        return Objects.hash(estado, nombreUsuario);
+        return Objects.hash(nombreUsuario.toString());
     }
     //Comparacion
 
