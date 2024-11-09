@@ -159,7 +159,7 @@ public class Tren <E extends Vagon>{
     }
     //JSON
 
-    
+
     /*public void iniciarViaje(Ruta ruta){
         if(ruta.)
         this.estado = true;
