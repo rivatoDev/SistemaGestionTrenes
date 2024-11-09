@@ -6,7 +6,7 @@ import org.example.Interfaces.GestionCarga;
 
 import java.util.LinkedHashSet;
 
-public class TrenComercial extends Tren {
+/*public class TrenComercial extends Tren {
     //Lista de vagones
     LinkedHashSet<VagonComercial> vagones = null;
 
@@ -67,4 +67,4 @@ public class TrenComercial extends Tren {
     public void sacarVagon(String idVagon){
 
     }
-}
+}*/
