@@ -199,4 +199,12 @@ public class GestionUsuario {
         return true;
     }
     //Archivos
+
+    public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombreDeUsuario) && usuario.getContrasenia().equals(contrasenia)) {
+                return usuario;
+            }
+        }
+    }
 }
