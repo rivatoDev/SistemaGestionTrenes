@@ -211,5 +211,6 @@ public class GestionUsuario {
                 return usuario;
             }
         }
+        return null;
     }
 }
