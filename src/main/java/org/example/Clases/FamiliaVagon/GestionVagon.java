@@ -1,5 +1,6 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
 import org.json.JSONArray;
@@ -16,17 +17,12 @@ import java.util.function.Function;
  */
 public class GestionVagon<T extends Vagon> {
     //Atributos
-    private Set<T> vagones;
+    private final Set<T> vagones;
     //Atributos
 
     //Constructor
-
     public GestionVagon() {
         this.vagones = new HashSet<>();
-    }
-
-    public GestionVagon(HashSet<T> vagones) {
-        this.vagones = (vagones == null) ? new HashSet<>() : vagones;
     }
     //Constructor
 
@@ -36,22 +32,19 @@ public class GestionVagon<T extends Vagon> {
     }
     //Getter
 
-    //Setter
-    public void setVagones(Set<T> vagones) {
-        this.vagones = vagones;
-    }
-    //Setter
-
     //Mostrar
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("\n-------------------------------------------------------------------------------------------------------------------\n");
+        StringBuilder sb = new StringBuilder("\n");
+        sb.append("------------------------------------------------------------------------------------------------------------------------\n");
         for(T t: this.vagones) {
             if(t.isEstado()) {
+                sb.append("--------------------------------------------------VAGON--------------------------------------------------\n");
                 sb.append(t);
+                sb.append("--------------------------------------------------VAGON--------------------------------------------------\n");
             }
         }
-        sb.append("-------------------------------------------------------------------------------------------------------------------\n");
+        sb.append("------------------------------------------------------------------------------------------------------------------------\n");
         return sb.toString();
     }
     //Mostrar
@@ -59,18 +52,23 @@ public class GestionVagon<T extends Vagon> {
     /**
      * Carga un Vagon.
      * @param t Vagon a agregar.
-     * @return true si se pudo agregar sin problemas, false de lo contrario.
+     * @return true si se pudo agregar sin problemas.
+     * @throws ElementAlreadyExistsException si el vagon ya existe.
      */
     //Alta
     public boolean agregarVagon(T t) {
-        return this.vagones.add(t);
+        if(!this.vagones.add(t)) {
+            throw new ElementAlreadyExistsException();
+        }
+        return true;
     }
     //Alta
 
     /**
      * Elimina un Vagon.
      * @param t Vagon a eliminar.
-     * @return true si se pudo eliminar el vagon sin problemas, sino devuelve false
+     * @return true si se pudo eliminar el vagon sin problemas.
+     * @throws NoSuchElementException si el vagon no existe.
      */
     //Baja
     public boolean eliminarVagon (T t) {
@@ -78,7 +76,7 @@ public class GestionVagon<T extends Vagon> {
             throw new NoSuchElementException();
         } else {
             t.setEstado();
-            this.vagones.add(t);
+            this.agregarVagon(t);
         }
         return true;
     }
@@ -88,14 +86,15 @@ public class GestionVagon<T extends Vagon> {
      * Modifica un Vagon.
      * @param vagonViejo Vagon a modificar.
      * @param vagonNuevo Vagon modificado.
-     * @return true si se pudo modificar el vagon sin problemas, sino devuelve false
+     * @return true si se pudo modificar el vagon sin problemas.
+     * @throws NoSuchElementException si el vagon no existe.
      */
     //Modificacion
     public boolean modificarVagon (T vagonViejo, T vagonNuevo) {
         if(!this.vagones.remove(vagonViejo) || !vagonNuevo.isEstado()) {
             throw new NoSuchElementException();
         } else {
-            return this.eliminarVagon(vagonViejo) && this.agregarVagon(vagonNuevo);
+            return this.agregarVagon(vagonNuevo);
         }
     }
     //Modificacion
@@ -119,12 +118,12 @@ public class GestionVagon<T extends Vagon> {
      * @param vagon Function a utilizar, tiene que ser el metodo estatico de convertirAJSONObject de algun Vagon.
      * @return un HashSet con los datos del JSONArray
      */
-    public static HashSet<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> vagon) {
-        HashSet<Vagon> hs = new HashSet<>();
+    public static GestionVagon<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> vagon) {
+        GestionVagon<Vagon> gv = new GestionVagon<>();
         for (int i = 0; i < json.length(); i++) {
-            hs.add(vagon.apply(json.getJSONObject(i)));
+            gv.agregarVagon(vagon.apply(json.getJSONObject(i)));
         }
-        return hs;
+        return gv;
     }
     //JSON
 
@@ -141,16 +140,18 @@ public class GestionVagon<T extends Vagon> {
         GestionVagon<Vagon> gv = new GestionVagon<>();
 
         try {
-            gv.setVagones(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+            if(new File(archivo).length() > 0) {
+                for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
+                    gv.agregarVagon(v);
+                }
+            }
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
         }
+        gv.agregarVagon(vagon);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            System.out.println(gv);
-            if(gv.agregarVagon(vagon)) {
-                bf.write(gv.convertirJSONArray().toString(5));
-            }
+            bf.write(gv.convertirJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }
@@ -165,11 +166,15 @@ public class GestionVagon<T extends Vagon> {
      * @return true si se pudo eliminar sin problema, sino false.
      */
     public static boolean eliminarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        GestionVagon<Vagon> gv = new GestionVagon<>();
+
+        for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
+            gv.agregarVagon(v);
+        }
+        gv.eliminarVagon(vagon);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            if(gv.eliminarVagon(vagon)) {
-                bf.write(gv.convertirJSONArray().toString(2));
-            }
+            bf.write(gv.convertirJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }
@@ -184,11 +189,15 @@ public class GestionVagon<T extends Vagon> {
      * @return true si se pudo modificar sin problema, sino false.
      */
     public static boolean modificarRegistro (Vagon vagonViejo, Vagon vagonNuevo, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionVagon<Vagon> gv = new GestionVagon<>(GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon));
+        GestionVagon<Vagon> gv = new GestionVagon<>();
+
+        for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
+            gv.agregarVagon(v);
+        }
+        gv.modificarVagon(vagonViejo, vagonNuevo);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            if (gv.modificarVagon(vagonViejo, vagonNuevo)) {
-                bf.write(gv.convertirJSONArray().toString(2));
-            }
+            bf.write(gv.convertirJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }

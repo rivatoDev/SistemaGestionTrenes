@@ -15,47 +15,38 @@ import java.util.*;
  */
 public class VagonComercial extends Vagon{
     //Atributos
-    private Map<StringBuilder, Usuario> pasajeros;
+    private final Map<String, Usuario> pasajeros;
     //Atributos
 
     //Constructor
-
     public VagonComercial() {
         super();
         this.pasajeros = new HashMap<>();
     }
 
-    public VagonComercial(String idVagon, String capacidad, HashMap<StringBuilder, Usuario> pasajeros) {
+    public VagonComercial(String idVagon, int capacidad) {
         super(idVagon, capacidad);
-        this.pasajeros = pasajeros;
+        this.pasajeros = new HashMap<>();
     }
     //Constructor
 
     //Getter
-    public Map<StringBuilder, Usuario> getPasajeros() {
+    public Map<String, Usuario> getPasajeros() {
         return pasajeros;
     }
     //Getter
-
-    //Setter
-    public void setPasajeros(Map<StringBuilder, Usuario> pasajeros) {
-        this.pasajeros = pasajeros;
-    }
-    //Setter
 
     //Comparacion
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        VagonComercial that = (VagonComercial) o;
-        return Objects.equals(pasajeros, that.pasajeros);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), pasajeros);
+        return Objects.hash(super.hashCode());
     }
     //Comparacion
 
@@ -63,12 +54,14 @@ public class VagonComercial extends Vagon{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(super.toString());
-        sb.append("----------------------------------------------------------------------------------------------------\n");
-        for(Map.Entry<StringBuilder, Usuario> pasajero: pasajeros.entrySet()) {
-            sb.append("Ticket: "). append(pasajero.getKey()).append('\n');
-            sb.append(pasajero.getValue().toString());
+        if(!this.pasajeros.isEmpty()) {
+            for(Map.Entry<String, Usuario> pasajero: pasajeros.entrySet()) {
+                sb.append("----------------------------------------PASAJERO----------------------------------------\n");
+                sb.append("Ticket: "). append(pasajero.getKey()).append('\n');
+                sb.append(pasajero.getValue().toString());
+                sb.append("----------------------------------------PASAJERO----------------------------------------\n");
+            }
         }
-        sb.append("----------------------------------------------------------------------------------------------------\n");
         return sb.toString();
     }
     //Mostrar
@@ -84,7 +77,7 @@ public class VagonComercial extends Vagon{
      */
     public boolean cargarPasajero (Usuario pasajero, String idTicket) throws JSONObjectEliminatedException {
         if (pasajero.isEstado() && pasajero.getTipoUsuario() == TipoUsuario.CLIENTE && this.contarAsientos() <= Integer.parseInt(this.capacidad.toString())) {
-            this.pasajeros.put(new StringBuilder(idTicket), pasajero);
+            this.pasajeros.put(idTicket, pasajero);
            return true;
         } else if(!pasajero.isEstado()){
             throw new JSONObjectEliminatedException();
@@ -104,8 +97,8 @@ public class VagonComercial extends Vagon{
      * @throws NoSuchElementException si no se encontro al pasajero en el vagon.
      */
     public boolean cancelarViaje(String idTicket) {
-        if(pasajeros.containsKey(new StringBuilder(idTicket))) {
-           pasajeros.remove(new StringBuilder(idTicket));
+        if(pasajeros.containsKey(idTicket)) {
+           pasajeros.remove(idTicket);
            return true;
         } else {
             throw new NoSuchElementException();
@@ -122,7 +115,7 @@ public class VagonComercial extends Vagon{
         if(this.pasajeros.isEmpty()) {
             throw new NullPointerException();
         } else {
-            for(Map.Entry<StringBuilder, Usuario> usuario: this.pasajeros.entrySet()) {
+            for(Map.Entry<String, Usuario> usuario: this.pasajeros.entrySet()) {
                 this.pasajeros.remove(usuario.getKey());
             }
             return true;
@@ -138,7 +131,7 @@ public class VagonComercial extends Vagon{
      */
     public int contarAsientos () {
         int i = 0;
-        for (Map.Entry<StringBuilder, Usuario> usuario: this.pasajeros.entrySet()) {
+        for (Map.Entry<String, Usuario> usuario: this.pasajeros.entrySet()) {
             i++;
         }
         return i;
@@ -152,7 +145,7 @@ public class VagonComercial extends Vagon{
      * @return el pasajero convertido en un JSONObject junto con su id de la entrada.
      */
     public JSONObject convertirPasajeroAJSONObject (String key) {
-        JSONObject json = this.pasajeros.get(new StringBuilder(key)).convertirAJSONObject();
+        JSONObject json = this.pasajeros.get(key).convertirAJSONObject();
         json.put("idEntrada", key);
         return json;
     }
@@ -163,8 +156,8 @@ public class VagonComercial extends Vagon{
      */
     public JSONArray convertirAJSONArray() {
         JSONArray json = new JSONArray();
-        for(Map.Entry<StringBuilder, Usuario> usuario: this.pasajeros.entrySet()) {
-            json.put(this.convertirPasajeroAJSONObject(usuario.getKey().toString()));
+        for(Map.Entry<String, Usuario> usuario: this.pasajeros.entrySet()) {
+            json.put(this.convertirPasajeroAJSONObject(usuario.getValue().toString()));
         }
         return json;
     }
@@ -197,11 +190,11 @@ public class VagonComercial extends Vagon{
      * @param json el JSONArray a convertir
      * @return Un Hashmap con los datos del JSONArray.
      */
-    public static HashMap<StringBuilder, Usuario> getJSONArray (JSONArray json) {
-        HashMap<StringBuilder, Usuario> pasajeros = new HashMap<>();
+    public static HashMap<String, Usuario> getJSONArray (JSONArray json) {
+        HashMap<String, Usuario> pasajeros = new HashMap<>();
         for(int i = 0; i < json.length(); i++) {
             if(verificarJSON(json.getJSONObject(i))) {
-                pasajeros.put(new StringBuilder(json.getJSONObject(i).getString("idEntrada")),
+                pasajeros.put(json.getJSONObject(i).getString("idEntrada"),
                               Usuario.JSONxUsuario(json.getJSONObject(i)));
             } else {
                 throw new IllegalArgumentException();
@@ -212,9 +205,13 @@ public class VagonComercial extends Vagon{
 
     public static VagonComercial getJSONObject (JSONObject json) throws JSONObjectEliminatedException {
         if(VagonComercial.verificarJSON(json) && json.getBoolean("estado")) {
-            return new VagonComercial(json.getString("idVagon"),
-                                      json.getString("capacidad"),
-                                      getJSONArray(json.getJSONArray("pasajeros")));
+            VagonComercial vg = new VagonComercial();
+            vg.setIdVagon(json.getString("idVagon"));
+            vg.setCapacidad(json.getNumber("capacidad"));
+            for(Map.Entry<String, Usuario> pasajero: getJSONArray(json.getJSONArray("pasajeros")).entrySet()) {
+                vg.cargarPasajero(pasajero.getValue(), pasajero.getKey());
+            }
+            return vg;
         } else if (!VagonComercial.verificarJSON(json)) {
             throw new IllegalArgumentException();
         } else {

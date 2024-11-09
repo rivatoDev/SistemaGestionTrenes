@@ -2,26 +2,28 @@ package org.example.Clases.FamiliaVagon;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 /**
  * Clase padre abstracta de VagonDeCarga y VagonComercial que representa a los vagones.
  */
 public abstract class Vagon{
     //Atributos
     protected StringBuilder idVagon;
-    protected StringBuilder capacidad;
+    protected Number capacidad;
     protected boolean estado;
     //Atributos
 
     //Constructores
     public Vagon() {
         this.idVagon = new StringBuilder();
-        this.capacidad = new StringBuilder();
+        this.capacidad = 0;
         this.estado = true;
     }
 
-    public Vagon(String idVagon, String capacidad) {
+    public Vagon(String idVagon, Number capacidad) {
         this.idVagon = new StringBuilder(idVagon);
-        this.capacidad = new StringBuilder(capacidad);
+        this.capacidad = capacidad;
         this.estado = true;
     }
     //Constructores
@@ -31,8 +33,8 @@ public abstract class Vagon{
         return idVagon.toString();
     }
 
-    public String getCapacidad() {
-        return capacidad.toString();
+    public Number getCapacidad() {
+        return capacidad;
     }
 
     public boolean isEstado() {
@@ -45,8 +47,8 @@ public abstract class Vagon{
         this.idVagon.replace(0, this.idVagon.length(), idVagon);
     }
 
-    public void setCapacidad(String capacidad) {
-        this.capacidad.replace(0, this.capacidad.length(), capacidad);
+    public void setCapacidad(Number capacidad) {
+        this.capacidad = capacidad;
     }
 
     public void setEstado() {
@@ -54,11 +56,25 @@ public abstract class Vagon{
     }
     //Setter
 
+    //Comparacion
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vagon vagon = (Vagon) o;
+        return estado && vagon.estado && Objects.equals(idVagon.toString(), vagon.idVagon.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(estado, idVagon.toString());
+    }
+    //Comparacion
+
     //Mostrar
     @Override
     public String toString() {
-        return "\n------------------------------------------------------------VAGON------------------------------------------------------------\n" +
-                "ID: " + this.idVagon + '\n' +
+        return  "ID: " + this.idVagon + '\n' +
                 "Capacidad: " + this.capacidad + '\n';
     }
     //Mostrar
@@ -70,9 +86,9 @@ public abstract class Vagon{
     //JSON
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
+        json.put("estado", this.estado);
         json.put("idVagon", this.idVagon);
         json.put("capacidad", this.capacidad);
-        json.put("estado", this.estado);
         return json;
     }
     //JSON
