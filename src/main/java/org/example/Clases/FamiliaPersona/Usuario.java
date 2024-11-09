@@ -71,10 +71,8 @@ public final class Usuario extends Persona {
     //Mostrar
     @Override
     public String toString() {
-        return "--------------------------------------------------USUARIO--------------------------------------------------\n" +
-                "Nombre de Usuario: " + this.nombreUsuario + '\n' +
-                super.toString() +
-               "--------------------------------------------------USUARIO--------------------------------------------------\n";
+        return  "Nombre de Usuario: " + this.nombreUsuario + '\n' +
+                super.toString();
     }
     //Mostrar
 

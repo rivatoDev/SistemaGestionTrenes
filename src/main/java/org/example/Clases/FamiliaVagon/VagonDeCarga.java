@@ -13,43 +13,26 @@ import java.util.Objects;
  */
 public class VagonDeCarga extends Vagon {
     //Atributos
-    protected double pesoMax;
     protected List<Cargamento> contenido;
     //Atributos
 
     //Constructores
     public VagonDeCarga() {
         super();
-        this.pesoMax = 0;
         this.contenido = new LinkedList<>();
     }
 
-    public VagonDeCarga(String idVagon, String capacidad, double pesoMax, LinkedList<Cargamento> contenido) {
+    public VagonDeCarga(String idVagon, double capacidad) {
         super(idVagon, capacidad);
-        this.pesoMax = pesoMax;
-        this.contenido = contenido;
+        this.contenido = new LinkedList<>();
     }
     //Constructores
 
     //Getter
-    public double getPesoMax() {
-        return pesoMax;
-    }
-
     public LinkedList<Cargamento> getContenido() {
         return (LinkedList<Cargamento>) contenido;
     }
     //Getter
-
-    //Setter
-    public void setPesoMax(double pesoMax) {
-        this.pesoMax = pesoMax;
-    }
-
-    public void setContenido(LinkedList<Cargamento> contenido) {
-        this.contenido = contenido;
-    }
-    //Setter
 
     //Comparacion
     @Override
@@ -70,11 +53,13 @@ public class VagonDeCarga extends Vagon {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(super.toString());
-        sb.append("Peso Maximo: ").append(this.pesoMax).append('\n');
-        for(Cargamento c: contenido) {
-            sb.append(c.toString());
+        if(!this.contenido.isEmpty()) {
+            for(Cargamento c: contenido) {
+                sb.append("----------------------------------------CARGAMENTO----------------------------------------\n");
+                sb.append(c.toString());
+                sb.append("----------------------------------------CARGAMENTO----------------------------------------\n");
+            }
         }
-        sb.append("\n------------------------------------------------------------VAGON------------------------------------------------------------\n");
         return sb.toString();
     }
     //Mostrar
@@ -87,7 +72,7 @@ public class VagonDeCarga extends Vagon {
      * @throws OffLimitsException si el peso total supera al pesoMax del vagon.
      */
     public boolean agregarCargamento (Cargamento cargamento) throws OffLimitsException {
-        if (cargamento.CalcularPeso() > this.pesoMax - this.calcularPesoTotal()) {
+        if (cargamento.CalcularPeso() > (double)this.capacidad - this.calcularPesoTotal()) {
             throw new OffLimitsException();
         }
         return this.contenido.add(cargamento);
@@ -156,7 +141,6 @@ public class VagonDeCarga extends Vagon {
     @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = super.convertirAJSONObject();
-        json.put("pesoMax", this.pesoMax);
         json.put("contenido", this.contenidoAJSONArray());
         return json;
     }
@@ -170,7 +154,6 @@ public class VagonDeCarga extends Vagon {
         return json.has("idVagon") &&
                json.has("capacidad") &&
                json.has("estado") &&
-               json.has("pesoMax") &&
                json.has("contenido");
     }
 
@@ -197,10 +180,13 @@ public class VagonDeCarga extends Vagon {
      */
     public static VagonDeCarga getJSONObject (JSONObject json){
         if(VagonDeCarga.verificarJSON(json) && json.getBoolean("estado")) {
-            return new VagonDeCarga(json.getString("idVagon"),
-                                    json.getString("capacidad"),
-                                    json.getDouble("pesoMax"),
-                                    getJSONArray(json.getJSONArray("contenido")));
+            VagonDeCarga vc = new VagonDeCarga();
+            vc.setIdVagon(json.getString("idVagon"));
+            vc.setCapacidad(json.getNumber("capacidad"));
+            for(Cargamento c: getJSONArray(json.getJSONArray("contenido"))) {
+                vc.agregarCargamento(c);
+            }
+            return vc;
         } else if (VagonDeCarga.verificarJSON(json)){
             throw new IllegalArgumentException();
         } else {

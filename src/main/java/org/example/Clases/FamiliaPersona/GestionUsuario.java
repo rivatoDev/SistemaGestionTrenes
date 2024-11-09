@@ -37,10 +37,13 @@ public class GestionUsuario {
     //Mostrar
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("\n-------------------------------------------------------------------------------------------------------------------\n");
+        StringBuilder sb = new StringBuilder("\n");
+        sb.append("-------------------------------------------------------------------------------------------------------------------\n");
         for(Usuario u: this.usuarios) {
             if(u.isEstado()) {
+                sb.append("--------------------------------------------------USUARIO--------------------------------------------------\n");
                 sb.append(u);
+                sb.append("--------------------------------------------------USUARIO--------------------------------------------------\n");
             }
         }
         sb.append("-------------------------------------------------------------------------------------------------------------------\n");
@@ -49,11 +52,11 @@ public class GestionUsuario {
     //Mostrar
 
     //Alta
-
     /**
      * Carga un Usuario.
      * @param usuario Usuario a agregar.
-     * @return true si se pudo agregar sin problema al Usuario, sino false.
+     * @return true si se pudo agregar sin problema al Usuario.
+     * @throws ElementAlreadyExistsException si el usuario ya existe.
      */
     public boolean agregarUsuario(Usuario usuario) {
         if(!this.usuarios.add(usuario)) {
@@ -67,7 +70,8 @@ public class GestionUsuario {
     /**
      * Elimina un Usuario.
      * @param usuario Usuario a eliminar.
-     * @return true si se pudo eliminar sin problema al Usuario, sino false.
+     * @return true si se pudo eliminar sin problema al Usuario.
+     * @throws NoSuchElementException si el usuario no existe.
      */
     public boolean eliminarUsuario (Usuario usuario) {
         if(!this.usuarios.remove(usuario) || !usuario.isEstado()) {
@@ -85,7 +89,8 @@ public class GestionUsuario {
      * Modifica un Usuario.
      * @param usuarioViejo Usuario a modificar.
      * @param usuarioNuevo Usuario a modificado.
-     * @return true si se pudo modificar sin problema al Usuario, sino false.
+     * @return true si se pudo modificar sin problema al Usuario.
+     * @throws NoSuchElementException si el usuario no existe.
      */
     public boolean modificarUsuario (Usuario usuarioViejo, Usuario usuarioNuevo) {
         if(!this.usuarios.remove(usuarioViejo) || !usuarioViejo.isEstado()) {
