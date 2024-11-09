@@ -65,8 +65,6 @@ public class Menu {
         System.out.print("Ingrese la clave de administrador: ");
         String claveAdmin = teclado.nextLine();
 
-//        if(!(verificarAdministrador)){
-
     }
 
     private void mostrarMenuUsuario(Usuario usuario) {
