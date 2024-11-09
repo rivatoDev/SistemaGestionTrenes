@@ -44,50 +44,57 @@ public class Menu {
         } while (opcion != 3);
     }
 
-    private void iniciarSesionUsuario() throws NoSuchElementException{
+    private void iniciarSesionUsuario() throws NoSuchElementException {
         Usuario usuario = new Usuario();
         System.out.print("Ingrese el nombre de usuario: ");
         String nombreUsuario = teclado.nextLine();
         System.out.println("Ingrese su contraseña");
         String contrasenia = teclado.nextLine();
-        if(usuario == gu.verificarUsuario(nombreUsuario, contrasenia)){
+        if (gu.verificarUsuario(nombreUsuario, contrasenia) != null) {
             usuario = gu.verificarUsuario(nombreUsuario, contrasenia);
             mostrarMenuUsuario(usuario);
-        }
-        else{
+        } else {
             throw new NoSuchElementException();
         }
     }
 
+    /* faltaria ver tema administradores*/
     private void iniciarSesionAdministrador() {
         System.out.print("Ingrese el nombre de administrador: ");
         String nombreAdmin = teclado.nextLine();
         System.out.print("Ingrese la clave de administrador: ");
         String claveAdmin = teclado.nextLine();
+
     }
 
     private void mostrarMenuUsuario(Usuario usuario) {
         int opcion;
         do {
             System.out.println("\n----- Menú Usuario -----");
-            System.out.println("1. ");
-            System.out.println("2. Salir");
+            System.out.println("1. Ver mis datos");
+            System.out.println("2. Modificar mis datos");
+            System.out.println("3. ");
+            System.out.println("4. Salir del programa");
             System.out.print("Seleccione una opción: ");
             opcion = teclado.nextInt();
-            teclado.nextLine();
 
             switch (opcion) {
                 case 1:
+                    System.out.println(usuario.toString());
                     break;
                 case 2:
-                    System.out.println("Saliendo del menú de usuario");
+                    gu.modificarUsuario();
+                case 3:
                     break;
+                case 4:
+                    System.out.println("Saliendo del programa");
                 default:
                     System.out.println("Opcion no valida");
             }
             System.out.println();
         } while (opcion != 2);
     }
+
     private void mostrarMenuAdministrador() {
         int opcion;
         do {
@@ -96,11 +103,11 @@ public class Menu {
             System.out.println("2. Eliminar Usuario");
             System.out.println("3. Modificar Usuario");
             System.out.println("4. Listar Usuarios");
-            System.out.println("5. Salir");
+            System.out.println("5. Modificar administrador");
+            System.out.println("6. Salir");
 
             System.out.print("Seleccione una opcion: ");
             opcion = teclado.nextInt();
-            teclado.nextLine();
 
             switch (opcion) {
                 case 1:
@@ -112,12 +119,13 @@ public class Menu {
                 case 4:
                     break;
                 case 5:
-                    System.out.println("Saliendo del menú de administrador");
                     break;
+                case 6:
+                    System.out.println("Saliendo del menu de administrador");
                 default:
                     System.out.println("Opcion no valida");
             }
             System.out.println();
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 }
