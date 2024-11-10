@@ -1,7 +1,11 @@
 package org.example.Clases;
 
 import org.example.Clases.FamiliaPersona.Maquinista;
+import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaTren.Tren;
+import org.example.Enums.TipoUsuario;
+import org.example.Excepciones.JSONObjectEliminatedException;
+import org.json.JSONObject;
 
 public class Ruta {
     //Atributos
@@ -23,42 +27,38 @@ public class Ruta {
     public Ruta() {
     }
 
+
+    //Getter
     public Tren getTren() {
         return tren;
     }
-
-    public void setTren(Tren tren) {
-        this.tren = tren;
-    }
-
     public StringBuilder getSalida() {
         return salida;
     }
-
-    public void setSalida(StringBuilder salida) {
-        this.salida = salida;
-    }
-
     public StringBuilder getLlegada() {
         return llegada;
     }
-
-    public void setLlegada(StringBuilder llegada) {
-        this.llegada = llegada;
-    }
-
     public Maquinista getMaquinista() {
         return maquinista;
     }
-
-    public void setMaquinista(Maquinista maquinista) {
-        this.maquinista = maquinista;
-    }
-
     public int getFecha() {
         return fecha;
     }
 
+
+    //Setter
+    public void setTren(Tren tren) {
+        this.tren = tren;
+    }
+    public void setSalida(StringBuilder salida) {
+        this.salida = salida;
+    }
+    public void setLlegada(StringBuilder llegada) {
+        this.llegada = llegada;
+    }
+    public void setMaquinista(Maquinista maquinista) {
+        this.maquinista = maquinista;
+    }
     public void setFecha(int fecha) {
         this.fecha = fecha;
     }
@@ -73,5 +73,42 @@ public class Ruta {
                 ", maquinista=" + maquinista +
                 ", fecha=" + fecha +
                 '}';
+    }
+
+    //Pasar a jsonobject
+    public JSONObject convertirAJSONObject() {
+        JSONObject json = new JSONObject();
+        json.put("tren", this.tren);
+        json.put("salida", this.salida);
+        json.put("llegada", this.llegada);
+        json.put("maquinista", this.maquinista);
+        json.put("fecha", this.fecha);
+        return json;
+    }
+
+    //Verificar
+    public static boolean verificarJSON (JSONObject json) {
+        return json.has("tren") &&
+                json.has("salida") &&
+                json.has("llegada") &&
+                json.has("maquinista") &&
+                json.has("fecha");
+    }
+
+
+    //Pasar de JSON a Ruta
+    //Faltaria ver el tema de como saber que tipo de tren es
+    public static Ruta JSONxRuta(JSONObject json) throws JSONObjectEliminatedException {
+        if (Ruta.verificarJSON(json)) {
+            Tren tren = Tren.JSONxTren(json.getJSONObject("tren"));
+            StringBuilder salida = new StringBuilder(json.getString("salida"));
+            StringBuilder llegada = new StringBuilder(json.getString("llegada"));
+            Maquinista maquinista = Maquinista.JSONxMaquinista(json.getJSONObject("maquinista"));
+            int fecha = json.getInt("fecha");
+
+            return new Ruta(tren, salida, llegada, maquinista, fecha);
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 }
