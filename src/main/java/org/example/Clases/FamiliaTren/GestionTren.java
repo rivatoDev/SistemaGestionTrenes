@@ -1,6 +1,5 @@
 package org.example.Clases.FamiliaTren;
 
-import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -16,9 +15,13 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
-public class GestionTren<T extends Vagon> {
+/**
+ * Clase para gestionar los trenes del sistema.
+ * @param <T> El tipo de tren que va tener la clase.
+ */
+public class GestionTren<T extends Tren> {
     //Atributos
-    private final Set<Tren<T>> trenes;
+    private final Set<T> trenes;
     //Atributos
 
     //Constructor
@@ -28,7 +31,7 @@ public class GestionTren<T extends Vagon> {
     //Constructor
 
     //Getter
-    public Set<Tren<T>> getTrenes() {
+    public Set<T> getTrenes() {
         return trenes;
     }
     //Getter
@@ -38,10 +41,13 @@ public class GestionTren<T extends Vagon> {
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
         sb.append("---------------------------------------------------------------------------------------------------------------------------------------\n");
-        for(Tren<T> t: this.trenes) {
-            sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
-            sb.append(t);
-            sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
+        for(T t: this.trenes) {
+            if(t.isEstado()) {
+                sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
+                sb.append(t);
+                System.out.println(t.isEstado());
+                sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
+            }
         }
         sb.append("---------------------------------------------------------------------------------------------------------------------------------------\n");
         return sb.toString();
@@ -49,8 +55,14 @@ public class GestionTren<T extends Vagon> {
     //Mostrar
 
     //Alta
-    public boolean agregarTren (Tren<T> tren) {
-        if(!this.trenes.add(tren)) {
+    /**
+     * Carga un tren.
+     * @param t Tren a cargar..
+     * @return true si se pudo agregar el tren sin problemas.
+     * @throws ElementAlreadyExistsException si el tren ya existe.
+     */
+    public boolean agregarTren (T t) {
+        if(!this.trenes.add(t)) {
             throw new ElementAlreadyExistsException();
         }
         return true;
@@ -58,19 +70,31 @@ public class GestionTren<T extends Vagon> {
     //Alta
 
     //Baja
-    public boolean eliminarTren (Tren<T> tren) {
-        if(!this.trenes.remove(tren) || !tren.isEstado()) {
+    /**
+     * Elimina un tren.
+     * @param t Tren a eliminar.
+     * @return true si se pudo eliminar el tren sin problema.
+     */
+    public boolean eliminarTren (T t) {
+        if(!this.trenes.remove(t) || !t.isEstado()) {
             throw new NoSuchElementException();
         } else {
-            tren.setEstado();
-            this.agregarTren(tren);
+            t.setEstado(false);
+            this.agregarTren(t);
         }
         return true;
     }
     //Baja
 
     //Modificacion
-    public boolean modificarTren (Tren<T> trenViejo, Tren<T> trenNuevo) {
+    /**
+     * Modifica a un tren.
+     * @param trenViejo el tren a modificar.
+     * @param trenNuevo El mismo tren ya modificado.
+     * @return true si se pudo modificar el vagon sin problema.
+     * @throws NoSuchElementException si sel tren a modificar no existe.
+     */
+    public boolean modificarTren (T trenViejo, T trenNuevo) {
         if(!this.trenes.remove(trenViejo) || !trenNuevo.isEstado()) {
             throw new NoSuchElementException();
         } else {
@@ -80,30 +104,47 @@ public class GestionTren<T extends Vagon> {
     //Modificacion
 
     //JSON
+    /**
+     * Convierte al gestor en un JSONArray.
+     * @return El JSONArray con los datos del gestor de trenes.
+     */
     public JSONArray convertirJSONArray () {
         JSONArray json = new JSONArray();
-        for(Tren<T> t: this.trenes) {
+        for(T t: this.trenes) {
             json.put(t.convertirAJSONObject());
         }
         return json;
     }
 
-    public static GestionTren<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> tipoVagon) {
-        GestionTren<Vagon> gt = new GestionTren<>();
+    /**
+     * Transforma a un JSONArray en un gestor de trenes.
+     * @param json el JSONArray a transformar.
+     * @param tipoTren function que contenga el tipo de tren y su funcion de convertir el tren a un JSONObject.
+     * @return un gestor de trenes con los datos del JSONArray.
+     */
+    public static GestionTren<Tren> getJSONArray(JSONArray json, Function<JSONObject, Tren> tipoTren) {
+        GestionTren<Tren> gt = new GestionTren<>();
         for (int i = 0; i < json.length(); i++) {
-            gt.agregarTren(Tren.getJSONObject(json.getJSONObject(i), tipoVagon));
+            gt.agregarTren(tipoTren.apply(json.getJSONObject(i)));
         }
         return gt;
     }
     //JSON
 
     //Archivos
-    public static boolean agregarRegistro (Tren<Vagon> tren, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionTren<Vagon> gt = new GestionTren<>();
+    /**
+     * Guarda un tren en un archivo.
+     * @param tren Tren a guardar.
+     * @param tipoTren Function con el tipo de tren a guardar y su funcion de convertir un tren a un JSONObject.
+     * @param archivo Nombre del archivo donde se va a guardar al tren.
+     * @return true si se pudo guardar al tren sin problemas.
+     */
+    public static boolean agregarRegistro (Tren tren, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionTren<Tren> gt = new GestionTren<>();
 
         try {
             if(new File(archivo).length() > 0) {
-                for(Tren<Vagon> t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getTrenes()) {
+                for(Tren t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getTrenes()) {
                     gt.agregarTren(t);
                 }
             }
@@ -120,10 +161,17 @@ public class GestionTren<T extends Vagon> {
         return true;
     }
 
-    public static boolean eliminarRegistro (Tren<Vagon> tren, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionTren<Vagon> gt = new GestionTren<>();
+    /**
+     * Elimina un tren en un archivo.
+     * @param tren Tren a eliminar.
+     * @param tipoTren Function con el tipo de tren a eliminar y su funcion de convertir un tren a un JSONObject.
+     * @param archivo Nombre del archivo donde se va a eliminar al tren.
+     * @return true si se pudo eliminar al tren sin problemas.
+     */
+    public static boolean eliminarRegistro (Tren tren, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionTren<Tren> gt = new GestionTren<>();
 
-        for(Tren<Vagon> t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getTrenes()) {
+        for(Tren t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getTrenes()) {
             gt.agregarTren(t);
         }
         gt.eliminarTren(tren);
@@ -136,10 +184,18 @@ public class GestionTren<T extends Vagon> {
         return true;
     }
 
-    public static boolean modificarRegistro (Tren<Vagon> trenViejo, Tren<Vagon> trenNuevo, Function<JSONObject, Vagon> tipoVagon, String archivo) {
-        GestionTren<Vagon> gt = new GestionTren<>();
+    /**
+     * Modifica un tren en un archivo.
+     * @param trenViejo Tren a modificar.
+     * @param trenNuevo Tren modificado.
+     * @param tipoTren Function con el tipo de tren a modificar y su funcion de convertir un tren a un JSONObject.
+     * @param archivo Nombre del archivo donde se va a modificar al tren.
+     * @return true si se pudo modificar al tren sin problemas.
+     */
+    public static boolean modificarRegistro (Tren trenViejo, Tren trenNuevo, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionTren<Tren> gt = new GestionTren<>();
 
-        for(Tren<Vagon> t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getTrenes()) {
+        for(Tren t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getTrenes()) {
             gt.agregarTren(t);
         }
         gt.modificarTren(trenViejo, trenNuevo);

@@ -10,6 +10,9 @@ import org.json.JSONObject;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * Clase abstracta que representa a los trenes.
+ */
 public abstract class Tren {
     //Atributos
     protected final StringBuilder modelo;
@@ -83,12 +86,12 @@ public abstract class Tren {
         this.capacidad = capacidad;
     }
 
-    public void setEstado() {
-        this.estado = !this.estado;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
-    public void setEstadoViaje() {
-        this.estadoViaje = !this.estadoViaje;
+    public void setEstadoViaje(boolean estadoViaje) {
+        this.estadoViaje = estadoViaje;
     }
     //Setter
 
@@ -118,6 +121,10 @@ public abstract class Tren {
     }
     //Mostrar
 
+    /**
+     * Convierte a un Tren en un JSONObject.
+     * @return Un JSONObject con los datos del tren.
+     */
     //JSON
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
@@ -128,9 +135,33 @@ public abstract class Tren {
         json.put("estadoViaje", this.estadoViaje);
         return json;
     }
+
+    /**
+     * Verifica que el JSONObject sea del tipo correcto.
+     * @param json el JSONObject a comparar.
+     * @return true si el JSONObject es del tipo correcto, sino false.
+     */
+    public static boolean verificarJSON(JSONObject json) {
+        return json.has("estado") &&
+                json.has("modelo") &&
+                json.has("patente") &&
+                json.has("ubicacion") &&
+                json.has("estadoViaje") &&
+                json.has("vagones");
+    }
     //JSON
 
     //Viajes
+
+    /**
+     * Metodo para iniciar un viaje.
+     * Cambia el estadoViaje a true si el tren no se encuentra en ningun viaje.
+     * @param ruta La ruta que tiene que tomar el tren.
+     * @return true si se pudo iniciar el viaje sin ningun problema.
+     * @throws IllegalStateException si el tren ya se encuentra viajando.
+     * @throws IllegalArgumentException si el tren ingresado en la ruta no es el correcto.
+     * @throws NoSuchElementException si el tren no se encuentra en la ubicacion inicial del viaje.
+     */
     public boolean iniciarViaje(Ruta ruta) {
         if (this.estadoViaje) {
             throw new IllegalStateException();
@@ -145,6 +176,11 @@ public abstract class Tren {
             }
         }
 
+    /**
+     * Finaliza un viaje.
+     * @return true si se pudo finalizar el viaje sin problemas.
+     * @throws IllegalStateException si el tren no se encuentra viajando.
+     */
     public boolean finalizarViaje() {
         if (!this.estadoViaje) {
             throw new IllegalStateException();

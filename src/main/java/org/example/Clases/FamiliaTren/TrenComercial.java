@@ -1,22 +1,20 @@
 package org.example.Clases.FamiliaTren;
 
-import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
-import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
-import org.example.Excepciones.WrongUserException;
-import org.example.Interfaces.GestionCarga;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
 
+/**
+ * Clase que hereda de Tren y representa a los trenes que llevan pasajeros.
+ */
 public class TrenComercial extends Tren {
     //Atributos
-    private LinkedHashSet<VagonComercial> vagones;
+    private final LinkedHashSet<VagonComercial> vagones;
     //Atributos
 
     //Constructor
@@ -36,6 +34,7 @@ public class TrenComercial extends Tren {
         return vagones;
     }
 
+    //Comparacion
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,6 +46,7 @@ public class TrenComercial extends Tren {
     public int hashCode() {
         return Objects.hash(super.hashCode());
     }
+    //Comparacion
 
     //Mostrar
     @Override
@@ -64,6 +64,15 @@ public class TrenComercial extends Tren {
     //Mostrar
 
     //Alta
+    /**
+     * Agrega un vagon al final del LinkedHashSet de vagones.
+     * Solo se puede operar el ultimo vagon acoplado.
+     * @param vagon el Vagon a agregar.
+     * @return true si se pudo agregar el vagon sin problemas.
+     * @throws ElementAlreadyExistsException si el vagon ya se encuentra en el tren.
+     * @throws JSONObjectEliminatedException si el vagon no esta disponible o fue eliminado.
+     * @throws OffLimitsException si el vagon a agregar supera el peso maximo permitido.
+     */
     public boolean acoplarVagon(VagonComercial vagon) {
         if (this.vagones.contains(vagon)) {
             throw new ElementAlreadyExistsException();
@@ -79,6 +88,11 @@ public class TrenComercial extends Tren {
     //Alta
 
     //Baja
+    /**
+     * Quita del tren al ultimo vagon.
+     * @return  true si se pudo quitar el vagon sin problemas.
+     * @throws NullPointerException si el vagon esta vacio.
+     */
     public boolean desacoplarVagon() {
         if(this.vagones.isEmpty()) {
             throw new NullPointerException();
@@ -88,6 +102,12 @@ public class TrenComercial extends Tren {
         }
     }
 
+    /**
+     * Quita el un vagon a eleccion.
+     * @param vagon el Vagon a quitar.
+     * @return true si se pudo quitar el vagon sin problemas.
+     * @throws NoSuchElementException si el tren no contiene al Vagon.
+     */
     public boolean quitarVagon (VagonComercial vagon) {
         LinkedHashSet<VagonComercial> set = new LinkedHashSet<>();
         if(!this.vagones.contains(vagon)) {
@@ -105,6 +125,10 @@ public class TrenComercial extends Tren {
         return true;
     }
 
+    /**
+     * Quita al tren todos los vagones que tenga.
+     * @return true si se pudo desarmar el tren sin inconvenientes.
+     */
     public boolean desarmarTren() {
         for (VagonComercial vc: this.vagones) {
             this.desacoplarVagon();
@@ -113,7 +137,12 @@ public class TrenComercial extends Tren {
     }
     //Baja
 
+
     //Verificacion
+    /**
+     * Calcula el peso que esta llevando el tren.
+     * @return el peso total del tren.
+     */
     public double pesoActual () {
         double peso = 0;
         for(VagonComercial vc: this.vagones) {
@@ -124,6 +153,10 @@ public class TrenComercial extends Tren {
     //Verificacion
 
     //JSON
+    /**
+     * Convierte a {@link #vagones} en un JSONArray.
+     * @return Un JSONArray con los datos del tren.
+     */
     public JSONArray convertirAJSONArray() {
         JSONArray json = new JSONArray();
         for(VagonComercial vc: this.vagones) {
@@ -132,6 +165,10 @@ public class TrenComercial extends Tren {
         return json;
     }
 
+    /**
+     * Convierte al tren en un JSONObject.
+     * @return Un JSONObject con los datos del tren.
+     */
     @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = super.convertirAJSONObject();
@@ -139,15 +176,11 @@ public class TrenComercial extends Tren {
         return json;
     }
 
-    public static boolean verificarJSON(JSONObject json) {
-        return json.has("estado") &&
-                json.has("modelo") &&
-                json.has("patente") &&
-                json.has("ubicacion") &&
-                json.has("estadoViaje") &&
-                json.has("vagones");
-    }
-
+    /**
+     * Convierte a un JSONArray en un LinkedHashSet de vagones.
+     * @param json El JSONArray a convertir.
+     * @return Un linkedHashSet de vagones con los datos del JSONArray.
+     */
     public static LinkedHashSet<VagonComercial> getJSONArray (JSONArray json) {
         LinkedHashSet<VagonComercial> vagones = new LinkedHashSet<>();
         for(int i = 0; i < json.length(); i++) {
@@ -160,21 +193,26 @@ public class TrenComercial extends Tren {
         return vagones;
     }
 
-    public static TrenComercial getJSONObject (JSONObject json) throws JSONObjectEliminatedException {
-        if(TrenComercial.verificarJSON(json) && json.getBoolean("estado")) {
+    /**
+     * Convierte a un JSONObject en un trenComercial.
+     * @param json el JSONObject a convertir.
+     * @return un TrenComercial con los datos de un JSONObject.
+     * @throws IllegalArgumentException si el JSONObject no es del tipo correcto.
+     */
+    public static TrenComercial getJSONObject (JSONObject json) {
+        if(!TrenComercial.verificarJSON(json)) {
+            throw new IllegalArgumentException();
+        } else  {
             TrenComercial tc = new TrenComercial();
+            tc.setEstado(json.getBoolean("estado"));
             tc.setModelo(json.getString("modelo"));
             tc.setPatente(json.getString("patente"));
             tc.setUbicacion(json.getString("ubicacion"));
-            tc.setUbicacion(json.getString("estadoViaje"));
-            for(VagonComercial vc: getJSONArray(json.getJSONArray("pasajeros"))) {
+            tc.setEstadoViaje(json.getBoolean("estadoViaje"));
+            for(VagonComercial vc: getJSONArray(json.getJSONArray("vagones"))) {
                 tc.acoplarVagon(vc);
             }
             return tc;
-        } else if (!TrenComercial.verificarJSON(json)) {
-            throw new IllegalArgumentException();
-        } else {
-            throw new JSONObjectEliminatedException();
         }
     }
     //JSON

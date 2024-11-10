@@ -5,6 +5,8 @@ import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
@@ -25,9 +27,17 @@ public class Main {
         //Archivos
 
         VagonComercial vagon = new VagonComercial("123", 100);
-        Tren<Vagon> tren = new Tren<>("XLR9", "qwe123", "Mar del Plata");
-        GestionTren.agregarRegistro(tren, VagonComercial::getJSONObject, almacenamientoVagones);
-        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), VagonComercial::getJSONObject));
+        Tren tren = new TrenDeCarga("XLR0", "qwe123", "Mar del Plata");
+        Tren trenModificado = new TrenDeCarga("XLR8", "qwe123", "Mar del Plata");
+
+        GestionTren.agregarRegistro(tren, TrenDeCarga::getJSONObject, almacenamientoVagones);
+        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
+
+        GestionTren.modificarRegistro(tren, trenModificado, TrenDeCarga::getJSONObject, almacenamientoVagones);
+        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
+
+        GestionTren.eliminarRegistro(trenModificado, TrenDeCarga::getJSONObject, almacenamientoVagones);
+        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
     }
 
     //Archivos
