@@ -7,7 +7,7 @@ import org.example.Interfaces.GestionCarga;
 import java.util.ArrayList;
 import java.util.List;
 
-/*public class TrenDeCarga extends Tren implements GestionCarga {
+public class TrenDeCarga extends Tren implements GestionCarga {
     //Peso maximo
     private static double pesoMax = 100;
     //Lista
@@ -83,4 +83,4 @@ import java.util.List;
     }
 
 
-}*/
+}

@@ -3,6 +3,8 @@ package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaTren.GestionTren;
+import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
@@ -21,7 +23,11 @@ public class Main {
         final String almacenamientoVagones = "vagones.json";
         final String almacenamientoUsuarios = "usuarios.json";
         //Archivos
-        
+
+        VagonComercial vagon = new VagonComercial("123", 100);
+        Tren<Vagon> tren = new Tren<>("XLR9", "qwe123", "Mar del Plata");
+        GestionTren.agregarRegistro(tren, VagonComercial::getJSONObject, almacenamientoVagones);
+        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), VagonComercial::getJSONObject));
     }
 
     //Archivos

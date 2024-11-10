@@ -83,7 +83,7 @@ public class Menu {
                     System.out.println(usuario.toString());
                     break;
                 case 2:
-                    gu.modificarUsuario();
+                    //gu.modificarUsuario();
                 case 3:
                     break;
                 case 4:
