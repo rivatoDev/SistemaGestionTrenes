@@ -2,12 +2,16 @@ package org.example.Clases;
 
 import org.example.Clases.*;
 import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,6 +20,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
 
 public class GestionRuta {
     //Atributos
@@ -30,6 +35,8 @@ public class GestionRuta {
     public Set<Ruta> getRutas() {
         return rutas;
     }
+
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder("\n");
@@ -70,12 +77,21 @@ public class GestionRuta {
         return json;
     }
 
+
     public static HashSet<Ruta> getJSONArray(JSONArray json) {
         HashSet<Ruta> hs = new HashSet<>();
-        for(int i = 0; i < json.length(); i++) {
-            if(json.getJSONObject(i).getBoolean("estado")) {
-                hs.add(Ruta.JSONxRuta(json.getJSONObject(i)));
+
+        for (int i = 0; i < json.length(); i++) {
+            JSONObject jsonObject = json.getJSONObject(i);
+
+            Function<JSONObject, Tren> trenConverter;
+            if (TrenDeCarga.class.isAssignableFrom(Tren.class)) {
+                trenConverter = TrenDeCarga::getJSONObject;
+            } else {
+                trenConverter = TrenComercial::getJSONObject;
             }
+
+            hs.add(Ruta.JSONxRuta(jsonObject, trenConverter));
         }
         return hs;
     }

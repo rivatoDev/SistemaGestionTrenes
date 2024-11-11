@@ -7,6 +7,8 @@ import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.json.JSONObject;
 
+import java.util.function.Function;
+
 public class Ruta {
     //Atributos
     private Tren tren;
@@ -97,18 +99,15 @@ public class Ruta {
 
 
     //Pasar de JSON a Ruta
-    //Faltaria ver el tema de como saber que tipo de tren es
-    public static Ruta JSONxRuta(JSONObject json) throws JSONObjectEliminatedException {
-        if (Ruta.verificarJSON(json)) {
-            Tren tren = Tren.JSONxTren(json.getJSONObject("tren"));
-            StringBuilder salida = new StringBuilder(json.getString("salida"));
-            StringBuilder llegada = new StringBuilder(json.getString("llegada"));
-            Maquinista maquinista = Maquinista.JSONxMaquinista(json.getJSONObject("maquinista"));
-            int fecha = json.getInt("fecha");
+    public static Ruta JSONxRuta(JSONObject json, Function<JSONObject, Tren> trenConverter) {
+        Ruta ruta = new Ruta();
 
-            return new Ruta(tren, salida, llegada, maquinista, fecha);
-        } else {
-            throw new IllegalArgumentException();
-        }
+        ruta.setTren(trenConverter.apply(json.getJSONObject("tren")));
+        ruta.setSalida(new StringBuilder(json.getString("salida")));
+        ruta.setLlegada(new StringBuilder(json.getString("llegada")));
+        ruta.setMaquinista(Maquinista.JSONxMaquinista(json.getJSONObject("maquinista")));
+        ruta.setFecha(json.getInt("fecha"));
+
+        return ruta;
     }
 }
