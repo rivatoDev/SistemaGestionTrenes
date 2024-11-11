@@ -7,43 +7,55 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Menu {
-    private GestionUsuario gu;
-    private Usuario usuarioActual;
-    private Scanner teclado;
+    public Menu() {}
 
-    public Menu() {
-        this.gu = new GestionUsuario();
-        this.teclado = new Scanner(System.in);
+    public static String MenuPrincipal() {
+        return
+                "--------------------------------------------------INICIO--------------------------------------------------" +
+                "1. Iniciar Sesion" +
+                "2. Crear Usuario" +
+                "0. Salir" +
+                "--------------------------------------------------INICIO--------------------------------------------------";
     }
 
-    public void mostrarMenuPrincipal() {
-        int opcion;
-        do {
-            System.out.println("----- Menú Principal -----");
-            System.out.println("1. Ingresar como Usuario");
-            System.out.println("2. Ingresar como Administrador");
-            System.out.println("3. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcion = teclado.nextInt();
-            teclado.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    iniciarSesionUsuario();
-                    break;
-                case 2:
-                    iniciarSesionAdministrador();
-                    break;
-                case 3:
-                    System.out.println("Saliendo del programa");
-                    break;
-                default:
-                    System.out.println("Opcion no valida");
-            }
-            System.out.println();
-        } while (opcion != 3);
+    public static String menuCliente () {
+        return
+                "--------------------------------------------------CLIENTE--------------------------------------------------" +
+                "1. Sacar Entrada" +
+                "2. Configuracion" +
+                "0. Cerrar Sesion" +
+                "--------------------------------------------------CLIENTE--------------------------------------------------";
     }
 
+    public static String administrador () {
+        return
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------" +
+                "1. Gestionar Trenes" +
+                "2. Gestionar Vagones" +
+                "3. Configuracion" +
+                "0. Cerrar Sesion" +
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
+    }
+
+    public static String configuracion () {
+        return "--------------------------------------------------CONFIGURACION--------------------------------------------------" +
+               "1. Modificar Datos" +
+               "6. Eliminar Usuario." +
+               "0. Volver." +
+               "--------------------------------------------------CONFIGURACION--------------------------------------------------";
+    }
+
+    public static String modificarDatos (Usuario usuario) {
+        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------" +
+               "1. DNI." +
+               "2. Nombre." +
+               "3. Apellido." +
+               "4. Nombre De Usuario." +
+               "5. Clave." +
+               "0. Volver." +
+               "--------------------------------------------------DATOS PERSONALES--------------------------------------------------";
+    }
+    
     private void iniciarSesionUsuario() throws NoSuchElementException {
         Usuario usuario = new Usuario();
         System.out.print("Ingrese el nombre de usuario: ");
