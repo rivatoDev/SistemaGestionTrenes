@@ -2,6 +2,7 @@ package org.example.Clases.FamiliaPersona;
 
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.JSONObjectEliminatedException;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -84,9 +85,13 @@ public final class Usuario extends Persona {
     @Override
     public JSONObject convertirAJSONObject() {
         JSONObject json = super.convertirAJSONObject();
-        json.put("nombreUsuario", this.nombreUsuario);
-        json.put("contrasenia", this.contrasenia);
-        json.put("tipoUsuario", this.tipoUsuario);
+        try {
+            json.put("nombreUsuario", this.nombreUsuario);
+            json.put("contrasenia", this.contrasenia);
+            json.put("tipoUsuario", this.tipoUsuario);
+        } catch (JSONException e) {
+            return null;
+        }
         return json;
     }
 
@@ -96,13 +101,17 @@ public final class Usuario extends Persona {
      * @return true si el JSON contiene los datos de un usuario y false si es al contrario.
      */
     public static boolean verificarJSON (JSONObject json) {
-        return json.has("dni") &&
-               json.has("nombre") &&
-               json.has("apellido") &&
-               json.has("nombreUsuario") &&
-               json.has("contrasenia") &&
-               json.has("tipoUsuario") &&
-               json.has("estado");
+        try {
+            return json.has("dni") &&
+                    json.has("nombre") &&
+                    json.has("apellido") &&
+                    json.has("nombreUsuario") &&
+                    json.has("contrasenia") &&
+                    json.has("tipoUsuario") &&
+                    json.has("estado");
+        } catch (JSONException e) {
+            return false;
+        }
     }
 
     /**
@@ -110,18 +119,23 @@ public final class Usuario extends Persona {
      * @return El JSONObject como un usuario.
      */
     public static Usuario JSONxUsuario (JSONObject json) throws JSONObjectEliminatedException {
-        if(json.getBoolean("estado") && Usuario.verificarJSON(json)) {
-            return new Usuario(json.getString("dni"),
-                               json.getString("nombre"),
-                               json.getString("apellido"),
-                               json.getString("nombreUsuario"),
-                               json.getString("contrasenia"),
-                               TipoUsuario.valueOf(json.getString("tipoUsuario")));
-        } else if (!json.getBoolean("estado")){
-            throw new JSONObjectEliminatedException();
-        } else {
-            throw new IllegalArgumentException();
+        try {
+            if(json.getBoolean("estado") && Usuario.verificarJSON(json)) {
+                return new Usuario(json.getString("dni"),
+                        json.getString("nombre"),
+                        json.getString("apellido"),
+                        json.getString("nombreUsuario"),
+                        json.getString("contrasenia"),
+                        TipoUsuario.valueOf(json.getString("tipoUsuario")));
+            } else if (!json.getBoolean("estado")){
+                throw new JSONObjectEliminatedException();
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (JSONException e) {
+            return null;
         }
+
     }
     //JSON
 }

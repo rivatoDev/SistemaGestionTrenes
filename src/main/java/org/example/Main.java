@@ -3,21 +3,20 @@ package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Clases.FamiliaTren.GestionTren;
-import org.example.Clases.FamiliaTren.Tren;
-import org.example.Clases.FamiliaTren.TrenComercial;
-import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.GestionVagon;
-import org.example.Clases.FamiliaVagon.Vagon;
-import org.example.Clases.FamiliaVagon.VagonComercial;
-import org.example.Clases.FamiliaVagon.VagonDeCarga;
+import org.example.Clases.Menus.Menu;
+import org.example.Clases.Menus.SwitchMenuAdministrador;
+import org.example.Clases.Menus.SwitchMenuCliente;
+import org.example.Clases.Menus.SwitchMenuPrincipal;
 import org.example.Enums.TipoUsuario;
+import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,22 +25,116 @@ public class Main {
         final String almacenamientoUsuarios = "usuarios.json";
         //Archivos
 
-        VagonComercial vagon = new VagonComercial("123", 100);
-        Tren tren = new TrenDeCarga("XLR0", "qwe123", "Mar del Plata");
-        Tren trenModificado = new TrenDeCarga("XLR8", "qwe123", "Mar del Plata");
+        //Utilidades
+        Scanner sc = new Scanner(System.in);
+        int op;
+        int subOp;
+        Usuario usuarioActivo;
+        //Utilidades
 
-        GestionTren.agregarRegistro(tren, TrenDeCarga::getJSONObject, almacenamientoVagones);
-        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
+        do {
+            System.out.println(Menu.MenuPrincipal());
+            System.out.println("Opcion");
+            op = sc.nextInt();
+            sc.nextLine();
+            switch (op) {
+                case 0:
+                    System.out.println("--------------------------------------------------FIN--------------------------------------------------");
+                    break;
+                case 1:
+                    usuarioActivo = iniciarSesion(almacenamientoUsuarios);
+                    System.out.println(usuarioActivo);
+                    if(Objects.requireNonNull(usuarioActivo).getTipoUsuario() == TipoUsuario.CLIENTE) {
+                        do {
+                            System.out.println(Menu.menuCliente());
+                            System.out.println("Opcion: ");
+                            subOp = sc.nextInt();
+                            sc.nextLine();
+                            SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamientoUsuarios);
+                        } while (subOp != 0);
+                    } else if (Objects.requireNonNull(usuarioActivo).getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                        System.out.println(Menu.menuCliente());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        sc.nextLine();
+                        SwitchMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
+                    }
+                    break;
+                case 2:
+                       if (crearUsuario(TipoUsuario.CLIENTE, almacenamientoUsuarios)) {
+                           System.out.println("El usuario se ha creado con exito");
+                       }
+                    break;
+            }
+        } while(op != 0);
 
-        GestionTren.modificarRegistro(tren, trenModificado, TrenDeCarga::getJSONObject, almacenamientoVagones);
-        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
-
-        GestionTren.eliminarRegistro(trenModificado, TrenDeCarga::getJSONObject, almacenamientoVagones);
-        System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamientoVagones)), TrenDeCarga::getJSONObject));
     }
 
-    //Archivos
+    //Usuario
+    public static boolean crearUsuario (TipoUsuario tipoUsuario, String archivo) {
+        Scanner sc = new Scanner(System.in);
+        Usuario usuario = new Usuario();
+        boolean flag;
 
+        System.out.println("--------------------------------------------------CREACION DE USUARIO--------------------------------------------------");
+        System.out.println("DNI: ");
+        usuario.setDni(sc.nextLine());
+        System.out.println("Nombre: ");
+        usuario.setNombre(sc.nextLine());
+        System.out.println("Apellido: ");
+        usuario.setApellido(sc.nextLine());
+
+        do {
+            try {
+                System.out.println("Nombre De Usuario: ");
+                usuario.setNombreUsuario(sc.nextLine());
+                if (!Objects.requireNonNull(GestionUsuario.getJSONArray(new JSONArray(leerArchivo(archivo)))).getUsuarios().contains(usuario)) {
+                    flag = true;
+                } else {
+                    System.out.println("El nombre de usuario ya esta ocupado");
+                    flag = false;
+                }
+            } catch (FileDoesntExistException e) {
+                flag = true;
+            }
+        } while (!flag);
+
+        System.out.println("Clave: ");
+        usuario.setContrasenia(sc.nextLine());
+        usuario.setTipoUsuario(tipoUsuario);
+        System.out.println("--------------------------------------------------CREACION DE USUARIO--------------------------------------------------");
+
+        return GestionUsuario.agregarRegistro(usuario, archivo);
+    }
+
+    public static Usuario iniciarSesion(String archivo) {
+        Scanner teclado = new Scanner(System.in);
+        String nombreUsuario;
+        String contrasenia;
+        GestionUsuario gu = null;
+
+        try {
+            gu = GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+        } catch (FileDoesntExistException e) {
+            System.out.println("El archivo no existe.");
+        }
+
+        System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
+        System.out.print("Nombre de Usuario: ");
+        nombreUsuario = teclado.nextLine();
+        System.out.println("Contraseña: ");
+        contrasenia = teclado.nextLine();
+        System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
+        try {
+            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario, contrasenia);
+        } catch (NullPointerException e) {
+            System.out.println("El usuario no existe");
+        }
+        return null;
+    }
+    //Usuario
+
+    //Archivos
     /**
      * Crea un archivo de texto.
      * @param nombre Nombre del archivo.

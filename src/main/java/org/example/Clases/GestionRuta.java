@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
-public class GestionRuta {
+/*public class GestionRuta {
     //Atributos
     private final Set<Ruta> rutas;
 
@@ -134,4 +134,4 @@ public class GestionRuta {
         return true;
     }
 
-}
+}*/

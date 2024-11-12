@@ -1,64 +1,61 @@
-package org.example.Clases;
+package org.example.Clases.Menus;
 
-import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
 
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 public class Menu {
-    private GestionUsuario gu;
-    private Usuario usuarioActual;
-    private Scanner teclado;
+    public Menu() {}
 
-    public Menu() {
-        this.gu = new GestionUsuario();
-        this.teclado = new Scanner(System.in);
+    public static String MenuPrincipal() {
+        return
+                "\n--------------------------------------------------INICIO--------------------------------------------------\n" +
+                "1. Iniciar Sesion" + '\n' +
+                "2. Crear Usuario" + '\n' +
+                "0. Salir" + '\n' +
+                "--------------------------------------------------INICIO--------------------------------------------------";
     }
 
-    public void mostrarMenuPrincipal() {
-        int opcion;
-        do {
-            System.out.println("----- Menú Principal -----");
-            System.out.println("1. Ingresar como Usuario");
-            System.out.println("2. Ingresar como Administrador");
-            System.out.println("3. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcion = teclado.nextInt();
-            teclado.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    iniciarSesionUsuario();
-                    break;
-                case 2:
-                    iniciarSesionAdministrador();
-                    break;
-                case 3:
-                    System.out.println("Saliendo del programa");
-                    break;
-                default:
-                    System.out.println("Opcion no valida");
-            }
-            System.out.println();
-        } while (opcion != 3);
+    public static String menuCliente () {
+        return
+                "--------------------------------------------------CLIENTE--------------------------------------------------\n" +
+                "1. Sacar Entrada" + '\n' +
+                "2. Configuracion" + '\n' +
+                "0. Cerrar Sesion" + '\n' +
+                "--------------------------------------------------CLIENTE--------------------------------------------------\n";
     }
 
-    private void iniciarSesionUsuario() throws NoSuchElementException {
-        Usuario usuario = new Usuario();
-        System.out.print("Ingrese el nombre de usuario: ");
-        String nombreUsuario = teclado.nextLine();
-        System.out.println("Ingrese su contraseña");
-        String contrasenia = teclado.nextLine();
-        if (gu.verificarUsuario(nombreUsuario, contrasenia) != null) {
-            usuario = gu.verificarUsuario(nombreUsuario, contrasenia);
-            mostrarMenuUsuario(usuario);
-        } else {
-            throw new NoSuchElementException();
-        }
+    public static String administrador () {
+        return
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
+                "1. Gestionar Trenes" + '\n' +
+                "2. Gestionar Vagones" + '\n' +
+                "3. Configuracion" + '\n' +
+                "0. Cerrar Sesion" + '\n' +
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n";
     }
+
+    public static String configuracion () {
+        return "--------------------------------------------------CONFIGURACION--------------------------------------------------\n" +
+               "1. Modificar Datos" + '\n' +
+               "2. Eliminar Usuario." + '\n' +
+               "0. Volver." + '\n' +
+               "--------------------------------------------------CONFIGURACION--------------------------------------------------\n";
+    }
+
+    public static String modificarDatos () {
+        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n" +
+               "1. DNI." + '\n' +
+               "2. Nombre." + '\n' +
+               "3. Apellido." + '\n' +
+               "4. Nombre De Usuario." + '\n' +
+               "5. Clave." + '\n' +
+               "0. Volver." + '\n' +
+               "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n";
+    }
+    
+
 
     /* faltaria ver tema administradores*/
+    /*
     private void iniciarSesionAdministrador() {
         System.out.print("Ingrese el nombre de administrador: ");
         String nombreAdmin = teclado.nextLine();
@@ -127,5 +124,5 @@ public class Menu {
             }
             System.out.println();
         } while (opcion != 6);
-    }
+    }*/
 }
