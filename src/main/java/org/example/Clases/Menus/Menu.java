@@ -1,76 +1,61 @@
-package org.example.Clases;
+package org.example.Clases.Menus;
 
-import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
-
-import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Menu {
     public Menu() {}
 
     public static String MenuPrincipal() {
         return
-                "--------------------------------------------------INICIO--------------------------------------------------" +
-                "1. Iniciar Sesion" +
-                "2. Crear Usuario" +
-                "0. Salir" +
+                "\n--------------------------------------------------INICIO--------------------------------------------------\n" +
+                "1. Iniciar Sesion" + '\n' +
+                "2. Crear Usuario" + '\n' +
+                "0. Salir" + '\n' +
                 "--------------------------------------------------INICIO--------------------------------------------------";
     }
 
     public static String menuCliente () {
         return
-                "--------------------------------------------------CLIENTE--------------------------------------------------" +
-                "1. Sacar Entrada" +
-                "2. Configuracion" +
-                "0. Cerrar Sesion" +
-                "--------------------------------------------------CLIENTE--------------------------------------------------";
+                "--------------------------------------------------CLIENTE--------------------------------------------------\n" +
+                "1. Sacar Entrada" + '\n' +
+                "2. Configuracion" + '\n' +
+                "0. Cerrar Sesion" + '\n' +
+                "--------------------------------------------------CLIENTE--------------------------------------------------\n";
     }
 
     public static String administrador () {
         return
-                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------" +
-                "1. Gestionar Trenes" +
-                "2. Gestionar Vagones" +
-                "3. Configuracion" +
-                "0. Cerrar Sesion" +
-                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
+                "1. Gestionar Trenes" + '\n' +
+                "2. Gestionar Vagones" + '\n' +
+                "3. Configuracion" + '\n' +
+                "0. Cerrar Sesion" + '\n' +
+                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n";
     }
 
     public static String configuracion () {
-        return "--------------------------------------------------CONFIGURACION--------------------------------------------------" +
-               "1. Modificar Datos" +
-               "6. Eliminar Usuario." +
-               "0. Volver." +
-               "--------------------------------------------------CONFIGURACION--------------------------------------------------";
+        return "--------------------------------------------------CONFIGURACION--------------------------------------------------\n" +
+               "1. Modificar Datos" + '\n' +
+               "2. Eliminar Usuario." + '\n' +
+               "0. Volver." + '\n' +
+               "--------------------------------------------------CONFIGURACION--------------------------------------------------\n";
     }
 
-    public static String modificarDatos (Usuario usuario) {
-        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------" +
-               "1. DNI." +
-               "2. Nombre." +
-               "3. Apellido." +
-               "4. Nombre De Usuario." +
-               "5. Clave." +
-               "0. Volver." +
-               "--------------------------------------------------DATOS PERSONALES--------------------------------------------------";
+    public static String modificarDatos () {
+        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n" +
+               "1. DNI." + '\n' +
+               "2. Nombre." + '\n' +
+               "3. Apellido." + '\n' +
+               "4. Nombre De Usuario." + '\n' +
+               "5. Clave." + '\n' +
+               "0. Volver." + '\n' +
+               "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n";
     }
     
-    private void iniciarSesionUsuario() throws NoSuchElementException {
-        Usuario usuario = new Usuario();
-        System.out.print("Ingrese el nombre de usuario: ");
-        String nombreUsuario = teclado.nextLine();
-        System.out.println("Ingrese su contraseña");
-        String contrasenia = teclado.nextLine();
-        if (gu.verificarUsuario(nombreUsuario, contrasenia) != null) {
-            usuario = gu.verificarUsuario(nombreUsuario, contrasenia);
-            mostrarMenuUsuario(usuario);
-        } else {
-            throw new NoSuchElementException();
-        }
-    }
+
 
     /* faltaria ver tema administradores*/
+    /*
     private void iniciarSesionAdministrador() {
         System.out.print("Ingrese el nombre de administrador: ");
         String nombreAdmin = teclado.nextLine();
@@ -139,5 +124,5 @@ public class Menu {
             }
             System.out.println();
         } while (opcion != 6);
-    }
+    }*/
 }

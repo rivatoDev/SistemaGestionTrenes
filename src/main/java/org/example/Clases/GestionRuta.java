@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-public class GestionRuta {
+/*public class GestionRuta {
     //Atributos
     private final Set<Ruta> rutas;
 
@@ -118,4 +118,4 @@ public class GestionRuta {
         return true;
     }
 
-}
+}*/

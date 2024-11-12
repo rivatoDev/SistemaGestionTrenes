@@ -1,5 +1,6 @@
 package org.example.Clases.FamiliaPersona;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -102,10 +103,14 @@ public abstract class Persona{
      */
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
-        json.put("dni", this.dni);
-        json.put("nombre", this.nombre);
-        json.put("apellido", this.apellido);
-        json.put("estado", this.estado);
+        try {
+            json.put("dni", this.dni);
+            json.put("nombre", this.nombre);
+            json.put("apellido", this.apellido);
+            json.put("estado", this.estado);
+        } catch (JSONException e) {
+            return null;
+        }
         return json;
     }
     //JSON

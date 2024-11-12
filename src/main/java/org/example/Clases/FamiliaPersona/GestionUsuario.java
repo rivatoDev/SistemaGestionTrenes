@@ -5,13 +5,12 @@ import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -59,10 +58,15 @@ public class GestionUsuario {
      * @throws ElementAlreadyExistsException si el usuario ya existe.
      */
     public boolean agregarUsuario(Usuario usuario) {
-        if(!this.usuarios.add(usuario)) {
-            throw new ElementAlreadyExistsException();
+        try {
+            if(!this.usuarios.add(usuario)) {
+                throw new ElementAlreadyExistsException();
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return true;
+
     }
     //Alta
 
@@ -74,13 +78,17 @@ public class GestionUsuario {
      * @throws NoSuchElementException si el usuario no existe.
      */
     public boolean eliminarUsuario (Usuario usuario) {
-        if(!this.usuarios.remove(usuario) || !usuario.isEstado()) {
-            throw new NoSuchElementException();
-        } else {
-            usuario.setEstado();
-            this.agregarUsuario(usuario);
+        try {
+            if(!this.usuarios.remove(usuario) || !usuario.isEstado()) {
+                throw new NoSuchElementException();
+            } else {
+                usuario.setEstado();
+                this.agregarUsuario(usuario);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return true;
     }
     //Baja
 
@@ -93,10 +101,14 @@ public class GestionUsuario {
      * @throws NoSuchElementException si el usuario no existe.
      */
     public boolean modificarUsuario (Usuario usuarioViejo, Usuario usuarioNuevo) {
-        if(!this.usuarios.remove(usuarioViejo) || !usuarioViejo.isEstado()) {
-            throw new NoSuchElementException();
+        try {
+            if(!this.usuarios.remove(usuarioViejo) || !usuarioViejo.isEstado()) {
+                throw new NoSuchElementException();
+            }
+            return this.agregarUsuario(usuarioNuevo);
+        } catch (Exception e) {
+            return false;
         }
-         return this.agregarUsuario(usuarioNuevo);
     }
     //Modificacion
 
@@ -107,10 +119,15 @@ public class GestionUsuario {
      */
     public JSONArray convertirAJSONArray () {
         JSONArray json = new JSONArray();
-        for(Usuario u: this.usuarios) {
-            json.put(u.convertirAJSONObject());
+        try {
+            for(Usuario u: this.usuarios) {
+                json.put(u.convertirAJSONObject());
+            }
+            return json;
+        } catch (JSONException e) {
+            return null;
         }
-        return json;
+
     }
 
     /**
@@ -118,19 +135,22 @@ public class GestionUsuario {
      * @param json El JSONArray a convertir.
      * @return Un HashSet con los datos del JSONArray.
      */
-    public static HashSet<Usuario> getJSONArray(JSONArray json) {
-        HashSet<Usuario> hs = new HashSet<>();
-        for(int i = 0; i < json.length(); i++) {
-            if(json.getJSONObject(i).getBoolean("estado")) {
-                hs.add(Usuario.JSONxUsuario(json.getJSONObject(i)));
+    public static GestionUsuario getJSONArray(JSONArray json) {
+        GestionUsuario gu = new GestionUsuario();
+        try {
+            for(int i = 0; i < json.length(); i++) {
+                if(json.getJSONObject(i).getBoolean("estado")) {
+                    gu.agregarUsuario(Usuario.JSONxUsuario(json.getJSONObject(i)));
+                }
             }
+            return gu;
+        } catch (JSONException e) {
+            return null;
         }
-        return hs;
     }
     //JSON
 
     //Archivos
-
     /**
      * Carga un Usuario en un archivo.
      * Si el archivo no existe lo crea.
@@ -142,12 +162,14 @@ public class GestionUsuario {
         GestionUsuario gu = new GestionUsuario();
         try {
             if (new File(archivo).length() > 0) {
-                for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+                for (Usuario u: Objects.requireNonNull(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))).getUsuarios()) {
                     gu.agregarUsuario(u);
                 }
             }
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
+        } catch (NullPointerException e) {
+            return false;
         }
         gu.agregarUsuario(usuario);
 
@@ -169,10 +191,14 @@ public class GestionUsuario {
     public static boolean eliminarRegistro (Usuario usuario, String archivo) {
         GestionUsuario gu = new GestionUsuario();
 
-        for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
-            gu.agregarUsuario(u);
+        try {
+            for (Usuario u: Objects.requireNonNull(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))).getUsuarios()) {
+                gu.agregarUsuario(u);
+            }
+            gu.eliminarUsuario(usuario);
+        } catch (NullPointerException e) {
+            return false;
         }
-        gu.eliminarUsuario(usuario);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gu.convertirAJSONArray().toString(2));
@@ -191,10 +217,14 @@ public class GestionUsuario {
     public static boolean modificarRegistro (Usuario usuarioViejo, Usuario usuarioNuevo, String archivo) {
         GestionUsuario gu = new GestionUsuario();
 
-        for (Usuario u: GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
-            gu.agregarUsuario(u);
+        try {
+            for (Usuario u: Objects.requireNonNull(GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))).getUsuarios()) {
+                gu.agregarUsuario(u);
+            }
+            gu.modificarUsuario(usuarioViejo, usuarioNuevo);
+        } catch (NullPointerException e) {
+            return false;
         }
-        gu.modificarUsuario(usuarioViejo, usuarioNuevo);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gu.convertirAJSONArray().toString());
@@ -207,7 +237,8 @@ public class GestionUsuario {
 
     public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().equals(nombreDeUsuario) && usuario.getContrasenia().equals(contrasenia)) {
+            System.out.println("hola");
+            if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario) && Objects.equals(usuario.getContrasenia(), contrasenia)) {
                 return usuario;
             }
         }
