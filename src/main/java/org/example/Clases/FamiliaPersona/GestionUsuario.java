@@ -237,11 +237,10 @@ public class GestionUsuario {
 
     public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
         for (Usuario usuario : usuarios) {
-            System.out.println("hola");
             if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario) && Objects.equals(usuario.getContrasenia(), contrasenia)) {
                 return usuario;
             }
         }
-        return null;
+        throw new NullPointerException();
     }
 }

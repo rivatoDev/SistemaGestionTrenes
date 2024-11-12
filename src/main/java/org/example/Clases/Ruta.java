@@ -99,8 +99,8 @@ public class Ruta {
 
 
     //Pasar de JSON a Ruta
- ramaMenu
     //Faltaria ver el tema de como saber que tipo de tren es
+    /*
     public static Ruta JSONxRuta(JSONObject json) throws JSONObjectEliminatedException {
         if (Ruta.verificarJSON(json)) {
             Tren tren = Tren.JSONxTren(json.getJSONObject("tren"));
@@ -112,5 +112,5 @@ public class Ruta {
             return new Ruta(tren, salida, llegada, maquinista, fecha);
         } else {
             throw new IllegalArgumentException();
-        }
-    }
+        }*/
+}

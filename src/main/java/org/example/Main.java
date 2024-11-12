@@ -43,21 +43,22 @@ public class Main {
                     break;
                 case 1:
                     usuarioActivo = iniciarSesion(almacenamientoUsuarios);
-                    System.out.println(usuarioActivo);
-                    if(Objects.requireNonNull(usuarioActivo).getTipoUsuario() == TipoUsuario.CLIENTE) {
-                        do {
+                    if(usuarioActivo != null) {
+                        if (usuarioActivo.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
                             System.out.println(Menu.menuCliente());
                             System.out.println("Opcion: ");
                             subOp = sc.nextInt();
                             sc.nextLine();
-                            SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamientoUsuarios);
-                        } while (subOp != 0);
-                    } else if (Objects.requireNonNull(usuarioActivo).getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                        System.out.println(Menu.menuCliente());
-                        System.out.println("Opcion: ");
-                        subOp = sc.nextInt();
-                        sc.nextLine();
-                        SwitchMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
+                            SwitchMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
+                        } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
+                            do {
+                                System.out.println(Menu.menuCliente());
+                                System.out.println("Opcion: ");
+                                subOp = sc.nextInt();
+                                sc.nextLine();
+                                SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamientoUsuarios);
+                            } while (subOp != 0);
+                        }
                     }
                     break;
                 case 2:
@@ -128,7 +129,7 @@ public class Main {
         try {
             return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario, contrasenia);
         } catch (NullPointerException e) {
-            System.out.println("El usuario no existe");
+            System.out.println("Nombre de usuario o clave incorrecta.");
         }
         return null;
     }
