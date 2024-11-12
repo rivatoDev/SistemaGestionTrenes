@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Function;
 
-/*public class GestionRuta {
+public class GestionRuta {
     //Atributos
     private final Set<Ruta> rutas;
 
@@ -76,7 +76,6 @@ import java.util.function.Function;
         }
         return json;
     }
-
 
     public static HashSet<Ruta> getJSONArray(JSONArray json) {
         HashSet<Ruta> hs = new HashSet<>();
@@ -133,5 +132,4 @@ import java.util.function.Function;
         }
         return true;
     }
-
-}*/
+}

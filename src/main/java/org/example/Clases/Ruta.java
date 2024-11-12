@@ -1,9 +1,7 @@
 package org.example.Clases;
 
 import org.example.Clases.FamiliaPersona.Maquinista;
-import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaTren.Tren;
-import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.json.JSONObject;
 
@@ -16,6 +14,7 @@ public class Ruta {
     private StringBuilder llegada;
     private Maquinista maquinista;
     private int fecha;
+    //Atributos
 
     //Constructor
     public Ruta(Tren tren, StringBuilder salida, StringBuilder llegada, Maquinista maquinista, int fecha) {
@@ -25,9 +24,12 @@ public class Ruta {
         this.maquinista = maquinista;
         this.fecha = fecha;
     }
+    //Constructor
+
     //Constructor vacio
     public Ruta() {
     }
+    //Constructor vacio
 
 
     //Getter
@@ -46,7 +48,7 @@ public class Ruta {
     public int getFecha() {
         return fecha;
     }
-
+    //Getter
 
     //Setter
     public void setTren(Tren tren) {
@@ -64,6 +66,7 @@ public class Ruta {
     public void setFecha(int fecha) {
         this.fecha = fecha;
     }
+    //Setter
 
     //Mostrar
     @Override
@@ -76,8 +79,9 @@ public class Ruta {
                 ", fecha=" + fecha +
                 '}';
     }
+    //Mostrar
 
-    //Pasar a jsonobject
+    //Pasar a JSONObject
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("tren", this.tren);
@@ -87,6 +91,7 @@ public class Ruta {
         json.put("fecha", this.fecha);
         return json;
     }
+    //Pasar a JSONObject
 
     //Verificar
     public static boolean verificarJSON (JSONObject json) {
@@ -96,14 +101,16 @@ public class Ruta {
                 json.has("maquinista") &&
                 json.has("fecha");
     }
+    //Verificar
 
 
-    //Pasar de JSON a Ruta
-    //Faltaria ver el tema de como saber que tipo de tren es
-    /*
-    public static Ruta JSONxRuta(JSONObject json) throws JSONObjectEliminatedException {
+    /**
+     * Pasa de json a un objeto Ruta
+     * @throws JSONObjectEliminatedException
+     */
+    public static Ruta JSONxRuta(JSONObject json, Function<JSONObject, Tren> trenConverter) throws JSONObjectEliminatedException {
         if (Ruta.verificarJSON(json)) {
-            Tren tren = Tren.JSONxTren(json.getJSONObject("tren"));
+            Tren tren = trenConverter.apply(json);
             StringBuilder salida = new StringBuilder(json.getString("salida"));
             StringBuilder llegada = new StringBuilder(json.getString("llegada"));
             Maquinista maquinista = Maquinista.JSONxMaquinista(json.getJSONObject("maquinista"));
@@ -112,5 +119,6 @@ public class Ruta {
             return new Ruta(tren, salida, llegada, maquinista, fecha);
         } else {
             throw new IllegalArgumentException();
-        }*/
+        }
+    }
 }
