@@ -23,7 +23,7 @@ public class Menu {
                 "--------------------------------------------------CLIENTE--------------------------------------------------\n";
     }
 
-    public static String administrador () {
+    public static String menuAdministrador () {
         return
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
                 "1. Gestionar Trenes" + '\n' +
@@ -51,78 +51,20 @@ public class Menu {
                "0. Volver." + '\n' +
                "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n";
     }
-    
 
-
-    /* faltaria ver tema administradores*/
-    /*
-    private void iniciarSesionAdministrador() {
-        System.out.print("Ingrese el nombre de administrador: ");
-        String nombreAdmin = teclado.nextLine();
-        System.out.print("Ingrese la clave de administrador: ");
-        String claveAdmin = teclado.nextLine();
-
+    public static String menuVagones () {
+        return "--------------------------------------------------VAGONES--------------------------------------------------\n" +
+               "1. Agregar Vagon." + '\n' +
+               "2. Modificar Vagon." + '\n' +
+               "3. Eliminar Vagon." + '\n' +
+               "0. Salir." + '\n' +
+               "--------------------------------------------------VAGONES--------------------------------------------------\n";
     }
 
-    private void mostrarMenuUsuario(Usuario usuario) {
-        int opcion;
-        do {
-            System.out.println("\n----- Menú Usuario -----");
-            System.out.println("1. Ver mis datos");
-            System.out.println("2. Modificar mis datos");
-            System.out.println("3. ");
-            System.out.println("4. Salir del programa");
-            System.out.print("Seleccione una opción: ");
-            opcion = teclado.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    System.out.println(usuario.toString());
-                    break;
-                case 2:
-                    //gu.modificarUsuario();
-                case 3:
-                    break;
-                case 4:
-                    System.out.println("Saliendo del programa");
-                default:
-                    System.out.println("Opcion no valida");
-            }
-            System.out.println();
-        } while (opcion != 2);
+    public static String modificarVagon () {
+        return "--------------------------------------------------MODIFICAR--------------------------------------------------\n" +
+               "1. ID." +
+               "2. Capacidad." +
+               "--------------------------------------------------MODIFICAR--------------------------------------------------\n";
     }
-
-    private void mostrarMenuAdministrador() {
-        int opcion;
-        do {
-            System.out.println("\n----- Menú Administrador -----");
-            System.out.println("1. Agregar Usuario");
-            System.out.println("2. Eliminar Usuario");
-            System.out.println("3. Modificar Usuario");
-            System.out.println("4. Listar Usuarios");
-            System.out.println("5. Modificar administrador");
-            System.out.println("6. Salir");
-
-            System.out.print("Seleccione una opcion: ");
-            opcion = teclado.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    System.out.println("Saliendo del menu de administrador");
-                default:
-                    System.out.println("Opcion no valida");
-            }
-            System.out.println();
-        } while (opcion != 6);
-    }*/
 }

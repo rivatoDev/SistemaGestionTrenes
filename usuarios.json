@@ -1,9 +1,20 @@
-[{
-  "estado": true,
-  "apellido": "Rivara",
-  "contrasenia": "tomatoli",
-  "tipoUsuario": "CLIENTE",
-  "nombreUsuario": "rivato",
-  "nombre": "Tomas",
-  "dni": "44336431"
-}]
+[
+  {
+    "estado": true,
+    "apellido": "Perez",
+    "contrasenia": "contrasenia",
+    "tipoUsuario": "ADMINISTRADOR",
+    "nombreUsuario": "dieguito",
+    "nombre": "Diego",
+    "dni": "32345761"
+  },
+  {
+    "estado": true,
+    "apellido": "Rivara",
+    "contrasenia": "tomatoli",
+    "tipoUsuario": "CLIENTE",
+    "nombreUsuario": "rivato",
+    "nombre": "Tomas",
+    "dni": "44336431"
+  }
+]
