@@ -26,7 +26,7 @@ public class SwitchMenuAdministrador {
             case 0:
                 break;
             case 1:
-                    SwitchMenuTrenes();
+                    
                 break;
             case 2:
                     System.out.println(Menu.menuVagones());
