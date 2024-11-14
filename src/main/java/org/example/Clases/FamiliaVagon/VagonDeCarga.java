@@ -39,13 +39,12 @@ public class VagonDeCarga extends Vagon {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VagonDeCarga that = (VagonDeCarga) o;
-        return this.estado && that.estado && Objects.equals(this.idVagon.toString(), that.idVagon.toString());
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estado, idVagon);
+        return Objects.hash(super.hashCode());
     }
     //Comparacion
 

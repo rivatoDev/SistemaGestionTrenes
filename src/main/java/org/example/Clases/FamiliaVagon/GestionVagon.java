@@ -179,7 +179,7 @@ public class GestionVagon<T extends Vagon> {
         for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
             gv.agregarVagon(v);
         }
-        System.out.println("Hola");
+
         System.out.println(gv.getVagones().contains(vagon));
         gv.eliminarVagon(vagon);
 

@@ -123,7 +123,7 @@ public class SMenuVagones {
         GestionVagon<Vagon> gv;
 
         try {
-            Vagon vagon = SMenuVagones.seleccionarTipo();
+            Vagon vagon = seleccionarTipo();
             if(vagon instanceof VagonDeCarga) {
                 gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getVagonesDeCarga())), VagonDeCarga::getJSONObject);
                 System.out.println(gv);
@@ -160,7 +160,6 @@ public class SMenuVagones {
         Scanner sc = new Scanner(System.in);
         GestionVagon<Vagon> gv;
         Vagon vagonModificado = seleccionarTipo();
-        String id;
 
         switch(op) {
             case 0:

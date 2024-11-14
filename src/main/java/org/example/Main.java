@@ -7,6 +7,8 @@ import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
+import org.example.Clases.FamiliaVagon.GestionVagon;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
 import org.example.Clases.Menus.SMenuAdministrador;
@@ -34,6 +36,10 @@ public class Main {
         int subOp;
         Usuario usuarioActivo;
         //Utilidades
+
+        //VagonDeCarga v = new VagonDeCarga("123", 123.7);
+        //GestionVagon.agregarRegistro(v, VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
+        //GestionVagon.eliminarRegistro(new VagonDeCarga("123", 123.7), VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
 
         do {
             System.out.println(Menu.MenuPrincipal());
