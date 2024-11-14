@@ -2,61 +2,129 @@ package org.example;
 
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.FamiliaVagon.VagonComercial;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
+import org.example.Clases.Menus.Menu;
+import org.example.Excepciones.ElementAlreadyExistsException;
+import org.json.JSONArray;
 
 import java.util.Scanner;
 
-public class SwitchMenuVagones <T extends Vagon>{
-    public SwitchMenuVagones() {
+public class SMenuVagones {
+    public SMenuVagones() {
     }
-    public void vagonAdministrador(int op, GestionVagon gestor, T t, T vagonViejo, T vagonNuevo){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("---------------------MENU VAGONES ADMINISTRADOR---------------------------------------------------------");
-        System.out.println("Ingrese 1 para añadir vagon.");
-        System.out.println("Ingrese 2 para eliminar vagon.");
-        System.out.println("Ingrese 3 para modificar vagon.");
-        System.out.println("Ingrese 0 para salir.");
-        System.out.println("---------------------MENU VAGONES ADMINISTRADOR---------------------------------------------------------");
-        op = sc.nextInt();
-        sc.nextLine();
-        switch (op) {
 
+    //Baja
+
+    //Baja
+
+    //Modificacion
+    /**
+     * Selecciona el tipo de vagon.
+     * @return Un vagon instanciado con el tipo seleccionado.
+     */
+    public static Vagon seleccionarTipo () {
+        Scanner sc = new Scanner(System.in);
+        Vagon vagon;
+
+        System.out.println(Menu.menuTipoVagon());
+        int op = sc.nextInt();
+        switch (op) {
+            case 1:
+                vagon = new VagonDeCarga();
+                break;
+            case 2:
+                vagon = new VagonComercial();
+                break;
+            default:
+                throw new IllegalArgumentException("Opcion no valida");
+        }
+        return vagon;
+    }
+
+    /**
+     * Modifica la capacidad del vagon, el id es inmutable.
+     * @param op el numero del menu a acceder.
+     * @param archivo el archivo donde se va a guardar
+     * @return true si se pudo modificar el archivo sin problema.
+     * @throws IllegalArgumentException si la opcion ingresada no es valida.
+     */
+    public static boolean modificarVagon (int op, String archivo) {
+        Scanner sc = new Scanner(System.in);
+        GestionVagon<Vagon> gv;
+        Vagon vagonModificado = seleccionarTipo();
+
+        switch(op) {
             case 0:
-                System.out.println("--------------------------------------------------FIN--------------------------------------------------");
                 break;
             case 1:
-                Boolean proceso = false;
-                proceso = gestor.agregarVagon(T t);
-                if (proceso == true){
-                    System.out.println("Vagon agregado correctamente");
-                }
-                else {
-                    System.out.println("Error al agregar vagon");
+                System.out.println("Capacidad: ");
+                vagonModificado.setCapacidad(sc.nextInt());
+                break;
+            default:
+                throw new IllegalArgumentException("Opcion no valida.");
+        }
+
+        try {
+            if(vagonModificado instanceof VagonDeCarga) {
+                gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), VagonDeCarga::getJSONObject);
+                System.out.println(gv);
+                System.out.println("ID: ");
+                return GestionVagon.modificarRegistro(gv.verificarVagon(sc.nextLine()), vagonModificado, VagonDeCarga::getJSONObject, archivo);
+            } else {
+                gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), VagonComercial::getJSONObject);
+                System.out.println(gv);
+                System.out.println("ID: ");
+                return GestionVagon.modificarRegistro(gv.verificarVagon(sc.nextLine()), vagonModificado, VagonComercial::getJSONObject, archivo);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("ID invalido");
+        }
+        return false;
+    }
+    //Modificacion
+
+    /**
+     * Carga, elimina y modifica los vagones.
+     * @param op
+     * @param archivo
+     */
+    public static void administrarVagones (int op, String archivo) {
+        int subOp;
+        Scanner sc = new Scanner(System.in);
+        switch (op) {
+            case 0:
+                break;
+            case 1:
+                try {
+                    if(GestionVagon.agregarRegistro(vagon, tipoVagon, archivo))
+                        System.out.println("El Vagon se agrego exitosamente");
+                    else
+                        System.out.println("Ocurrio un error");
+                } catch (ElementAlreadyExistsException e) {
+                    System.out.println("El Vagon ya existe");
                 }
                 break;
             case 2:
-                Boolean proceso = false;
-                proceso = gestor.eliminarVagon(T t);
-                if (proceso == true){
-                    System.out.println("Vagon eliminado correctamente");
-                }
-                else {
-                    System.out.println("Error al eliminar vagon");
-                }
+                do {
+                    System.out.println(Menu.modificarVagon());
+                    System.out.println("Opcion: ");
+                    subOp = sc.nextInt();
+                    try {
+                        if(modificarVagon(subOp, archivo)) {
+                            System.out.println("El Vagon se modifico exitosamente");
+                        }
+                        else {
+                            System.out.println("Ocurrio un error");
+                        }
+                    } catch (ElementAlreadyExistsException e) {
+                        System.out.println("El Vagon ya existe");
+                    }
+                } while (subOp != 0);
                 break;
             case 3:
-                Boolean proceso = false;
-                proceso = gestor.modificarVagon(T vagonViejo,T vagonNuevo);
-                if (proceso == true){
-                    System.out.println("Vagon modificado correctamente");
-                }
-                else {
-                    System.out.println("Error al modificar vagon");
-                }
-                break;
-            default:
-                System.out.println("Opcion no valida");
-                break;
 
+                break;
         }
     }
 }

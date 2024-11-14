@@ -1,14 +1,17 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -116,14 +119,19 @@ public class GestionVagon<T extends Vagon> {
      * Convierte el JSONArray en un HashSet.
      * @param json JSONArray a convertir.
      * @param vagon Function a utilizar, tiene que ser el metodo estatico de convertirAJSONObject de algun Vagon.
-     * @return un HashSet con los datos del JSONArray
+     * @return un GestionVagon con los datos del JSONArray.
+     * @throws NullPointerException si ocurre una JSONException.
      */
     public static GestionVagon<Vagon> getJSONArray(JSONArray json, Function<JSONObject, Vagon> vagon) {
-        GestionVagon<Vagon> gv = new GestionVagon<>();
-        for (int i = 0; i < json.length(); i++) {
-            gv.agregarVagon(vagon.apply(json.getJSONObject(i)));
+        try {
+            GestionVagon<Vagon> gv = new GestionVagon<>();
+            for (int i = 0; i < json.length(); i++) {
+                gv.agregarVagon(vagon.apply(json.getJSONObject(i)));
+            }
+            return gv;
+        } catch (JSONException e) {
+            throw new NullPointerException();
         }
-        return gv;
     }
     //JSON
 
@@ -204,4 +212,13 @@ public class GestionVagon<T extends Vagon> {
         return true;
     }
     //Archivos
+
+    public Vagon verificarVagon(String idVagon) {
+        for (Vagon v: vagones) {
+            if (Objects.equals(v.getIdVagon(), idVagon)) {
+                return v;
+            }
+        }
+        throw new NullPointerException();
+    }
 }
