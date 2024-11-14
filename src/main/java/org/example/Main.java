@@ -5,11 +5,9 @@ import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.Menus.Menu;
-import org.example.Clases.Menus.SwitchMenuAdministrador;
+import org.example.Clases.Menus.SMenuAdministrador;
 import org.example.Clases.Menus.SwitchMenuCliente;
-import org.example.Clases.Menus.SwitchMenuPrincipal;
 import org.example.Enums.TipoUsuario;
-import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
@@ -51,7 +49,7 @@ public class Main {
                                 System.out.println("Opcion: ");
                                 subOp = sc.nextInt();
                                 sc.nextLine();
-                                SwitchMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
+                                SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
                             } while (subOp != 0);
                         } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
                             do {

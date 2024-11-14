@@ -5,11 +5,11 @@ import org.example.SMenuVagones;
 
 import java.util.Scanner;
 
-public class SwitchMenuAdministrador {
-    public SwitchMenuAdministrador() {
+public class SMenuAdministrador {
+    public SMenuAdministrador() {
     }
 
-    public static void usuarioAdministrador (int op, Usuario usuario, String archivo) {
+    public static void usuarioAdministrador (int op, Usuario usuario, Almacenamiento almacenamiento) {
         int subOp = 0;
         Scanner sc = new Scanner(System.in);
         switch (op) {
@@ -22,7 +22,7 @@ public class SwitchMenuAdministrador {
                     System.out.println(Menu.menuVagones());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
-                    SMenuVagones.administrarVagones(subOp, archivo);
+                    SMenuVagones.administrarVagones(subOp, almacenamiento);
                 } while (subOp != 0);
                 break;
             case 3:
@@ -31,7 +31,7 @@ public class SwitchMenuAdministrador {
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     sc.nextLine();
-                    SwitchMenuPrincipal.configuracion(subOp, usuario, archivo);
+                    SwitchMenuPrincipal.configuracion(subOp, usuario, alma);
                 } while (subOp != 0);
                 break;
             default:

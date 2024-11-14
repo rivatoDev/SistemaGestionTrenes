@@ -20,7 +20,7 @@ import java.util.function.Function;
  */
 public class GestionVagon<T extends Vagon> {
     //Atributos
-    private final Set<T> vagones;
+    private final HashSet<T> vagones;
     //Atributos
 
     //Constructor
