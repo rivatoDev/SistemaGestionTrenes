@@ -1,9 +1,9 @@
 package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.SMenuVagones;
 
 import java.util.Scanner;
+
 
 public class SMenuAdministrador {
     public SMenuAdministrador() {
@@ -31,7 +31,7 @@ public class SMenuAdministrador {
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     sc.nextLine();
-                    SwitchMenuPrincipal.configuracion(subOp, usuario, alma);
+                    SwitchMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
                 } while (subOp != 0);
                 break;
             default:

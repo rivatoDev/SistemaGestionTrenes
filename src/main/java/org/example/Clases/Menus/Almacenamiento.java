@@ -5,62 +5,69 @@ package org.example.Clases.Menus;
  */
 public class Almacenamiento {
     //Atributos
-    private final String nombreArchivoTrenes;
-    private final String nombreArchivoVagonesDeCarga;
-    private final String nombreArchivoVagonesComerciales;
-    private final String nombreArchivoRutas;
-    private final String nombreArchivoMaquinistas;
-    private final String nombreArchivoUsuarios;
+    private final String trenesDeCarga;
+    private final String trenesComerciales;
+    private final String vagonesDeCarga;
+    private final String vagonesComerciales;
+    private final String rutas;
+    private final String maquinistas;
+    private final String usuarios;
     //Atributos
 
     //Constructor
-    public Almacenamiento(String nombreArchivoTrenes, String nombreArchivoVagonesDeCarga, String nombreArchivoVagonesComerciales, String nombreArchivoRutas, String nombreArchivoMaquinistas, String nombreArchivoUsuarios) {
-        this.nombreArchivoTrenes = nombreArchivoTrenes;
-        this.nombreArchivoVagonesDeCarga = nombreArchivoVagonesDeCarga;
-        this.nombreArchivoVagonesComerciales = nombreArchivoVagonesComerciales;
-        this.nombreArchivoRutas = nombreArchivoRutas;
-        this.nombreArchivoMaquinistas = nombreArchivoMaquinistas;
-        this.nombreArchivoUsuarios = nombreArchivoUsuarios;
+    public Almacenamiento(String trenesDeCarga, String trenesComerciales, String vagonesDeCarga, String vagonesComerciales, String rutas, String maquinistas, String usuarios) {
+        this.trenesDeCarga = trenesDeCarga;
+        this.trenesComerciales = trenesComerciales;
+        this.vagonesDeCarga = vagonesDeCarga;
+        this.vagonesComerciales = vagonesComerciales;
+        this.rutas = rutas;
+        this.maquinistas = maquinistas;
+        this.usuarios = usuarios;
     }
     //Constructor
 
     //Getter
-    public String getNombreArchivoTrenes() {
-        return nombreArchivoTrenes;
+    public String getTrenesDeCarga() {
+        return trenesDeCarga;
     }
 
-    public String getNombreArchivoVagonesDeCarga() {
-        return nombreArchivoVagonesDeCarga;
+    public String getTrenesComerciales() {
+        return trenesComerciales;
     }
 
-    public String getNombreArchivoVagonesComerciales() {
-        return nombreArchivoVagonesComerciales;
+    public String getVagonesDeCarga() {
+        return vagonesDeCarga;
     }
 
-    public String getNombreArchivoRutas() {
-        return nombreArchivoRutas;
+    public String getVagonesComerciales() {
+        return vagonesComerciales;
     }
 
-    public String getNombreArchivoMaquinistas() {
-        return nombreArchivoMaquinistas;
+    public String getRutas() {
+        return rutas;
     }
 
-    public String getNombreArchivoUsuarios() {
-        return nombreArchivoUsuarios;
+    public String getMaquinistas() {
+        return maquinistas;
+    }
+
+    public String getUsuarios() {
+        return usuarios;
     }
     //Getter
 
-
     //Mostrar
+
     @Override
     public String toString() {
-        return "GestionSistema{" +
-                "nombreArchivoTrenes='" + nombreArchivoTrenes + '\'' +
-                ", nombreArchivoVagonesDeCarga='" + nombreArchivoVagonesDeCarga + '\'' +
-                ", nombreArchivoVagonesComerciales='" + nombreArchivoVagonesComerciales + '\'' +
-                ", nombreArchivoRutas='" + nombreArchivoRutas + '\'' +
-                ", nombreArchivoMaquinistas='" + nombreArchivoMaquinistas + '\'' +
-                ", nombreArchivoUsuarios='" + nombreArchivoUsuarios + '\'' +
+        return "Almacenamiento{" +
+                "trenesDeCarga='" + trenesDeCarga + '\'' +
+                ", trenesComerciales='" + trenesComerciales + '\'' +
+                ", vagonesDeCarga='" + vagonesDeCarga + '\'' +
+                ", vagonesComerciales='" + vagonesComerciales + '\'' +
+                ", rutas='" + rutas + '\'' +
+                ", maquinistas='" + maquinistas + '\'' +
+                ", usuarios='" + usuarios + '\'' +
                 '}';
     }
     //Mostrar

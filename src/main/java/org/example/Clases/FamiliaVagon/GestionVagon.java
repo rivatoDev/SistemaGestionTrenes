@@ -1,6 +1,5 @@
 package org.example.Clases.FamiliaVagon;
 
-import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -176,9 +175,12 @@ public class GestionVagon<T extends Vagon> {
     public static boolean eliminarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gv = new GestionVagon<>();
 
+
         for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
             gv.agregarVagon(v);
         }
+        System.out.println("Hola");
+        System.out.println(gv.getVagones().contains(vagon));
         gv.eliminarVagon(vagon);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
