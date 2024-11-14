@@ -7,13 +7,11 @@ import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
-import org.example.Clases.Menus.SwitchMenuAdministrador;
+import org.example.Clases.Menus.SMenuAdministrador;
 import org.example.Clases.Menus.SwitchMenuCliente;
-import org.example.Clases.Menus.SwitchMenuPrincipal;
 import org.example.Enums.TipoUsuario;
-import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,14 +21,12 @@ import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
-        //Archivos
-        final String almacenamientoVagones = "vagones.json";
-        final String almacenamientoUsuarios = "usuarios.json";
-        //Archivos
+        Almacenamiento almacenamiento = new Almacenamiento("trenesDeCarga.json", "trenesComerciales.json",
+                "vagonesDeCarga.json", "vagonesComerciales.json",
+                "rutas.json", "maquinistas.json", "usuarios.json");
 
         //Utilidades
         Scanner sc = new Scanner(System.in);
@@ -49,7 +45,7 @@ public class Main {
                     System.out.println("--------------------------------------------------FIN--------------------------------------------------");
                     break;
                 case 1:
-                    usuarioActivo = iniciarSesion(almacenamientoUsuarios);
+                    usuarioActivo = iniciarSesion(almacenamiento.getUsuarios());
                     if(usuarioActivo != null) {
                         if (usuarioActivo.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
                             do {
@@ -57,7 +53,7 @@ public class Main {
                                 System.out.println("Opcion: ");
                                 subOp = sc.nextInt();
                                 sc.nextLine();
-                                SwitchMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamientoUsuarios);
+                                SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamiento);
                             } while (subOp != 0);
                         } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
                             do {
@@ -65,13 +61,13 @@ public class Main {
                                 System.out.println("Opcion: ");
                                 subOp = sc.nextInt();
                                 sc.nextLine();
-                                SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamientoUsuarios);
+                                SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
                             } while (subOp != 0);
                         }
                     }
                     break;
                 case 2:
-                       if (crearUsuario(TipoUsuario.CLIENTE, almacenamientoUsuarios)) {
+                       if (crearUsuario(TipoUsuario.CLIENTE, almacenamiento.getUsuarios())) {
                            System.out.println("El usuario se ha creado con exito");
                        }
                     break;
