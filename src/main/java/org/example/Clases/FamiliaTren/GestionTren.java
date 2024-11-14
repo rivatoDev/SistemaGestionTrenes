@@ -1,5 +1,6 @@
 package org.example.Clases.FamiliaTren;
 
+import com.sun.tools.javac.Main;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -139,12 +140,14 @@ public class GestionTren<T extends Tren> {
      * @param archivo Nombre del archivo donde se va a guardar al tren.
      * @return true si se pudo guardar al tren sin problemas.
      */
-    public static boolean agregarRegistro (Tren tren, Function<JSONObject, Tren> tipoTren, String archivo) {
+    public static boolean agregarRegistro(Tren tren, Function<JSONObject, Tren> tipoTren, String archivo) {
         GestionTren<Tren> gt = new GestionTren<>();
 
         try {
-            if(new File(archivo).length() > 0) {
-                for(Tren t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getTrenes()) {
+            if (new File(archivo).length() > 0) {
+                Main.
+                JSONArray trenesJSON = new JSONArray(Main.leerArchivo(archivo));
+                for (Tren t : GestionTren.getJSONArray(trenesJSON, tipoTren).getTrenes()) {
                     gt.agregarTren(t);
                 }
             }

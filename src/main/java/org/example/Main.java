@@ -3,6 +3,10 @@ package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaTren.GestionTren;
+import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.Menus.Menu;
 import org.example.Clases.Menus.SwitchMenuAdministrador;
@@ -12,12 +16,14 @@ import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
@@ -139,13 +145,14 @@ public class Main {
     //Usuario
 
     //Vagon
-    public static Vagon ingresarVagon () {
-        System.out.printl;
-    }
+//    public static Vagon ingresarVagon () {
+////        System.out.printl;2222
+//    }
 
     //Vagon
 
     //Archivos
+
     /**
      * Crea un archivo de texto.
      * @param nombre Nombre del archivo.
@@ -179,4 +186,44 @@ public class Main {
         return json;
     }
     //Archivos
+}
+
+public static boolean crearTren(String archivo) {
+    Scanner sc = new Scanner(System.in);
+    Tren tren;
+
+    System.out.println("--------------------------------------------------CREACION DE TREN--------------------------------------------------");
+    System.out.println("¿El tren es comercial o de carga? (Escriba 'comercial' o 'carga'):");
+    String tipoTren = sc.nextLine().toLowerCase();
+
+    if (tipoTren.equals("comercial")) {
+        tren = new TrenComercial();
+    } else if (tipoTren.equals("carga")) {
+        tren = new TrenDeCarga();
+    } else {
+        System.out.println("Tipo de tren no válido.");
+        return false;
+    }
+
+    // Asignación de atributos
+    System.out.println("Modelo: ");
+    tren.setModelo(new String(sc.nextLine()));
+    System.out.println("Patente: ");
+    tren.setPatente(new String(sc.nextLine()));
+    System.out.println("Ubicación: ");
+    tren.setUbicacion(new String(sc.nextLine()));
+
+    System.out.println("Capacidad (Número): ");
+    tren.setCapacidad(sc.nextDouble());
+    sc.nextLine();
+
+    tren.setEstado(true);
+    tren.setEstadoViaje(false);
+
+    System.out.println("--------------------------------------------------CREACION DE TREN--------------------------------------------------");
+
+    JSONObject a = new JSONObject();
+    a = tren.convertirAJSONObject();
+
+    return GestionTren.agregarRegistro(tren, a, archivo);
 }

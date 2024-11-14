@@ -199,6 +199,7 @@ public class TrenComercial extends Tren {
      * @return un TrenComercial con los datos de un JSONObject.
      * @throws IllegalArgumentException si el JSONObject no es del tipo correcto.
      */
+
     public static TrenComercial getJSONObject (JSONObject json) {
         if(!TrenComercial.verificarJSON(json)) {
             throw new IllegalArgumentException();

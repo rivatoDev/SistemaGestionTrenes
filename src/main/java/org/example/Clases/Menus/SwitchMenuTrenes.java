@@ -11,14 +11,8 @@ public class SwitchMenuTrenes <T extends Tren>{
     }
     public void trenAdministrador(int op, GestionTren gestor, T t, T trenViejo, T trenNuevo){
         Scanner sc = new Scanner(System.in);
-        System.out.println("---------------------MENU TRENES ADMINISTRADOR---------------------------------------------------------");
-        System.out.println("Ingrese 1 para añadir tren.");
-        System.out.println("Ingrese 2 para eliminar tren.");
-        System.out.println("Ingrese 3 para modificar tren.");
-        System.out.println("Ingrese 0 para salir.");
-        System.out.println("---------------------MENU TRENES ADMINISTRADOR---------------------------------------------------------");
-        op = sc.nextInt();
-        sc.nextLine();
+        Menu.menuTrenes();
+        System.out.println("Opcion? :");
         switch (op) {
 
             case 0:
@@ -26,7 +20,7 @@ public class SwitchMenuTrenes <T extends Tren>{
                 break;
             case 1:
                 Boolean proceso = false;
-                proceso = gestor.agregarTren(T t);
+//                proceso = gestor.agregarTren(T t);
                 if (proceso == true){
                     System.out.println("Tren agregado correctamente");
                 }
@@ -36,7 +30,7 @@ public class SwitchMenuTrenes <T extends Tren>{
                 break;
             case 2:
                 proceso = false;
-                proceso = gestor.eliminarTren(T t);
+//                proceso = gestor.eliminarTren(T t);
                 if (proceso == true){
                     System.out.println("Tren eliminado correctamente");
                 }
@@ -46,7 +40,7 @@ public class SwitchMenuTrenes <T extends Tren>{
                 break;
             case 3:
                 proceso = false;
-                proceso = gestor.modificarTren(T trenViejo,T trenNuevo);
+//                proceso = gestor.modificarTren(T trenViejo,T trenNuevo);
                 if (proceso == true){
                     System.out.println("Tren modificado correctamente");
                 }

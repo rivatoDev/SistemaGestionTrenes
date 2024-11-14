@@ -16,5 +16,14 @@
     "nombreUsuario": "rivato",
     "nombre": "Tomas",
     "dni": "44336431"
+  },
+  {
+    "estado": false,
+    "apellido": "pistarini",
+    "contrasenia": "asd123",
+    "tipoUsuario": "CLIENTE",
+    "nombreUsuario": "kirito",
+    "nombre": "Joaquih",
+    "dni": "44535612"
   }
 ]

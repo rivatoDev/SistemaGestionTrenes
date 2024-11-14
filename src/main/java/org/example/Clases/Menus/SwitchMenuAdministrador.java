@@ -26,12 +26,10 @@ public class SwitchMenuAdministrador {
             case 0:
                 break;
             case 1:
+                    SwitchMenuTrenes();
                 break;
             case 2:
-                do {
                     System.out.println(Menu.menuVagones());
-
-                }
                 break;
             case 3:
                 do {
@@ -81,9 +79,9 @@ public class SwitchMenuAdministrador {
                 break;
             case 1:
                 try {
-                    if(GestionVagon.agregarRegistro(vagon, tipoVagon, archivo))
+//                    if(GestionVagon.agregarRegistro(vagon, tipoVagon, archivo))
                         System.out.println("El Vagon se agrego exitosamente");
-                    else
+//                    else
                         System.out.println("Ocurrio un error");
                 } catch (ElementAlreadyExistsException e) {
                     System.out.println("El Vagon ya existe");
@@ -95,10 +93,8 @@ public class SwitchMenuAdministrador {
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     try {
-                        modificarVagon(subOp, vagon, tipoVagon, archivo);
+//                        modificarVagon(subOp, vagon, tipoVagon, archivo);
                         System.out.println("El Vagon se agrego exitosamente");
-                    else
-                        System.out.println("Ocurrio un error");
                     } catch (ElementAlreadyExistsException e) {
                         System.out.println("El Vagon ya existe");
                     }

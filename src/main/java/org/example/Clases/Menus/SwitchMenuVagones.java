@@ -25,7 +25,7 @@ public class SwitchMenuVagones <T extends Vagon>{
                 break;
             case 1:
                 Boolean proceso = false;
-                proceso = gestor.agregarVagon(T t);
+//                proceso = gestor.agregarVagon(T t);
                 if (proceso == true){
                     System.out.println("Vagon agregado correctamente");
                 }
@@ -34,9 +34,9 @@ public class SwitchMenuVagones <T extends Vagon>{
                 }
                 break;
             case 2:
-                Boolean proceso = false;
-                proceso = gestor.eliminarVagon(T t);
-                if (proceso == true){
+                Boolean procesox = false;
+//                proceso = gestor.eliminarVagon(T t);
+                if (procesox == true){
                     System.out.println("Vagon eliminado correctamente");
                 }
                 else {
@@ -44,9 +44,9 @@ public class SwitchMenuVagones <T extends Vagon>{
                 }
                 break;
             case 3:
-                Boolean proceso = false;
-                proceso = gestor.modificarVagon(T vagonViejo,T vagonNuevo);
-                if (proceso == true){
+                Boolean procesoxx = false;
+//                proceso = gestor.modificarVagon(T vagonViejo,T vagonNuevo);
+                if (procesoxx == true){
                     System.out.println("Vagon modificado correctamente");
                 }
                 else {
