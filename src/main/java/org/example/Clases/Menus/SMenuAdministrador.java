@@ -16,6 +16,10 @@ public class SMenuAdministrador {
             case 0:
                 break;
             case 1:
+                System.out.println(Menu.menuTrenes());
+                System.out.println("Opcion: ");
+                subOp = sc.nextInt();
+                SwitchMenuTrenes.administrarTrenes(subOp, almacenamiento);
                 break;
             case 2:
                 do {

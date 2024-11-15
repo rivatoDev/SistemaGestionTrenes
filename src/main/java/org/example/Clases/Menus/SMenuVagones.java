@@ -179,7 +179,7 @@ public class SMenuVagones {
                             return GestionVagon.modificarRegistro(gv.verificarVagon(vagonModificado.getIdVagon()), vagonModificado, VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
                         }
                     } else {
-                        if (new File(almacenamiento.getVagonesDeCarga()).length() > 0) {
+                        if (new File(almacenamiento.getVagonesComerciales()).length() > 0) {
                             gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getVagonesComerciales())), VagonComercial::getJSONObject);
                             System.out.println(gv);
                             System.out.println("ID: ");

@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -208,4 +209,13 @@ public class GestionTren<T extends Tren> {
         return true;
     }
     //Archivos
+
+    public Tren verificarTren(String patente) {
+        for (Tren t: trenes) {
+            if (Objects.equals(t.getPatente(), patente)) {
+                return t;
+            }
+        }
+        throw new NullPointerException();
+    }
 }
