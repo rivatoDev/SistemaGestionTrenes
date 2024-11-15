@@ -63,23 +63,23 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-    public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
-        Ruta r = new Ruta();
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("----------------------------------------------------------------------------------------------------");
-        System.out.println("Tren: ");
-        int num = seleccionarTipo();
-        if(num == 1) {
-            SwitchMenuTrenes.mostrarTrenes(almacenamiento.getTrenesDeCarga());
-        }
-
-        r.setIdVagon(sc.nextLine());
-        System.out.println("Capacidad: ");
-        v.setCapacidad(sc.nextDouble());
-        System.out.println("----------------------------------------------------------------------------------------------------");
-        return v;
-    }
+//    public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
+//        Ruta r = new Ruta();
+//        Scanner sc = new Scanner(System.in);
+//
+//        System.out.println("----------------------------------------------------------------------------------------------------");
+//        System.out.println("Tren: ");
+//        int num = seleccionarTipo();
+//        if(num == 1) {
+//            SwitchMenuTrenes.mostrarTrenes(almacenamiento.getTrenesDeCarga());
+//        }
+//
+//        r.setIdVagon(sc.nextLine());
+//        System.out.println("Capacidad: ");
+//        v.setCapacidad(sc.nextDouble());
+//        System.out.println("----------------------------------------------------------------------------------------------------");
+//        return v;
+//    }
 
 
     /**
@@ -87,21 +87,21 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-    public static boolean agregarRuta (Almacenamiento almacenamiento) {
-        Scanner sc = new Scanner(System.in);
-        GestionRuta gr;
-        Ruta r = ingresarRuta(almacenamiento);
-        try {
-            return GestionRuta.agregarRegistro(r, almacenamiento.getVagonesDeCarga());
-        } catch (ElementAlreadyExistsException e) {
-            System.out.println("El vagon ya existe");
-        } catch (NullPointerException e) {
-            System.out.println("ID invalido");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Opcion incorrecta.");
-        }
-        return false;
-    }
+//    public static boolean agregarRuta (Almacenamiento almacenamiento) {
+//        Scanner sc = new Scanner(System.in);
+//        GestionRuta gr;
+//        Ruta r = ingresarRuta(almacenamiento);
+//        try {
+//            return GestionRuta.agregarRegistro(r, almacenamiento.getVagonesDeCarga());
+//        } catch (ElementAlreadyExistsException e) {
+//            System.out.println("El vagon ya existe");
+//        } catch (NullPointerException e) {
+//            System.out.println("ID invalido");
+//        } catch (IllegalArgumentException e) {
+//            System.out.println("Opcion incorrecta.");
+//        }
+//        return false;
+//    }
     //Alta
 
     //Baja
@@ -210,43 +210,42 @@ public class SMenuRutas {
      * @param op
      * @param almacenamiento
      */
-    public static void administrarRutas (int op, Almacenamiento almacenamiento) {
-        int subOp;
-        Scanner sc = new Scanner(System.in);
-        switch (op) {
-            case 0:
-                break;
-            case 1:
-                try {
-                    if(agregarRuta(almacenamiento)) {
-                        System.out.println("El vagon se agrego exitosamente");
-                    }
-                } catch (ElementAlreadyExistsException e) {
-                    System.out.println("El Vagon ya existe");
-                }
-                break;
-            case 2:
-                do {
-                    System.out.println(Menu.modificarRuta());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
-                        if(modificarRuta(subOp, almacenamiento)) {
-                            System.out.println("La ruta se modifico exitosamente");
-                        }
-                        else {
-                            System.out.println("Ocurrio un error");
-                        }
-                } while (subOp != 0);
-                break;
-            case 3:
-                if (eliminarRuta(almacenamiento)) {
-                    System.out.println("El vagon se elimino con exito");
-                }
-                break;
-            case 4:
-                System.out.println(mostrarVagones(almacenamiento));
-                break;
-        }
-    }
-}
+//    public static void administrarRutas (int op, Almacenamiento almacenamiento) {
+//        int subOp;
+//        Scanner sc = new Scanner(System.in);
+//        switch (op) {
+//            case 0:
+//                break;
+//            case 1:
+//                try {
+//                    if(agregarRuta(almacenamiento)) {
+//                        System.out.println("El vagon se agrego exitosamente");
+//                    }
+//                } catch (ElementAlreadyExistsException e) {
+//                    System.out.println("El Vagon ya existe");
+//                }
+//                break;
+//            case 2:
+//                do {
+//                    System.out.println(Menu.modificarRuta());
+//                    System.out.println("Opcion: ");
+//                    subOp = sc.nextInt();
+//                        if(modificarRuta(subOp, almacenamiento)) {
+//                            System.out.println("La ruta se modifico exitosamente");
+//                        }
+//                        else {
+//                            System.out.println("Ocurrio un error");
+//                        }
+//                } while (subOp != 0);
+//                break;
+////            case 3:
+////                if (eliminarRuta(almacenamiento)) {
+////                    System.out.println("El vagon se elimino con exito");
+////                }
+////                break;
+//            case 3:
+//                System.out.println(mostrarRutas(almacenamiento));
+//                break;
+//        }
+//    }
 }

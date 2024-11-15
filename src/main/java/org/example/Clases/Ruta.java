@@ -14,6 +14,8 @@ public class Ruta {
     private StringBuilder llegada;
     private Maquinista maquinista;
     private int fecha;
+    private static int contadorID = 0;
+    private int id = 0;
     //Atributos
 
     //Constructor
@@ -23,6 +25,7 @@ public class Ruta {
         this.llegada = llegada;
         this.maquinista = maquinista;
         this.fecha = fecha;
+        this.contadorID = id++;
     }
     //Constructor
 
@@ -48,6 +51,7 @@ public class Ruta {
     public int getFecha() {
         return fecha;
     }
+    public int getContadorID(){return contadorID;}
     //Getter
 
     //Setter
@@ -66,6 +70,7 @@ public class Ruta {
     public void setFecha(int fecha) {
         this.fecha = fecha;
     }
+    public void setContadorID(){this.contadorID = contadorID;}
     //Setter
 
     //Mostrar
