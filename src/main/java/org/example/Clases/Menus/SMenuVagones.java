@@ -99,7 +99,7 @@ public class SMenuVagones {
             if(v instanceof VagonDeCarga) {
                 return GestionVagon.agregarRegistro(v, VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
             } else {
-                return GestionVagon.eliminarRegistro(v, VagonComercial::getJSONObject, almacenamiento.getVagonesComerciales());
+                return GestionVagon.agregarRegistro(v, VagonComercial::getJSONObject, almacenamiento.getVagonesComerciales());
             }
         } catch (ElementAlreadyExistsException e) {
             System.out.println("El vagon ya existe");

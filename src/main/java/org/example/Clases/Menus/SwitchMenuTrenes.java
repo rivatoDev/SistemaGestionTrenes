@@ -95,7 +95,7 @@ public class SwitchMenuTrenes <T extends Tren> {
             if (tren instanceof TrenDeCarga) {
                 return GestionTren.agregarRegistro(tren, TrenDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
             } else {
-                return GestionTren.eliminarRegistro(tren, TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
+                return GestionTren.agregarRegistro(tren, TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
             }
         } catch (ElementAlreadyExistsException e) {
             System.out.println("El vagon ya existe");
