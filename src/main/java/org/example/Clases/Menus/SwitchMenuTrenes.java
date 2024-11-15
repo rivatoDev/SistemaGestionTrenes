@@ -283,13 +283,6 @@ public class SwitchMenuTrenes <T extends Tren> {
                 }
                 break;
             case 2:
-                    if (eliminarTren(almacenamiento)) {
-                        System.out.println("El tren se elimino con exito");
-                    }else{
-                        System.out.println("No se encontró");
-                    }
-                break;
-            case 3:
                 do {
                     System.out.println(Menu.modificarTren());
                     System.out.println("Opcion: ");
@@ -305,6 +298,13 @@ public class SwitchMenuTrenes <T extends Tren> {
                         System.out.println("El tren ya existe");
                     }
                 } while (subOp != 0);
+                break;
+            case 3:
+                if (eliminarTren(almacenamiento)) {
+                    System.out.println("El tren se elimino con exito");
+                }else{
+                    System.out.println("No se encontró");
+                }
                 break;
             case 4:
                 System.out.println(mostrarTrenes(almacenamiento));

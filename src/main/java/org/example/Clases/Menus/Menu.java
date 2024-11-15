@@ -55,8 +55,8 @@ public class Menu {
     public static String menuTrenes(){
         return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------"+
                 "1. Añadir tren." + "\n" +
-                "2. Eliminar tren."+ "\n" +
-                "3. Modificar tren." + "\n" +
+                "2. Modificar tren."+ "\n" +
+                "3. Eliminar tren." + "\n" +
                 "4. Ver trenes" + "\n" +
                 "0. Salir." + "\n" +
                 "--------------------------------------------MENU TRENES ADMNISTRADOR-----------------------------------------------";

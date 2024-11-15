@@ -243,7 +243,7 @@ public class SMenuVagones {
                 break;
             case 3:
                 if (eliminarVagon(almacenamiento)) {
-                    System.out.println("El usuario se elimino con exito");
+                    System.out.println("El vagon se elimino con exito");
                 }
                 break;
             case 4:
