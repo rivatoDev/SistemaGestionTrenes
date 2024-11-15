@@ -4,15 +4,10 @@ import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.GestionTren;
-import org.example.Clases.FamiliaVagon.Vagon;
-import org.example.Clases.FamiliaVagon.VagonComercial;
-import org.example.Clases.FamiliaVagon.TrenDeCarga;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Scanner;
@@ -308,6 +303,8 @@ public class SwitchMenuTrenes <T extends Tren> {
                 break;
             case 4:
                 System.out.println(mostrarTrenes(almacenamiento));
+                break;
+            case 5:
                 break;
         }
     }

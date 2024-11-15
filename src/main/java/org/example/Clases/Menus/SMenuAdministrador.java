@@ -31,13 +31,20 @@ public class SMenuAdministrador {
                 break;
             case 3:
                 do {
+                    System.out.println(Menu.menuRutas());
+                    System.out.println("Opcion: ");
+                    subOp = sc.nextInt();
+                    SMenuRutas.administrarRutas(subOp, almacenamiento);
+                } while (subOp != 0);
+                break;
+            case 4:
+                do {
                     System.out.println(Menu.configuracion());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     sc.nextLine();
                     SwitchMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
                 } while (subOp != 0);
-                break;
             default:
                 System.out.println("Opcion no valida");
                 break;

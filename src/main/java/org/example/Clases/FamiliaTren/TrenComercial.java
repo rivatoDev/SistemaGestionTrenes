@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Clase que hereda de Tren y representa a los trenes que llevan pasajeros.
  */
-public class TrenComercial extends Tren {
+public class    TrenComercial extends Tren {
     //Atributos
     private final LinkedHashSet<VagonComercial> vagones;
     //Atributos

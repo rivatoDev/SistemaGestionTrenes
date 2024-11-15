@@ -28,7 +28,8 @@ public class Menu {
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
                 "1. Gestionar Trenes" + '\n' +
                 "2. Gestionar Vagones" + '\n' +
-                "3. Configuracion" + '\n' +
+                "3. Gestionar Rutas" + "\n" +
+                "4. Configuracion" + '\n' +
                 "0. Cerrar Sesion" + '\n' +
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
     }
@@ -53,12 +54,12 @@ public class Menu {
     }
 
     public static String menuTrenes(){
-        return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------"+
+        return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------\n"+
                 "1. Añadir tren." + "\n" +
                 "2. Modificar tren."+ "\n" +
                 "3. Eliminar tren." + "\n" +
                 "4. Ver trenes" + "\n" +
-                "0. Salir." + "\n" +
+                "0. Volver" + "\n" +
                 "--------------------------------------------MENU TRENES ADMNISTRADOR-----------------------------------------------";
     }
 
@@ -75,7 +76,7 @@ public class Menu {
                 "2. Patente" + "\n" +
                 "3. Ubicacion" + "\n" +
                 "4. Capacidad" + "\n" +
-                "0. Salir." + '\n' +
+                "0. Volver." + '\n' +
                 "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
 
@@ -85,7 +86,7 @@ public class Menu {
                "2. Modificar Vagon." + '\n' +
                "3. Eliminar Vagon." + '\n' +
                "4. Mostrar Vagones." + '\n' +
-               "0. Salir." + '\n' +
+               "0. Volver." + '\n' +
                "--------------------------------------------------VAGONES--------------------------------------------------";
     }
 
@@ -99,7 +100,26 @@ public class Menu {
     public static String modificarVagon () {
         return "--------------------------------------------------MODIFICAR--------------------------------------------------\n" +
                "1. Capacidad." + '\n' +
-               "0. Salir." + '\n' +
+               "0. Volver." + '\n' +
                "--------------------------------------------------MODIFICAR--------------------------------------------------";
+    }
+
+    public static String menuRutas(){
+        return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------\n"+
+                "1. Añadir ruta." + "\n" +
+                "2. Modificar ruta."+ "\n" +
+                "3. Eliminar ruta." + "\n" +
+                "4. Ver rutas" + "\n" +
+                "0. Volver" + "\n" +
+                "--------------------------------------------MENU TRENES ADMNISTRADOR-----------------------------------------------";
+    }
+
+    public static String modificarRuta () {
+        return "--------------------------------------------------MODIFICAR--------------------------------------------------\n" +
+                "1. Salida" + '\n' +
+                "2. Llegada" + "\n" +
+                "3. Fecha" + "\n" +
+                "0. Volver." + '\n' +
+                "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
 }

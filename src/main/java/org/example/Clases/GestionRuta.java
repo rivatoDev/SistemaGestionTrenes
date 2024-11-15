@@ -5,6 +5,9 @@ import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
+import org.example.Clases.FamiliaVagon.GestionVagon;
+import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.Menus.Almacenamiento;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
@@ -19,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -56,8 +60,6 @@ public class GestionRuta {
     public boolean eliminarRuta (Ruta ruta) {
         if(!this.rutas.remove(ruta)) {
             throw new NoSuchElementException();
-        } else {
-            this.agregarRuta(ruta);
         }
         return true;
     }
@@ -77,29 +79,40 @@ public class GestionRuta {
         return json;
     }
 
-    public static HashSet<Ruta> getJSONArray(JSONArray json) {
-        HashSet<Ruta> hs = new HashSet<>();
+    public static GestionRuta getJSONArray(JSONArray json) {
+        GestionRuta rutini = new GestionRuta();
 
         for (int i = 0; i < json.length(); i++) {
             JSONObject jsonObject = json.getJSONObject(i);
 
-            Function<JSONObject, Tren> trenConverter;
-            if (TrenDeCarga.class.isAssignableFrom(Tren.class)) {
-                trenConverter = TrenDeCarga::getJSONObject;
-            } else {
-                trenConverter = TrenComercial::getJSONObject;
+            // Determina el tipo de tren a partir del JSON
+            Function<JSONObject, Tren> trenConverter = jsonObj -> {
+                if (jsonObj.has("vagones")) { // Solo se espera que tenga "vagones"
+                    JSONArray vagones = jsonObj.getJSONArray("vagones");
+                    if (vagones.length() > 0 && vagones.getJSONObject(0).has("tipo")) {
+                        String tipoVagon = vagones.getJSONObject(0).getString("tipo");
+                        if ("comercial".equals(tipoVagon)) {
+                            return TrenComercial.getJSONObject(jsonObj);
+                        } else if ("carga".equals(tipoVagon)) {
+                            return TrenDeCarga.getJSONObject(jsonObj);
+                        }
+                    }
+                }
+                return null;
+            };
+            Ruta ruta = Ruta.JSONxRuta(jsonObject, trenConverter);
+            if (ruta != null) {
+                rutini.rutas.add(ruta);
             }
-
-            hs.add(Ruta.JSONxRuta(jsonObject, trenConverter));
         }
-        return hs;
-    }
+        return rutini;
+    };
 
     public static boolean agregarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gu = new GestionRuta();
+        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
         try {
             if (new File(archivo).length() > 0) {
-                for (Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+                for (Ruta r: gu.rutas) {
                     gu.agregarRuta(r);
                 }
             }
@@ -117,10 +130,26 @@ public class GestionRuta {
         return true;
     }
 
-    public static boolean eliminarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gu = new GestionRuta();
+    public static boolean modificarRegistro (Ruta rutaVieja, Ruta rutaNueva, String archivo) {
+        GestionRuta gr = new GestionRuta();
 
-        for (Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))) {
+        for(Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getRutas()) {
+            gr.agregarRuta(r);
+        }
+        gr.modificarRuta(rutaVieja, rutaNueva);
+
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            bf.write(gr.convertirAJSONArray().toString(2));
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean eliminarRegistro (Ruta ruta, String archivo) {
+        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+
+        for (Ruta r: gu.rutas) {
             gu.agregarRuta(r);
         }
         gu.eliminarRuta(ruta);
@@ -131,5 +160,15 @@ public class GestionRuta {
             return false;
         }
         return true;
+    }
+
+    public Ruta verificarRuta(Ruta ruta, String archivo) {
+        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+        for (Ruta r: gu.rutas) {
+            if (Objects.equals(ruta, r)){
+                return r;
+            }
+        }
+        throw new NullPointerException();
     }
 }
