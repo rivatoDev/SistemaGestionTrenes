@@ -19,25 +19,22 @@ public class SwitchMenuTrenes <T extends Tren> {
     public static Tren seleccionarTipo() {
         Scanner sc = new Scanner(System.in);
         Tren tren = null;
-        boolean flag;
 
-        do {
-            flag = true;
+        while (tren == null) {
             System.out.println(Menu.menuTipoTren());
             System.out.println("Opcion: ");
-            int op = sc.nextInt();
-            switch (op) {
-                case 1:
+            String input = sc.nextLine();
+            switch (input) {
+                case "1":
                     tren = new TrenDeCarga();
                     break;
-                case 2:
+                case "2":
                     tren = new TrenComercial();
                     break;
                 default:
-                    System.out.println("Opcion no valida");
-                    flag = false;
+                    System.out.println("Opción no válida. Intente de nuevo.");
             }
-        } while (!flag);
+        }
         return tren;
     }
 
@@ -45,7 +42,8 @@ public class SwitchMenuTrenes <T extends Tren> {
         if(seleccionarTipo() instanceof TrenDeCarga) {
             try {
                 if(new File(almacenamiento.getTrenesDeCarga()).length() > 0) {
-                    return GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesDeCarga())), TrenDeCarga::getJSONObject).toString();
+
+                    return "carga" + GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesDeCarga())), TrenDeCarga::getJSONObject).toString();
                 }
             } catch (FileDoesntExistException e) {
                 return "El archivo no existe";
@@ -53,7 +51,7 @@ public class SwitchMenuTrenes <T extends Tren> {
         } else {
             try {
                 if(new File(almacenamiento.getTrenesComerciales()).length() > 0) {
-                    return GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesComerciales())), TrenComercial::getJSONObject).toString();
+                    return "comercial" + GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesComerciales())), TrenComercial::getJSONObject).toString();
                 }
             } catch (FileDoesntExistException e) {
                 return "El archivo no existe";
@@ -73,8 +71,21 @@ public class SwitchMenuTrenes <T extends Tren> {
         tren.setPatente(sc.nextLine());
         System.out.println("Ubicacion: ");
         tren.setUbicacion(sc.nextLine());
-        System.out.println("Capacidad:");
-        tren.setCapacidad(sc.nextInt());
+        while (true) {
+            System.out.println("Capacidad:");
+            String input = sc.nextLine();
+            try {
+                double capacidad = Double.parseDouble(input);
+                if (capacidad <= 0) {
+                    System.out.println("La capacidad debe ser mayor a 0. Intente de nuevo.");
+                } else {
+                    tren.setCapacidad(capacidad);
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada no válida. Por favor ingrese un número válido.");
+            }
+        }
         tren.setEstado(true);
         tren.setEstadoViaje(false);
         System.out.println("----------------------------------------------------------------------------------------------------");
@@ -93,7 +104,7 @@ public class SwitchMenuTrenes <T extends Tren> {
         Tren tren = ingresarTren();
         try {
             if (tren instanceof TrenDeCarga) {
-                return GestionTren.agregarRegistro(tren, TrenDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
+                return GestionTren.agregarRegistro(tren, TrenDeCarga::getJSONObject, almacenamiento.getTrenesDeCarga());
             } else {
                 return GestionTren.agregarRegistro(tren, TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
             }

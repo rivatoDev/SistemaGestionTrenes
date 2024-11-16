@@ -171,4 +171,14 @@ public class GestionRuta {
         }
         throw new NullPointerException();
     }
+
+    public Ruta verificarRutaID(String id, String archivo) {
+        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+        for (Ruta r: gu.rutas) {
+            if (Objects.equals(id, r.getContadorID())){
+                return r;
+            }
+        }
+        throw new NullPointerException();
+    }
 }

@@ -1,8 +1,18 @@
-[{
-  "estadoViaje": false,
-  "estado": true,
-  "ubicacion": "neco",
-  "modelo": "arg",
-  "vagones": [],
-  "patente": "io3123"
-}]
+[
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "neco",
+    "modelo": "arg",
+    "vagones": [],
+    "patente": "io3123"
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Mar del plata",
+    "modelo": "nivea",
+    "vagones": [],
+    "patente": "ASD123QQ"
+  }
+]

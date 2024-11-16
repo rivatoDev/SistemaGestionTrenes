@@ -1,5 +1,10 @@
 package org.example.Clases.Menus;
 
+import org.example.Clases.FamiliaPersona.Maquinista;
+import org.example.Clases.FamiliaTren.GestionTren;
+import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
@@ -63,23 +68,42 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-//    public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
-//        Ruta r = new Ruta();
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("----------------------------------------------------------------------------------------------------");
-//        System.out.println("Tren: ");
-//        int num = seleccionarTipo();
-//        if(num == 1) {
-//            SwitchMenuTrenes.mostrarTrenes(almacenamiento.getTrenesDeCarga());
-//        }
-//
-//        r.setIdVagon(sc.nextLine());
-//        System.out.println("Capacidad: ");
-//        v.setCapacidad(sc.nextDouble());
-//        System.out.println("----------------------------------------------------------------------------------------------------");
-//        return v;
-//    }
+    public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
+        Ruta r = new Ruta();
+        GestionTren gt = new GestionTren<>();
+        Scanner sc = new Scanner(System.in);
+        Maquinista maquinista = new Maquinista("44535612", "joauqin", "ortega", "25");
+
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        if(SwitchMenuTrenes.mostrarTrenes(almacenamiento).toString().contains("carga")){
+            System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesDeCarga())), TrenDeCarga::getJSONObject).toString());
+            Tren tren = new TrenDeCarga();
+            gt = GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesDeCarga())), TrenDeCarga::getJSONObject);
+            System.out.println("Ingrese la patente del tren a agregar a la ruta: ");
+            String patente = sc.nextLine();
+            tren = gt.verificarTren(patente);
+            r.setTren(tren);
+        }else{
+            System.out.println(GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesComerciales())), TrenComercial::getJSONObject).toString());
+            Tren tren = new TrenComercial();
+            gt = GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getTrenesComerciales())), TrenComercial::getJSONObject);
+            System.out.println("Ingrese la patente del tren a agregar a la ruta: ");
+            String patente = sc.nextLine();
+            tren = gt.verificarTren(patente);
+            r.setTren(tren);
+        }
+
+        System.out.println("Salida: ");
+        StringBuilder sb = new StringBuilder(sc.nextLine());
+        r.setSalida(sb);
+        System.out.println("Llegada: ");
+        StringBuilder sbb = new StringBuilder(sc.nextLine());
+        r.setLlegada(sbb);
+        r.setMaquinista(maquinista);
+        System.out.println("Fecha: ");
+        r.setFecha(sc.nextInt());
+        return r;
+    }
 
 
     /**
@@ -87,51 +111,42 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-//    public static boolean agregarRuta (Almacenamiento almacenamiento) {
-//        Scanner sc = new Scanner(System.in);
-//        GestionRuta gr;
-//        Ruta r = ingresarRuta(almacenamiento);
-//        try {
-//            return GestionRuta.agregarRegistro(r, almacenamiento.getVagonesDeCarga());
-//        } catch (ElementAlreadyExistsException e) {
-//            System.out.println("El vagon ya existe");
-//        } catch (NullPointerException e) {
-//            System.out.println("ID invalido");
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Opcion incorrecta.");
-//        }
-//        return false;
-//    }
+    public static boolean agregarRuta (Almacenamiento almacenamiento) {
+        Scanner sc = new Scanner(System.in);
+        GestionRuta gr;
+        Ruta r = ingresarRuta(almacenamiento);
+        try {
+            return GestionRuta.agregarRegistro(r, almacenamiento.getRutas());
+        } catch (ElementAlreadyExistsException e) {
+            System.out.println("La ruta ya existe");
+        } catch (NullPointerException e) {
+            System.out.println("ID invalido");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opcion incorrecta.");
+        }
+        return false;
+    }
     //Alta
 
     //Baja
-//    public static boolean eliminarVagon (Almacenamiento almacenamiento) {
-//        Scanner sc = new Scanner(System.in);
-//        GestionVagon<Vagon> gv;
-//
-//        try {
-//            Vagon vagon = seleccionarTipo();
-//            if(vagon instanceof VagonDeCarga) {
-//                gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getVagonesDeCarga())), VagonDeCarga::getJSONObject);
-//                System.out.println(gv);
-//                System.out.println("ID: ");
-//                return GestionVagon.eliminarRegistro(gv.verificarVagon(sc.nextLine()), VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
-//            } else {
-//                gv = GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getVagonesComerciales())), VagonComercial::getJSONObject);
-//                System.out.println(gv);
-//                System.out.println(gv.verificarVagon(sc.nextLine()));
-//                System.out.println("ID: ");
-//                return GestionVagon.eliminarRegistro(gv.verificarVagon(sc.nextLine()), VagonComercial::getJSONObject, almacenamiento.getVagonesComerciales());
-//            }
-//        } catch (FileDoesntExistException e) {
-//            System.out.println("El archivo no existe.");
-//        } catch (NullPointerException e) {
-//            System.out.println("ID invalido");
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Opcion incorrecta.");
-//        }
-//        return false;
-//    }
+    public static boolean eliminarRuta (Almacenamiento almacenamiento) {
+        Scanner sc = new Scanner(System.in);
+        GestionRuta gr;
+
+        try {
+                gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getRutas())));
+                System.out.println(gr);
+                System.out.println("ID: ");
+                return GestionRuta.eliminarRegistro(gr.verificarRutaID(sc.nextLine(), almacenamiento.getRutas()), almacenamiento.getRutas());
+        } catch (FileDoesntExistException e) {
+            System.out.println("El archivo no existe.");
+        } catch (NullPointerException e) {
+            System.out.println("ID invalido");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Opcion incorrecta.");
+        }
+        return false;
+    }
     //Baja
 
     //Modificacion
@@ -210,42 +225,42 @@ public class SMenuRutas {
      * @param op
      * @param almacenamiento
      */
-//    public static void administrarRutas (int op, Almacenamiento almacenamiento) {
-//        int subOp;
-//        Scanner sc = new Scanner(System.in);
-//        switch (op) {
-//            case 0:
-//                break;
-//            case 1:
-//                try {
-//                    if(agregarRuta(almacenamiento)) {
-//                        System.out.println("El vagon se agrego exitosamente");
-//                    }
-//                } catch (ElementAlreadyExistsException e) {
-//                    System.out.println("El Vagon ya existe");
-//                }
-//                break;
-//            case 2:
-//                do {
-//                    System.out.println(Menu.modificarRuta());
-//                    System.out.println("Opcion: ");
-//                    subOp = sc.nextInt();
-//                        if(modificarRuta(subOp, almacenamiento)) {
-//                            System.out.println("La ruta se modifico exitosamente");
-//                        }
-//                        else {
-//                            System.out.println("Ocurrio un error");
-//                        }
-//                } while (subOp != 0);
-//                break;
-////            case 3:
-////                if (eliminarRuta(almacenamiento)) {
-////                    System.out.println("El vagon se elimino con exito");
-////                }
-////                break;
-//            case 3:
-//                System.out.println(mostrarRutas(almacenamiento));
-//                break;
-//        }
-//    }
+    public static void administrarRutas (int op, Almacenamiento almacenamiento) {
+        int subOp;
+        Scanner sc = new Scanner(System.in);
+        switch (op) {
+            case 0:
+                break;
+            case 1:
+                try {
+                    if(agregarRuta(almacenamiento)) {
+                        System.out.println("El vagon se agrego exitosamente");
+                    }
+                } catch (ElementAlreadyExistsException e) {
+                    System.out.println("El Vagon ya existe");
+                }
+                break;
+            case 2:
+                do {
+                    System.out.println(Menu.modificarRuta());
+                    System.out.println("Opcion: ");
+                    subOp = sc.nextInt();
+                        if(modificarRuta(subOp, almacenamiento)) {
+                            System.out.println("La ruta se modifico exitosamente");
+                        }
+                        else {
+                            System.out.println("Ocurrio un error");
+                        }
+                } while (subOp != 0);
+                break;
+            case 3:
+                if (eliminarRuta(almacenamiento)) {
+                    System.out.println("El vagon se elimino con exito");
+                }
+                break;
+            case 4:
+                System.out.println(mostrarRutas(almacenamiento));
+                break;
+        }
+    }
 }

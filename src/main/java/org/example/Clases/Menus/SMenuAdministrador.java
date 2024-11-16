@@ -34,7 +34,7 @@ public class SMenuAdministrador {
                     System.out.println(Menu.menuRutas());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
-//                    SMenuRutas.administrarRutas(subOp, almacenamiento);
+                    SMenuRutas.administrarRutas(subOp, almacenamiento);
                 } while (subOp != 0);
                 break;
             case 4:
