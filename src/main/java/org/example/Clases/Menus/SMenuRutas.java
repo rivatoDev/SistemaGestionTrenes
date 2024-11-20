@@ -1,14 +1,10 @@
-package org.example.Clases.Menus;
+/*package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.Maquinista;
 import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.GestionVagon;
-import org.example.Clases.FamiliaVagon.Vagon;
-import org.example.Clases.FamiliaVagon.VagonComercial;
-import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Clases.GestionRuta;
 import org.example.Clases.Ruta;
 import org.example.Excepciones.ElementAlreadyExistsException;
@@ -68,7 +64,7 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-    public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
+    /*public static Ruta  ingresarRuta (Almacenamiento almacenamiento) {
         Ruta r = new Ruta();
         GestionTren gt = new GestionTren<>();
         Scanner sc = new Scanner(System.in);
@@ -111,7 +107,7 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-    public static boolean agregarRuta (Almacenamiento almacenamiento) {
+    /*public static boolean agregarRuta (Almacenamiento almacenamiento) {
         Scanner sc = new Scanner(System.in);
         GestionRuta gr;
         Ruta r = ingresarRuta(almacenamiento);
@@ -157,7 +153,7 @@ public class SMenuRutas {
      * @param almacenamiento
      * @return
      */
-    public static boolean modificarRuta (int op, Almacenamiento almacenamiento) {
+    /*public static boolean modificarRuta (int op, Almacenamiento almacenamiento) {
         Scanner sc = new Scanner(System.in);
         GestionRuta gr;
         Ruta rutaModificada = new Ruta();
@@ -225,7 +221,7 @@ public class SMenuRutas {
      * @param op
      * @param almacenamiento
      */
-    public static void administrarRutas (int op, Almacenamiento almacenamiento) {
+    /*public static void administrarRutas (int op, Almacenamiento almacenamiento) {
         int subOp;
         Scanner sc = new Scanner(System.in);
         switch (op) {
@@ -264,3 +260,4 @@ public class SMenuRutas {
         }
     }
 }
+*/

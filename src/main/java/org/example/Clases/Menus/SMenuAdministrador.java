@@ -16,10 +16,12 @@ public class SMenuAdministrador {
             case 0:
                 break;
             case 1:
-                System.out.println(Menu.menuTrenes());
-                System.out.println("Opcion: ");
-                subOp = sc.nextInt();
-                SwitchMenuTrenes.administrarTrenes(subOp, almacenamiento);
+                do {
+                    System.out.println(Menu.menuTrenes());
+                    System.out.println("Opcion: ");
+                    subOp = sc.nextInt();
+                    SMenuTrenes.administrarTrenes(subOp, almacenamiento);
+                } while(subOp != 0);
                 break;
             case 2:
                 do {
@@ -29,21 +31,21 @@ public class SMenuAdministrador {
                     SMenuVagones.administrarVagones(subOp, almacenamiento);
                 } while (subOp != 0);
                 break;
-            case 3:
+            /*case 3:
                 do {
                     System.out.println(Menu.menuRutas());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     SMenuRutas.administrarRutas(subOp, almacenamiento);
                 } while (subOp != 0);
-                break;
+                break;*/
             case 4:
                 do {
                     System.out.println(Menu.configuracion());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     sc.nextLine();
-                    SwitchMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
+                    SMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
                 } while (subOp != 0);
             default:
                 System.out.println("Opcion no valida");

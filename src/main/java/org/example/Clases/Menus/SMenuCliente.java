@@ -1,7 +1,6 @@
 package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.JSONObjectEliminatedException;
@@ -9,8 +8,8 @@ import org.example.Excepciones.WrongUserException;
 
 import java.util.Scanner;
 
-public class SwitchMenuCliente {
-    public SwitchMenuCliente() {
+public class SMenuCliente {
+    public SMenuCliente() {
     }
 
     public static void usuarioCliente (int op, Usuario usuario, String archivo) throws WrongUserException {
@@ -47,7 +46,7 @@ public class SwitchMenuCliente {
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
                     sc.nextLine();
-                    SwitchMenuPrincipal.configuracion(subOp, usuario, archivo);
+                    SMenuPrincipal.configuracion(subOp, usuario, archivo);
                 } while (subOp != 0);
                 break;
             default:

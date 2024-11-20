@@ -2,9 +2,7 @@ package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.ElementAlreadyExistsException;
-import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.WrongPasswordException;
 import org.example.Main;
 import org.json.JSONArray;
@@ -12,8 +10,8 @@ import org.json.JSONArray;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class SwitchMenuPrincipal {
-    public SwitchMenuPrincipal() {
+public class SMenuPrincipal {
+    public SMenuPrincipal() {
     }
 
     public static boolean modificarDatos(int op, Usuario usuario, String archivo) {

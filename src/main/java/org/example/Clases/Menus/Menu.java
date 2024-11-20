@@ -73,9 +73,9 @@ public class Menu {
     public static String modificarTren () {
         return "--------------------------------------------------MODIFICAR--------------------------------------------------\n" +
                 "1. Modelo." + '\n' +
-                "2. Patente" + "\n" +
-                "3. Ubicacion" + "\n" +
-                "4. Capacidad" + "\n" +
+                "2. Ubicacion" + "\n" +
+                "3. Capacidad" + "\n" +
+                "4. Agregar Vagon" + "\n" +
                 "0. Volver." + '\n' +
                 "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }

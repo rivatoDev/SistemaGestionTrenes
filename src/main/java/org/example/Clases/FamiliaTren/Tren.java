@@ -101,23 +101,22 @@ public abstract class Tren {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tren tren = (Tren) o;
-        return estado && tren.estado &&
-                Objects.equals(modelo.toString(), tren.modelo.toString()) &&
-                Objects.equals(patente.toString(), tren.patente.toString());
+        return estado && tren.estado && Objects.equals(patente.toString(), tren.patente.toString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estado, modelo.toString(), patente.toString());
+        return Objects.hash(estado, patente.toString());
     }
     //Comparacion
 
     //Mostrar
     @Override
     public String toString() {
-        return  "Modelo: " + this.modelo + "\n" +
-                "Patente: " + this.patente + "\n" +
-                "Ubicacion: " + this.ubicacion + "\n";
+        return "Patente: " + this.patente + "\n" +
+               "Modelo: " + this.modelo + "\n" +
+               "Capacidad: " + this.capacidad + "\n" +
+               "Ubicacion: " + this.ubicacion + "\n";
     }
     //Mostrar
 
@@ -129,8 +128,9 @@ public abstract class Tren {
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
         json.put("estado", this.estado);
-        json.put("modelo", this.modelo);
         json.put("patente", this.patente);
+        json.put("modelo", this.modelo);
+        json.put("capacidad", this.capacidad);
         json.put("ubicacion", this.ubicacion);
         json.put("estadoViaje", this.estadoViaje);
         return json;
@@ -146,6 +146,7 @@ public abstract class Tren {
                 json.has("modelo") &&
                 json.has("patente") &&
                 json.has("ubicacion") &&
+                json.has("capacidad") &&
                 json.has("estadoViaje") &&
                 json.has("vagones");
     }

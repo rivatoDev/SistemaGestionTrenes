@@ -2,17 +2,17 @@
   {
     "estadoViaje": false,
     "estado": true,
-    "ubicacion": "neco",
-    "modelo": "arg",
+    "ubicacion": "Mar Del Plata",
+    "modelo": "Avon",
     "vagones": [],
-    "patente": "io3123"
+    "patente": "ASD123QQ"
   },
   {
     "estadoViaje": false,
     "estado": true,
-    "ubicacion": "Mar del plata",
-    "modelo": "nivea",
+    "ubicacion": "neco",
+    "modelo": "arg",
     "vagones": [],
-    "patente": "ASD123QQ"
+    "patente": "io3123"
   }
 ]

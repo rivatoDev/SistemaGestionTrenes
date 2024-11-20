@@ -211,15 +211,15 @@ public class GestionTren<T extends Tren> {
     //Archivos
 
     public Tren verificarTren(String patente) {
-        for (Tren t : trenes) {
+        for (T t : trenes) {
             if (Objects.equals(t.getPatente(), patente)) {
                 if (t instanceof TrenDeCarga) {
-                    return (TrenDeCarga) t;
+                    return t;
                 } else if (t instanceof TrenComercial) {
-                    return (TrenComercial) t;
+                    return t;
                 }
             }
         }
-        throw new NullPointerException("No se encontró un tren con la patente especificada.");
+        return null;
     }
 }

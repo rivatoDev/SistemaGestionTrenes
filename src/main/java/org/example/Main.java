@@ -3,20 +3,13 @@ package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Clases.FamiliaTren.GestionTren;
-import org.example.Clases.FamiliaTren.Tren;
-import org.example.Clases.FamiliaTren.TrenComercial;
-import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.GestionVagon;
-import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
 import org.example.Clases.Menus.SMenuAdministrador;
-import org.example.Clases.Menus.SwitchMenuCliente;
+import org.example.Clases.Menus.SMenuCliente;
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.json.JSONTokener;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -66,7 +59,7 @@ public class Main {
                                 System.out.println("Opcion: ");
                                 subOp = sc.nextInt();
                                 sc.nextLine();
-                                SwitchMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
+                                SMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
                             } while (subOp != 0);
                         }
                     }
