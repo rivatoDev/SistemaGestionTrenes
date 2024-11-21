@@ -3,6 +3,7 @@ package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
 import org.example.Clases.Menus.SMenuAdministrador;
@@ -51,6 +52,7 @@ public class Main {
                                 System.out.println("Opcion: ");
                                 subOp = sc.nextInt();
                                 sc.nextLine();
+
                                 SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamiento);
                             } while (subOp != 0);
                         } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
@@ -137,13 +139,6 @@ public class Main {
         return null;
     }
     //Usuario
-
-    //Vagon
-//    public static Vagon ingresarVagon () {
-////        System.out.printl;2222
-//    }
-
-    //Vagon
 
     //Archivos
 

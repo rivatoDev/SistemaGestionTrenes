@@ -1,5 +1,5 @@
 [{
-  "estado": false,
+  "estado": true,
   "pasajeros": [],
   "idVagon": "678",
   "capacidad": 123

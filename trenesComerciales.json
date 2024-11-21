@@ -1,9 +1,14 @@
 [{
   "estadoViaje": false,
-  "estado": false,
+  "estado": true,
   "ubicacion": "Pinamar",
   "modelo": "Expreso Polar",
-  "vagones": [],
+  "vagones": [{
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "678",
+    "capacidad": 123
+  }],
   "patente": "qw12",
   "capacidad": 150
 }]

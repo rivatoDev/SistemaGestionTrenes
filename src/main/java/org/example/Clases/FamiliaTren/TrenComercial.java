@@ -20,11 +20,13 @@ public class    TrenComercial extends Tren {
     //Constructor
     public TrenComercial() {
         super();
+        this.capacidad = 0;
         this.vagones = new LinkedHashSet<>();
     }
 
-    public TrenComercial(String modelo, String patente, String ubicacion) {
+    public TrenComercial(String modelo, String patente, String ubicacion, int capacidad) {
         super(modelo, patente, ubicacion);
+        this.capacidad = capacidad;
         this.vagones = new LinkedHashSet<>();
     }
     //Constructor
@@ -33,6 +35,7 @@ public class    TrenComercial extends Tren {
     public LinkedHashSet<VagonComercial> getVagones() {
         return vagones;
     }
+    //Getter
 
     //Comparacion
     @Override
@@ -184,7 +187,7 @@ public class    TrenComercial extends Tren {
     public static LinkedHashSet<VagonComercial> getJSONArray (JSONArray json) {
         LinkedHashSet<VagonComercial> vagones = new LinkedHashSet<>();
         for(int i = 0; i < json.length(); i++) {
-            if(verificarJSON(json.getJSONObject(i))) {
+            if(VagonComercial.verificarJSON(json.getJSONObject(i))) {
                 vagones.add(VagonComercial.getJSONObject(json.getJSONObject(i)));
             } else {
                 throw new IllegalArgumentException();

@@ -21,11 +21,13 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     //Constructor
     public TrenDeCarga() {
         super();
+        this.capacidad = 0;
         this.vagones = new LinkedHashSet<>();
     }
 
-    public TrenDeCarga(String modelo, String patente, String ubicacion) {
+    public TrenDeCarga(String modelo, String patente, String ubicacion, double capacidad) {
         super(modelo, patente, ubicacion);
+        this.capacidad = capacidad;
         this.vagones = new LinkedHashSet<>();
     }
     //Constructor
@@ -80,7 +82,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
             throw new ElementAlreadyExistsException();
         } else if(!vagon.isEstado()){
             throw new JSONObjectEliminatedException();
-        } else  if (this.CalcularPeso() > Integer.parseInt(this.capacidad.toString())){
+        } else  if (this.CalcularPeso() > Double.parseDouble(this.capacidad.toString())){
             throw new OffLimitsException();
         } else {
             this.vagones.addLast(vagon);
@@ -120,7 +122,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
             }
             this.desacoplarVagon();
 
-            while(!this.vagones.isEmpty()) {
+            while(!set.isEmpty()) {
                 this.acoplarVagon(set.removeLast());
             }
         }
@@ -186,7 +188,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     public static LinkedHashSet<VagonDeCarga> getJSONArray (JSONArray json) {
         LinkedHashSet<VagonDeCarga> vagones = new LinkedHashSet<>();
         for(int i = 0; i < json.length(); i++) {
-            if(verificarJSON(json.getJSONObject(i))) {
+            if(VagonDeCarga.verificarJSON(json.getJSONObject(i))) {
                 vagones.add(VagonDeCarga.getJSONObject(json.getJSONObject(i)));
             } else {
                 throw new IllegalArgumentException();

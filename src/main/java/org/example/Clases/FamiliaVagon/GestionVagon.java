@@ -1,5 +1,7 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Clases.FamiliaTren.GestionTren;
+import org.example.Clases.FamiliaTren.Tren;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -74,9 +76,10 @@ public class GestionVagon<T extends Vagon> {
      */
     //Baja
     public boolean eliminarVagon (T t) {
-        if(!this.vagones.remove(t) || !t.isEstado()) {
+        if(!this.vagones.contains(t) || !t.isEstado()) {
             throw new NoSuchElementException();
         } else {
+            this.vagones.remove(t);
             t.setEstado(false);
             this.agregarVagon(t);
         }
@@ -93,9 +96,10 @@ public class GestionVagon<T extends Vagon> {
      */
     //Modificacion
     public boolean modificarVagon (T vagonViejo, T vagonNuevo) {
-        if(!this.vagones.remove(vagonViejo) || !vagonNuevo.isEstado()) {
+        if(!this.vagones.contains(vagonViejo) || !vagonNuevo.isEstado()) {
             throw new NoSuchElementException();
         } else {
+            this.vagones.remove(vagonViejo);
             return this.agregarVagon(vagonNuevo);
         }
     }
@@ -209,6 +213,25 @@ public class GestionVagon<T extends Vagon> {
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gv.convertirJSONArray().toString(2));
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean reactivarRegistro (String id, Function<JSONObject, Vagon> tipoVagon, String archivo) {
+        GestionVagon<Vagon> gt = new GestionVagon<>();
+        Vagon vagon;
+        for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
+            if(Objects.equals(v.getIdVagon(), id) && !v.isEstado()) {
+                vagon = v;
+                vagon.setEstado(true);
+            }
+            gt.getVagones().add(v);
+        }
+
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            bf.write(gt.convertirJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }

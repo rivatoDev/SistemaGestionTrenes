@@ -54,13 +54,14 @@ public class Menu {
     }
 
     public static String menuTrenes(){
-        return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------\n"+
+        return "---------------------------------------------MENU TRENES----------------------------------------------\n"+
                 "1. Añadir tren." + "\n" +
-                "2. Modificar tren."+ "\n" +
-                "3. Eliminar tren." + "\n" +
-                "4. Ver trenes" + "\n" +
+                "2. Reactivar tren." + "\n" +
+                "3. Modificar tren."+ "\n" +
+                "4. Eliminar tren." + "\n" +
+                "5. Ver trenes" + "\n" +
                 "0. Volver" + "\n" +
-                "--------------------------------------------MENU TRENES ADMNISTRADOR-----------------------------------------------";
+                "--------------------------------------------MENU TRENES-----------------------------------------------";
     }
 
     public static String menuTipoTren () {
@@ -76,6 +77,7 @@ public class Menu {
                 "2. Ubicacion" + "\n" +
                 "3. Capacidad" + "\n" +
                 "4. Agregar Vagon" + "\n" +
+                "5. Quitar Vagon" + "\n" +
                 "0. Volver." + '\n' +
                 "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
@@ -105,13 +107,13 @@ public class Menu {
     }
 
     public static String menuRutas(){
-        return "---------------------------------------------MENU TRENES ADMINISTRADOR----------------------------------------------\n"+
+        return "---------------------------------------------MENU RUTAS----------------------------------------------\n"+
                 "1. Añadir ruta." + "\n" +
                 "2. Modificar ruta."+ "\n" +
                 "3. Eliminar ruta." + "\n" +
                 "4. Ver rutas" + "\n" +
                 "0. Volver" + "\n" +
-                "--------------------------------------------MENU TRENES ADMNISTRADOR-----------------------------------------------";
+                "--------------------------------------------MENU RUTAS-----------------------------------------------";
     }
 
     public static String modificarRuta () {

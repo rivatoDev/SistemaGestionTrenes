@@ -6,6 +6,9 @@ import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
+import org.example.Clases.FamiliaVagon.VagonComercial;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
+import org.example.Clases.GestionRuta;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.LowCapacityException;
@@ -102,8 +105,23 @@ public class SMenuTrenes<T extends Tren> {
     public static boolean modificarTren (int op, Tren tren, Function<JSONObject, Tren> tipoTren, String trenes, String vagones) {
         Scanner sc = new Scanner(System.in);
         Number capacidad;
+        Function<Vagon, Boolean> tipoAcoplarVagon;
+        Function<Vagon, Boolean> tipoQuitarVagon;
+        Function<JSONObject, Vagon> tipogetJSONObject;
         GestionTren<Tren> gt = leerTrenes(tipoTren, trenes);
+        GestionVagon<Vagon> gv;
+        Vagon v;
 
+        if(tren instanceof TrenDeCarga) {
+            tipoAcoplarVagon = vagon -> ((TrenDeCarga) tren).acoplarVagon((VagonDeCarga) vagon);
+            tipoQuitarVagon = vagon -> ((TrenDeCarga) tren).quitarVagon((VagonDeCarga) vagon);
+            tipogetJSONObject = VagonDeCarga::getJSONObject;
+        } else {
+            tipoAcoplarVagon = vagon -> ((TrenComercial) tren).acoplarVagon((VagonComercial) vagon);
+            tipoQuitarVagon = vagon -> ((TrenComercial) tren).quitarVagon((VagonComercial) vagon);
+            tipogetJSONObject = VagonComercial::getJSONObject;
+        }
+        gv = SMenuVagones.leerVagones(tipogetJSONObject, vagones);
         System.out.println(gt.verificarTren(tren.getPatente()));
 
         if(new File(trenes).length() > 0) {
@@ -119,13 +137,12 @@ public class SMenuTrenes<T extends Tren> {
                     tren.setUbicacion(sc.nextLine());
                     break;
                 case 3:
-                    if(tren instanceof TrenDeCarga) {
+                    System.out.println("Capacidad: ");
+                    if (tren instanceof TrenDeCarga) {
                         capacidad = sc.nextDouble();
                     } else {
                         capacidad = sc.nextInt();
                     }
-                    sc.nextLine();
-                    System.out.println("Capacidad: ");
                     try {
                         tren.setCapacidad(capacidad);
                     } catch (NumberFormatException e) {
@@ -135,7 +152,17 @@ public class SMenuTrenes<T extends Tren> {
                     }
                     break;
                 case 4:
-
+                    System.out.println(gv);
+                    System.out.println("ID: ");
+                    v = gv.verificarVagon(sc.nextLine());
+                    tipoAcoplarVagon.apply(v);
+                    GestionVagon.eliminarRegistro(v, tipogetJSONObject, vagones);
+                    break;
+                case 5:
+                    System.out.println("ID: ");
+                    v = gv.verificarVagon(sc.nextLine());
+                    tipoQuitarVagon.apply(v);
+                    GestionVagon.reactivarRegistro(v.getIdVagon(), tipogetJSONObject, vagones);
                     break;
                 default:
                     throw new IllegalArgumentException("Opcion no valida.");
@@ -162,10 +189,18 @@ public class SMenuTrenes<T extends Tren> {
                 }
                 break;
             case 2:
+                if (GestionTren.reactivarRegistro(tren.getPatente(), tipoTren, trenes)) {
+                    System.out.println("El tren se recupero exitosamente");
+                } else {
+                    System.out.println("Patente inexistente");
+                }
+                break;
+            case 3:
                 do {
                     System.out.println(Menu.modificarTren());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
+                    sc.nextLine();
                     try {
                         if(subOp != 0) {
                             if(modificarTren(subOp, tren, tipoTren, trenes, vagones)) {
@@ -180,14 +215,14 @@ public class SMenuTrenes<T extends Tren> {
                     }
                 } while (subOp != 0);
                 break;
-            case 3:
+            case 4:
                 if (GestionTren.eliminarRegistro(gestor.verificarTren(tren.getPatente()), tipoTren, trenes)) {
                     System.out.println("El tren se elimino con exito");
                 } else {
                     System.out.println("No se encontró");
                 }
                 break;
-            case 4:
+            case 5:
                 System.out.println(gestor);
                 break;
         }
@@ -221,7 +256,11 @@ public class SMenuTrenes<T extends Tren> {
                 }
 
                 if(op < 4) {
-                    System.out.println(gt);
+                    if(op == 2) {
+                        System.out.println(gt.mostrarEliminados());
+                    } else {
+                        System.out.println(gt);
+                    }
                     System.out.println("Patente: ");
                     tren.setPatente(sc.nextLine());
                     tren = gt.verificarTren(tren.getPatente());

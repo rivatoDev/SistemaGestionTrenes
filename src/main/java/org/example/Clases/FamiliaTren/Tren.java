@@ -105,12 +105,12 @@ public abstract class Tren {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tren tren = (Tren) o;
-        return estado && tren.estado && Objects.equals(patente.toString(), tren.patente.toString());
+        return Objects.equals(patente.toString(), tren.patente.toString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(estado, patente.toString());
+        return Objects.hash(patente.toString());
     }
     //Comparacion
 
@@ -157,7 +157,6 @@ public abstract class Tren {
     //JSON
 
     //Viajes
-
     /**
      * Metodo para iniciar un viaje.
      * Cambia el estadoViaje a true si el tren no se encuentra en ningun viaje.

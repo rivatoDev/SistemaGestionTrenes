@@ -46,7 +46,21 @@ public class GestionTren<T extends Tren> {
             if(t.isEstado()) {
                 sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
                 sb.append(t);
+                sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n\n");
+            }
+        }
+        sb.append("---------------------------------------------------------------------------------------------------------------------------------------\n");
+        return sb.toString();
+    }
+
+    public String mostrarEliminados() {
+        StringBuilder sb = new StringBuilder("\n");
+        sb.append("---------------------------------------------------------------------------------------------------------------------------------------\n");
+        for(T t: this.trenes) {
+            if(!t.isEstado()) {
                 sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n");
+                sb.append(t);
+                sb.append("------------------------------------------------------------TREN-------------------------------------------------------------\n\n");
             }
         }
         sb.append("---------------------------------------------------------------------------------------------------------------------------------------\n");
@@ -76,9 +90,10 @@ public class GestionTren<T extends Tren> {
      * @return true si se pudo eliminar el tren sin problema.
      */
     public boolean eliminarTren (T t) {
-        if(!this.trenes.remove(t) || !t.isEstado()) {
+        if(!this.trenes.contains(t) || !t.isEstado()) {
             throw new NoSuchElementException();
         } else {
+            this.trenes.remove(t);
             t.setEstado(false);
             this.agregarTren(t);
         }
@@ -95,9 +110,10 @@ public class GestionTren<T extends Tren> {
      * @throws NoSuchElementException si sel tren a modificar no existe.
      */
     public boolean modificarTren (T trenViejo, T trenNuevo) {
-        if(!this.trenes.remove(trenViejo) || !trenNuevo.isEstado()) {
+        if(!this.trenes.contains(trenViejo) || !trenNuevo.isEstado()) {
             throw new NoSuchElementException();
         } else {
+            this.trenes.remove(trenViejo);
             return this.agregarTren(trenNuevo);
         }
     }
@@ -199,6 +215,25 @@ public class GestionTren<T extends Tren> {
             gt.agregarTren(t);
         }
         gt.modificarTren(trenViejo, trenNuevo);
+
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
+            bf.write(gt.convertirJSONArray().toString(2));
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean reactivarRegistro (String patente, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionTren<Tren> gt = new GestionTren<>();
+        Tren tren;
+        for(Tren t: GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getTrenes()) {
+            if(Objects.equals(t.getPatente(), patente) && !t.isEstado()) {
+                tren = t;
+                tren.setEstado(true);
+            }
+            gt.getTrenes().add(t);
+        }
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gt.convertirJSONArray().toString(2));

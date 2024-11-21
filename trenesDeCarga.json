@@ -2,6 +2,15 @@
   {
     "estadoViaje": false,
     "estado": true,
+    "ubicacion": "Pinamar",
+    "modelo": "Lenovo",
+    "vagones": [],
+    "patente": "123",
+    "capacidad": 400.4
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
     "ubicacion": "CABA",
     "modelo": "A-Train",
     "vagones": [],
@@ -16,14 +25,5 @@
     "vagones": [],
     "patente": "789w",
     "capacidad": 234.7
-  },
-  {
-    "estadoViaje": false,
-    "estado": false,
-    "ubicacion": "Pinamar",
-    "modelo": "Lenovo",
-    "vagones": [],
-    "patente": "123",
-    "capacidad": 400.4
   }
 ]
