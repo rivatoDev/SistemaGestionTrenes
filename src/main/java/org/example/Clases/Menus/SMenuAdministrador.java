@@ -1,14 +1,21 @@
 package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.Usuario;
-
 import java.util.Scanner;
 
-
+/**
+ * Clase que contiene el menu para poder gestionar a los usuarios administradores
+ */
 public class SMenuAdministrador {
     public SMenuAdministrador() {
     }
 
+    /**
+     * Menu principal del administrador.
+     * @param op la opcion seleccionada para el switch.
+     * @param usuario El usuario con el que se inicio sesion.
+     * @param almacenamiento la clase que contiene los nombres de todos los archivos del sistema.
+     */
     public static void usuarioAdministrador (int op, Usuario usuario, Almacenamiento almacenamiento) {
         int subOp = 0;
         Scanner sc = new Scanner(System.in);

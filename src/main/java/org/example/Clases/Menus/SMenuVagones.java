@@ -1,9 +1,5 @@
 package org.example.Clases.Menus;
 
-import org.example.Clases.FamiliaTren.GestionTren;
-import org.example.Clases.FamiliaTren.Tren;
-import org.example.Clases.FamiliaTren.TrenComercial;
-import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
@@ -19,6 +15,9 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.function.Function;
 
+/**
+ * Clase que contiene el menu para gestionar los vagones.
+ */
 public class SMenuVagones {
     public SMenuVagones() {}
 
@@ -53,6 +52,13 @@ public class SMenuVagones {
     }
 
     //Mostrar
+
+    /**
+     * Lee todos los vagones de un archivo.
+     * @param tipoVagon Function con el metodo getJSONObject del tipo de vagon.
+     * @param archivo Nombre del archivo que contiene los vagones.
+     * @return Una clase gestora que contiene todos los vagones del archivo.
+     */
     public static GestionVagon<Vagon> leerVagones (Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gv = null;
         try {
@@ -102,7 +108,6 @@ public class SMenuVagones {
     //Alta
 
     //Modificacion
-
     /**
      * Modifica la capacidad del vagon, el id es inmutable.
      * @param op el numero del menu a acceder.
@@ -143,6 +148,14 @@ public class SMenuVagones {
     }
     //Modificacion
 
+    /**
+     * Switch para gestionar los vagones.
+     * @param op Opcion a acceder
+     * @param vagon Vagon a utilizar.
+     * @param gestor El gestor que contiene todos los vagones.
+     * @param tipoVagon Function de el metodo GetJSONObject del tipo de vagon.
+     * @param archivo Nombre del archivo a utilizar.
+     */
     public static void switchVagones (int op, Vagon vagon, GestionVagon<Vagon> gestor, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         int subOp;
         Scanner sc = new Scanner(System.in);
@@ -160,6 +173,13 @@ public class SMenuVagones {
                 }
                 break;
             case 2:
+                if(GestionVagon.reactivarRegistro(vagon.getIdVagon(), tipoVagon, archivo)) {
+                    System.out.println("El vagon se recupero exitosamente");
+                } else {
+                    System.out.println("Vagon inexistente");
+                }
+                break;
+            case 3:
                 do {
                     System.out.println(Menu.modificarVagon());
                     System.out.println("Opcion: ");
@@ -177,14 +197,14 @@ public class SMenuVagones {
                     }
                 } while (subOp != 0);
                 break;
-            case 3:
+            case 4:
                 if (GestionVagon.eliminarRegistro(gestor.verificarVagon(vagon.getIdVagon()), tipoVagon, archivo)) {
                     System.out.println("El vagon se elimino con exito");
                 } else {
                     System.out.println("No se encontro.");
                 }
                 break;
-            case 4:
+            case 5:
                 System.out.println(gestor);
                 break;
         }
@@ -219,7 +239,11 @@ public class SMenuVagones {
                 }
 
                 if (op < 4) {
-                    System.out.println(gv);
+                    if(op == 2) {
+                        System.out.println(gv.mostrarEliminados());
+                    } else {
+                        System.out.println(gv);
+                    }
                     System.out.println("ID: ");
                     vagon = gv.verificarVagon(sc.nextLine());
                     if(vagon == null) {

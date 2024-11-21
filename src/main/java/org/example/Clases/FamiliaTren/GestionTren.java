@@ -224,6 +224,13 @@ public class GestionTren<T extends Tren> {
         return true;
     }
 
+    /**
+     * Recupera un tren que fue eliminado.
+     * @param patente la patente del tren a eliminar
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @param archivo el archivo a usar.
+     * @return true si se pudo recuperar el
+     */
     public static boolean reactivarRegistro (String patente, Function<JSONObject, Tren> tipoTren, String archivo) {
         GestionTren<Tren> gt = new GestionTren<>();
         Tren tren;
@@ -244,6 +251,11 @@ public class GestionTren<T extends Tren> {
     }
     //Archivos
 
+    /**
+     * Verifica que el tren exista dentro de la clase gestora.
+     * @param patente la patente del tren a buscar.
+     * @return Si el tren existe lo devuelve con todos sus datos, caso contrario null.
+     */
     public Tren verificarTren(String patente) {
         for (T t : trenes) {
             if (Objects.equals(t.getPatente(), patente)) {

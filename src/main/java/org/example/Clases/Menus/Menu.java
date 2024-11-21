@@ -3,56 +3,52 @@ package org.example.Clases.Menus;
 import org.example.Clases.FamiliaPersona.Usuario;
 
 public class Menu {
-    public Menu() {}
+    public Menu() {
+    }
 
+    //Usuario
     public static String MenuPrincipal() {
         return
                 "\n--------------------------------------------------INICIO--------------------------------------------------\n" +
-                "1. Iniciar Sesion" + '\n' +
-                "2. Crear Usuario" + '\n' +
-                "0. Salir" + '\n' +
-                "--------------------------------------------------INICIO--------------------------------------------------";
+                        "1. Iniciar Sesion" + '\n' +
+                        "2. Crear Usuario" + '\n' +
+                        "0. Salir" + '\n' +
+                        "--------------------------------------------------INICIO--------------------------------------------------";
     }
 
-    public static String menuCliente () {
-        return
-                "--------------------------------------------------CLIENTE--------------------------------------------------\n" +
-                "1. Sacar Entrada" + '\n' +
-                "2. Configuracion" + '\n' +
-                "0. Cerrar Sesion" + '\n' +
-                "--------------------------------------------------CLIENTE--------------------------------------------------";
+    public static String configuracion() {
+        return "--------------------------------------------------CONFIGURACION--------------------------------------------------\n" +
+                "1. Modificar Datos" + '\n' +
+                "2. Eliminar Usuario." + '\n' +
+                "0. Volver." + '\n' +
+                "--------------------------------------------------CONFIGURACION--------------------------------------------------";
     }
 
+    public static String modificarDatos() {
+        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n" +
+                "1. DNI." + '\n' +
+                "2. Nombre." + '\n' +
+                "3. Apellido." + '\n' +
+                "4. Nombre De Usuario." + '\n' +
+                "5. Clave." + '\n' +
+                "0. Volver." + '\n' +
+                "--------------------------------------------------DATOS PERSONALES--------------------------------------------------";
+    }
+    //Usuario
+
+    //Administrador
     public static String menuAdministrador () {
         return
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
-                "1. Gestionar Trenes" + '\n' +
-                "2. Gestionar Vagones" + '\n' +
-                "3. Gestionar Rutas" + "\n" +
-                "4. Configuracion" + '\n' +
-                "0. Cerrar Sesion" + '\n' +
-                "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
+                        "1. Gestionar Trenes" + '\n' +
+                        "2. Gestionar Vagones" + '\n' +
+                        "3. Gestionar Rutas" + "\n" +
+                        "4. Configuracion" + '\n' +
+                        "0. Cerrar Sesion" + '\n' +
+                        "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
     }
 
-    public static String configuracion () {
-        return "--------------------------------------------------CONFIGURACION--------------------------------------------------\n" +
-               "1. Modificar Datos" + '\n' +
-               "2. Eliminar Usuario." + '\n' +
-               "0. Volver." + '\n' +
-               "--------------------------------------------------CONFIGURACION--------------------------------------------------";
-    }
-
-    public static String modificarDatos () {
-        return "--------------------------------------------------DATOS PERSONALES--------------------------------------------------\n" +
-               "1. DNI." + '\n' +
-               "2. Nombre." + '\n' +
-               "3. Apellido." + '\n' +
-               "4. Nombre De Usuario." + '\n' +
-               "5. Clave." + '\n' +
-               "0. Volver." + '\n' +
-               "--------------------------------------------------DATOS PERSONALES--------------------------------------------------";
-    }
-
+    //Trenes
     public static String menuTrenes(){
         return "---------------------------------------------MENU TRENES----------------------------------------------\n"+
                 "1. Añadir tren." + "\n" +
@@ -81,15 +77,18 @@ public class Menu {
                 "0. Volver." + '\n' +
                 "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
+    //Trenes
 
+    //Vagones
     public static String menuVagones () {
         return "--------------------------------------------------VAGONES--------------------------------------------------\n" +
-               "1. Agregar Vagon." + '\n' +
-               "2. Modificar Vagon." + '\n' +
-               "3. Eliminar Vagon." + '\n' +
-               "4. Mostrar Vagones." + '\n' +
-               "0. Volver." + '\n' +
-               "--------------------------------------------------VAGONES--------------------------------------------------";
+                "1. Agregar Vagon." + '\n' +
+                "2. Reactivar Vagon." + '\n' +
+                "3. Modificar Vagon." + '\n' +
+                "4. Eliminar Vagon." + '\n' +
+                "5. Mostrar Vagones." + '\n' +
+                "0. Volver." + '\n' +
+                "--------------------------------------------------VAGONES--------------------------------------------------";
     }
 
     public static String menuTipoVagon () {
@@ -101,11 +100,14 @@ public class Menu {
 
     public static String modificarVagon () {
         return "--------------------------------------------------MODIFICAR--------------------------------------------------\n" +
-               "1. Capacidad." + '\n' +
-               "0. Volver." + '\n' +
-               "--------------------------------------------------MODIFICAR--------------------------------------------------";
+                "1. Capacidad." + '\n' +
+                "0. Volver." + '\n' +
+                "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
+    //Vagones
+    //Administrador
 
+    //Rutas
     public static String menuRutas(){
         return "---------------------------------------------MENU RUTAS----------------------------------------------\n"+
                 "1. Añadir ruta." + "\n" +
@@ -124,4 +126,16 @@ public class Menu {
                 "0. Volver." + '\n' +
                 "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
+    //Rutas
+
+    //Cliente
+    public static String menuCliente () {
+        return
+                "--------------------------------------------------CLIENTE--------------------------------------------------\n" +
+                        "1. Sacar Entrada" + '\n' +
+                        "2. Configuracion" + '\n' +
+                        "0. Cerrar Sesion" + '\n' +
+                        "--------------------------------------------------CLIENTE--------------------------------------------------";
+    }
+    //Cliente
 }

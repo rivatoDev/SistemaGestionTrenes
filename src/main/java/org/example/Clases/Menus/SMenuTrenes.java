@@ -8,7 +8,6 @@ import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Clases.FamiliaVagon.VagonDeCarga;
-import org.example.Clases.GestionRuta;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.LowCapacityException;
@@ -20,10 +19,18 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.function.Function;
 
+/**
+ * Clase que contiene el menu para gestionar los trenes.
+ * @param <T> Clase que herede de Tren.
+ */
 public class SMenuTrenes<T extends Tren> {
     public SMenuTrenes() {
     }
 
+    /**
+     * Selecciona el tipo de tren.
+     * @return Un tren ya instanciado del tipo de tren especificado.
+     */
     public static Tren seleccionarTipo() {
         Scanner sc = new Scanner(System.in);
         Tren tren = null;
@@ -46,6 +53,12 @@ public class SMenuTrenes<T extends Tren> {
         return tren;
     }
 
+    /**
+     * Lee todos los trenes que se encuentran en un archivo.
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @param archivo El nombre del archivo a utilizar.
+     * @return una clase gestora con todos los trenes del archivo.
+     */
     public static GestionTren<Tren> leerTrenes (Function<JSONObject, Tren> tipoTren, String archivo) {
         GestionTren<Tren> gt;
         try {
@@ -61,6 +74,12 @@ public class SMenuTrenes<T extends Tren> {
     }
 
     //Alta
+
+    /**
+     * Carga un treen.
+     * @param tren Tren cuya unica funcion es poder saber que tipo de tren se va a cargar.
+     * @return el tren con los datos cargados.
+     */
     public static Tren ingresarTren(Tren tren) {
         Scanner sc = new Scanner(System.in);
         Number capacidad;
@@ -172,6 +191,15 @@ public class SMenuTrenes<T extends Tren> {
         return false;
     }
 
+    /**
+     * Switch para gestionar los trenes.
+     * @param op Opcion a usar en el switch.
+     * @param tren El tren a usar.
+     * @param gestor El gestor que contiene los trenes.
+     * @param tipoTren Function del metodo getJSONObject del tipo de tren.
+     * @param trenes Nombre del archivo que contiene trenes.
+     * @param vagones Nombre del archivo que contiene vagones.
+     */
     public static void switchTrenes(int op, Tren tren, GestionTren<Tren> gestor, Function<JSONObject, Tren> tipoTren, String trenes, String vagones) {
         int subOp;
         Scanner sc = new Scanner(System.in);
@@ -228,6 +256,11 @@ public class SMenuTrenes<T extends Tren> {
         }
     }
 
+    /**
+     * Menu principal para gestionar los trenes.
+     * @param op Opcion a usar en el switch.
+     * @param almacenamiento Clase que contiene todos nombres de todos los archivos del sistema.
+     */
     public static void administrarTrenes (int op, Almacenamiento almacenamiento) {
         Scanner sc = new Scanner(System.in);
         Function<JSONObject, Tren> tipoTren = null;

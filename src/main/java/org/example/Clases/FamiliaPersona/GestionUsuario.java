@@ -1,6 +1,5 @@
 package org.example.Clases.FamiliaPersona;
 
-
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -235,12 +234,18 @@ public class GestionUsuario {
     }
     //Archivos
 
+    /**
+     * Verifica si un usuario existe en la clase gestora.
+     * @param nombreDeUsuario el nombre de usuario.
+     * @param contrasenia la contrasenia del usuario.
+     * @return si el usuario existe lo devuelve con todos sus datos, caso contrario null.
+     */
     public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
         for (Usuario usuario : usuarios) {
             if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario) && Objects.equals(usuario.getContrasenia(), contrasenia)) {
                 return usuario;
             }
         }
-        throw new NullPointerException();
+        return null;
     }
 }

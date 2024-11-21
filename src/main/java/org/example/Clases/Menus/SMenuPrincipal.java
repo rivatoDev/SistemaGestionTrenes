@@ -10,10 +10,20 @@ import org.json.JSONArray;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Clase que contiene el menu para poder gestionar los datos de los usuarios.
+ */
 public class SMenuPrincipal {
     public SMenuPrincipal() {
     }
 
+    /**
+     * Menu principal para poder gestionar los datos de los usuarios.
+     * @param op Opcion a usar en el switch
+     * @param usuario El usuario con el que se inicio sesion.
+     * @param archivo Nombre del archivo a usar.
+     * @return true si se pudo modificar los datos sin problemas, sino false.
+     */
     public static boolean modificarDatos(int op, Usuario usuario, String archivo) {
         Usuario usuarioModificado = usuario;
         Scanner sc = new Scanner(System.in);
@@ -58,6 +68,12 @@ public class SMenuPrincipal {
         return false;
     }
 
+    /**
+     * Menu para seleccionar que datos del usuario se va a modificar.
+     * @param op La opcion a usar en el switch.
+     * @param usuario El usuario con el que se inicio sesion.
+     * @param archivo Nombre del archivo a usar.
+     */
     public static void configuracion (int op, Usuario usuario, String archivo) {
         int subOp = 0;
         Scanner sc = new Scanner(System.in);

@@ -51,6 +51,20 @@ public class GestionVagon<T extends Vagon> {
         sb.append("------------------------------------------------------------------------------------------------------------------------\n");
         return sb.toString();
     }
+
+    public String mostrarEliminados() {
+        StringBuilder sb = new StringBuilder("\n");
+        sb.append("------------------------------------------------------------------------------------------------------------------------\n");
+        for(T t: this.vagones) {
+            if(!t.isEstado()) {
+                sb.append("--------------------------------------------------VAGON--------------------------------------------------\n");
+                sb.append(t);
+                sb.append("--------------------------------------------------VAGON--------------------------------------------------\n");
+            }
+        }
+        sb.append("------------------------------------------------------------------------------------------------------------------------\n");
+        return sb.toString();
+    }
     //Mostrar
 
     /**
@@ -219,6 +233,13 @@ public class GestionVagon<T extends Vagon> {
         return true;
     }
 
+    /**
+     * Recupera un vagon que estaba eliminado.
+     * @param id el idVagon del vagon.
+     * @param tipoVagon Function con el metodo getJSONObject del tipo de vagon.
+     * @param archivo el archivo a usar.
+     * @return true si se pudo recuperar el vagon sin problemas.
+     */
     public static boolean reactivarRegistro (String id, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gt = new GestionVagon<>();
         Vagon vagon;
@@ -239,12 +260,17 @@ public class GestionVagon<T extends Vagon> {
     }
     //Archivos
 
+    /**
+     * Verifica que un vagon exista dentro de la clase gestora.
+     * @param idVagon el id del vagon a buscar.
+     * @return Si el vagon existe lo devuelve con todos sus datos, sino null.
+     */
     public Vagon verificarVagon(String idVagon) {
         for (Vagon v: vagones) {
             if (Objects.equals(v.getIdVagon(), idVagon)) {
                 return v;
             }
         }
-        throw new NullPointerException();
+        return null;
     }
 }

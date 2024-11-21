@@ -1,15 +1,10 @@
 package org.example.Clases.FamiliaTren;
 
-import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.Ruta;
-import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.LowCapacityException;
-import org.example.Interfaces.GestionCarga;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * Clase abstracta que representa a los trenes.
@@ -196,5 +191,4 @@ public abstract class Tren {
     //Viaje
 
     public abstract boolean desarmarTren ();
-
 }

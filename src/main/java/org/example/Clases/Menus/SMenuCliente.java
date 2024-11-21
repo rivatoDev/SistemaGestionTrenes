@@ -8,11 +8,20 @@ import org.example.Excepciones.WrongUserException;
 
 import java.util.Scanner;
 
+/**
+ * Clase que contiene el menu para gestionar a los clientes.
+ */
 public class SMenuCliente {
     public SMenuCliente() {
     }
 
-    public static void usuarioCliente (int op, Usuario usuario, String archivo) throws WrongUserException {
+    /**
+     * Menu principal de los clientes.
+     * @param op opcion a usar en el switch.
+     * @param usuario el usuario con el que se inicio sesion
+     * @param archivo nombre del archivo a usar.
+     */
+    public static void usuarioCliente (int op, Usuario usuario, String archivo) {
         int subOp = 0;
         Scanner sc = new Scanner(System.in);
         switch (op) {
@@ -33,11 +42,11 @@ public class SMenuCliente {
                         throw new WrongUserException();
                     }
                 } catch (JSONObjectEliminatedException e) {
-                    e.toString();
+                    System.out.println("El pasajero no existe");
                 } catch (WrongUserException e) {
-                    e.toString();
+                    System.out.println("El usuario no es el correcto");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Ocurrio un error");
                 }
                 break;
             case 2:
