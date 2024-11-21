@@ -203,20 +203,20 @@ public class VagonComercial extends Vagon{
         return pasajeros;
     }
 
-    public static VagonComercial getJSONObject (JSONObject json) throws JSONObjectEliminatedException {
-        if(VagonComercial.verificarJSON(json) && json.getBoolean("estado")) {
-            VagonComercial vg = new VagonComercial();
+    public static VagonComercial getJSONObject (JSONObject json){
+        VagonComercial vg = null;
+        if(VagonComercial.verificarJSON(json)) {
+            vg = new VagonComercial();
+            vg.setEstado(json.getBoolean("estado"));
             vg.setIdVagon(json.getString("idVagon"));
             vg.setCapacidad(json.getNumber("capacidad"));
             for(Map.Entry<String, Usuario> pasajero: getJSONArray(json.getJSONArray("pasajeros")).entrySet()) {
                 vg.cargarPasajero(pasajero.getValue(), pasajero.getKey());
             }
-            return vg;
         } else if (!VagonComercial.verificarJSON(json)) {
             throw new IllegalArgumentException();
-        } else {
-            throw new JSONObjectEliminatedException();
         }
+        return vg;
     }
     //JSON
 }

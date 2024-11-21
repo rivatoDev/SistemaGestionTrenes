@@ -77,7 +77,7 @@ public class GestionVagon<T extends Vagon> {
         if(!this.vagones.remove(t) || !t.isEstado()) {
             throw new NoSuchElementException();
         } else {
-            t.setEstado();
+            t.setEstado(false);
             this.agregarVagon(t);
         }
         return true;
@@ -109,7 +109,9 @@ public class GestionVagon<T extends Vagon> {
     public JSONArray convertirJSONArray () {
         JSONArray json = new JSONArray();
         for(T t: this.vagones) {
-            json.put(t.convertirAJSONObject());
+            if(t != null) {
+                json.put(t.convertirAJSONObject());
+            }
         }
         return json;
     }
@@ -180,7 +182,6 @@ public class GestionVagon<T extends Vagon> {
             gv.agregarVagon(v);
         }
 
-        System.out.println(gv.getVagones().contains(vagon));
         gv.eliminarVagon(vagon);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {

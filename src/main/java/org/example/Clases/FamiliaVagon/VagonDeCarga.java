@@ -177,20 +177,21 @@ public class VagonDeCarga extends Vagon {
      * Pasa un JSONObject a un VagonDeCarga.
      * @param json Un cargamento con los datos del JSONObject.
      */
-    public static VagonDeCarga getJSONObject (JSONObject json){
-        if(VagonDeCarga.verificarJSON(json) && json.getBoolean("estado")) {
-            VagonDeCarga vc = new VagonDeCarga();
+    public static VagonDeCarga getJSONObject (JSONObject json) {
+        VagonDeCarga vc = null;
+        if(VagonDeCarga.verificarJSON(json)) {
+            vc = new VagonDeCarga();
+            vc.setEstado(json.getBoolean("estado"));
             vc.setIdVagon(json.getString("idVagon"));
             vc.setCapacidad(json.getNumber("capacidad"));
             for(Cargamento c: getJSONArray(json.getJSONArray("contenido"))) {
                 vc.agregarCargamento(c);
             }
             return vc;
-        } else if (VagonDeCarga.verificarJSON(json)){
+        } else if (!VagonDeCarga.verificarJSON(json)){
             throw new IllegalArgumentException();
-        } else {
-            throw new JSONObjectEliminatedException();
         }
+        return vc;
     }
     //JSON
 }

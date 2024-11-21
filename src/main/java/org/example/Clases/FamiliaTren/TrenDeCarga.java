@@ -201,7 +201,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
      * @return un TrenComercial con los datos de un JSONObject.
      * @throws IllegalArgumentException si el JSONObject no es del tipo correcto.
      */
-    public static TrenDeCarga getJSONObject (JSONObject json) throws JSONObjectEliminatedException {
+    public static TrenDeCarga getJSONObject (JSONObject json) {
         if(!TrenDeCarga.verificarJSON(json)) {
             throw new IllegalArgumentException();
         } else  {
@@ -209,6 +209,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
             tc.setEstado(json.getBoolean("estado"));
             tc.setModelo(json.getString("modelo"));
             tc.setPatente(json.getString("patente"));
+            tc.setCapacidad(json.getDouble("capacidad"));
             tc.setUbicacion(json.getString("ubicacion"));
             tc.setEstadoViaje(json.getBoolean("estadoViaje"));
             for(VagonDeCarga vc: getJSONArray(json.getJSONArray("vagones"))) {

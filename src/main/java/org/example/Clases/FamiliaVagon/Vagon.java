@@ -1,5 +1,6 @@
 package org.example.Clases.FamiliaVagon;
 
+import org.example.Excepciones.LowCapacityException;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -48,11 +49,14 @@ public abstract class Vagon{
     }
 
     public void setCapacidad(Number capacidad) {
+        if(Double.parseDouble(capacidad.toString()) <= 0) {
+            throw new LowCapacityException("La capacidad debe ser mayor a 0");
+        }
         this.capacidad = capacidad;
     }
 
-    public void setEstado() {
-        this.estado = !this.estado;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
     //Setter
 

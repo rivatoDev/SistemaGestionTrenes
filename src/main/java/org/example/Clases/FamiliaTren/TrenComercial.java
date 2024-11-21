@@ -208,6 +208,7 @@ public class    TrenComercial extends Tren {
             tc.setEstado(json.getBoolean("estado"));
             tc.setModelo(json.getString("modelo"));
             tc.setPatente(json.getString("patente"));
+            tc.setCapacidad(json.getInt("capacidad"));
             tc.setUbicacion(json.getString("ubicacion"));
             tc.setEstadoViaje(json.getBoolean("estadoViaje"));
             for(VagonComercial vc: getJSONArray(json.getJSONArray("vagones"))) {

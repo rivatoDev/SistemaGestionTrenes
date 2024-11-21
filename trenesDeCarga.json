@@ -1,8 +1,29 @@
-[{
-  "estadoViaje": false,
-  "estado": true,
-  "ubicacion": "CABA",
-  "modelo": "HEISEHN",
-  "vagones": [],
-  "patente": "24BSCS"
-}]
+[
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "CABA",
+    "modelo": "A-Train",
+    "vagones": [],
+    "patente": "234",
+    "capacidad": 120
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Miramar",
+    "modelo": "Tren Infinito",
+    "vagones": [],
+    "patente": "789w",
+    "capacidad": 234.7
+  },
+  {
+    "estadoViaje": false,
+    "estado": false,
+    "ubicacion": "Pinamar",
+    "modelo": "Lenovo",
+    "vagones": [],
+    "patente": "123",
+    "capacidad": 400.4
+  }
+]

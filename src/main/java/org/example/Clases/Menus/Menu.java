@@ -35,7 +35,7 @@ public class Menu {
     }
 
     public static String configuracion () {
-        return "--------------------------------------------------CONFIGURACION--------------------------------------------------" +
+        return "--------------------------------------------------CONFIGURACION--------------------------------------------------\n" +
                "1. Modificar Datos" + '\n' +
                "2. Eliminar Usuario." + '\n' +
                "0. Volver." + '\n' +

@@ -3,6 +3,7 @@ package org.example.Clases.FamiliaTren;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.Ruta;
 import org.example.Excepciones.ElementAlreadyExistsException;
+import org.example.Excepciones.LowCapacityException;
 import org.example.Interfaces.GestionCarga;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -83,6 +84,9 @@ public abstract class Tren {
     }
 
     public void setCapacidad(Number capacidad) {
+        if(Double.parseDouble(capacidad.toString()) <= 0) {
+            throw new LowCapacityException("La capacidad debe ser mayor a 0");
+        }
         this.capacidad = capacidad;
     }
 

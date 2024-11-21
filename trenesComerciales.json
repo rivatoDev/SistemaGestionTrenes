@@ -1,18 +1,9 @@
-[
-  {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "Mar Del Plata",
-    "modelo": "Avon",
-    "vagones": [],
-    "patente": "ASD123QQ"
-  },
-  {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "neco",
-    "modelo": "arg",
-    "vagones": [],
-    "patente": "io3123"
-  }
-]
+[{
+  "estadoViaje": false,
+  "estado": false,
+  "ubicacion": "Pinamar",
+  "modelo": "Expreso Polar",
+  "vagones": [],
+  "patente": "qw12",
+  "capacidad": 150
+}]
