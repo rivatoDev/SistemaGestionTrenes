@@ -1,13 +1,8 @@
 package org.example;
 
-
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
-import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.Menus.Almacenamiento;
-import org.example.Clases.Menus.Menu;
-import org.example.Clases.Menus.SMenuAdministrador;
-import org.example.Clases.Menus.SMenuCliente;
+import org.example.Clases.Menus.*;
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
@@ -30,10 +25,6 @@ public class Main {
         Usuario usuarioActivo;
         //Utilidades
 
-        //VagonDeCarga v = new VagonDeCarga("123", 123.7);
-        //GestionVagon.agregarRegistro(v, VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
-        //GestionVagon.eliminarRegistro(new VagonDeCarga("123", 123.7), VagonDeCarga::getJSONObject, almacenamiento.getVagonesDeCarga());
-
         do {
             System.out.println(Menu.MenuPrincipal());
             System.out.println("Opcion");
@@ -54,6 +45,15 @@ public class Main {
                                 sc.nextLine();
 
                                 SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamiento);
+                            } while (subOp != 0);
+                        } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.TAQUILLERO) {
+                            do {
+                                System.out.println(Menu.menuTaquillero());
+                                System.out.println("Opcion: ");
+                                subOp = sc.nextInt();
+                                sc.nextLine();
+
+                                SMenuTaquillero.usuarioTaquillero(subOp, usuarioActivo, almacenamiento);
                             } while (subOp != 0);
                         } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
                             do {

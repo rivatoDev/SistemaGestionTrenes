@@ -44,13 +44,12 @@ public final class Maquinista extends Persona{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Maquinista that = (Maquinista) o;
-        return super.equals(o) &&
-               Objects.equals(idMaquinista.toString(), that.idMaquinista.toString());
+        return Objects.equals(idMaquinista.toString(), that.idMaquinista.toString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), idMaquinista);
+        return Objects.hash(idMaquinista);
     }
     //Comparacion
 

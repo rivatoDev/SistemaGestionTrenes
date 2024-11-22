@@ -63,8 +63,8 @@ public abstract class Persona{
         this.apellido.replace(0, this.apellido.length(), apellido);
     }
 
-    public void setEstado() {
-        this.estado = !this.estado;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
     //Setter
 

@@ -16,14 +16,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Function;
 
 /**
  * Clase que contiene el menu para gestionar los trenes.
- * @param <T> Clase que herede de Tren.
  */
-public class SMenuTrenes<T extends Tren> {
+public class SMenuTrenes {
     public SMenuTrenes() {
     }
 
@@ -74,7 +74,6 @@ public class SMenuTrenes<T extends Tren> {
     }
 
     //Alta
-
     /**
      * Carga un treen.
      * @param tren Tren cuya unica funcion es poder saber que tipo de tren se va a cargar.
@@ -296,8 +295,9 @@ public class SMenuTrenes<T extends Tren> {
                     }
                     System.out.println("Patente: ");
                     tren.setPatente(sc.nextLine());
-                    tren = gt.verificarTren(tren.getPatente());
-                    if(tren == null) {
+                    try {
+                        tren = gt.verificarTren(tren.getPatente());
+                    } catch (NoSuchElementException e) {
                         System.out.println("ID invalido.");
                         op = 0;
                     }

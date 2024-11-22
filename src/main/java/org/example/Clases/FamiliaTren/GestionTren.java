@@ -4,6 +4,7 @@ import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -126,8 +127,12 @@ public class GestionTren<T extends Tren> {
      */
     public JSONArray convertirJSONArray () {
         JSONArray json = new JSONArray();
-        for(T t: this.trenes) {
-            json.put(t.convertirAJSONObject());
+        try {
+            for(T t: this.trenes) {
+                json.put(t.convertirAJSONObject());
+            }
+        } catch (JSONException e) {
+            return null;
         }
         return json;
     }
@@ -140,8 +145,12 @@ public class GestionTren<T extends Tren> {
      */
     public static GestionTren<Tren> getJSONArray(JSONArray json, Function<JSONObject, Tren> tipoTren) {
         GestionTren<Tren> gt = new GestionTren<>();
-        for (int i = 0; i < json.length(); i++) {
-            gt.agregarTren(tipoTren.apply(json.getJSONObject(i)));
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                gt.agregarTren(tipoTren.apply(json.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            return null;
         }
         return gt;
     }
@@ -254,7 +263,8 @@ public class GestionTren<T extends Tren> {
     /**
      * Verifica que el tren exista dentro de la clase gestora.
      * @param patente la patente del tren a buscar.
-     * @return Si el tren existe lo devuelve con todos sus datos, caso contrario null.
+     * @return Si el tren existe lo devuelve con todos sus datos.
+     * @throws NoSuchElementException si no existe el tren.
      */
     public Tren verificarTren(String patente) {
         for (T t : trenes) {
@@ -266,6 +276,6 @@ public class GestionTren<T extends Tren> {
                 }
             }
         }
-        return null;
+        throw new NoSuchElementException("Patente inexistente");
     }
 }

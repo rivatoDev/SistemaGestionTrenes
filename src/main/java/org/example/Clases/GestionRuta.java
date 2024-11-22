@@ -1,19 +1,11 @@
 package org.example.Clases;
 
-import org.example.Clases.*;
-import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaTren.Tren;
-import org.example.Clases.FamiliaTren.TrenComercial;
-import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.FamiliaVagon.GestionVagon;
-import org.example.Clases.FamiliaVagon.Vagon;
-import org.example.Clases.Menus.Almacenamiento;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.ElementAlreadyExistsException;
-import org.example.Excepciones.JSONObjectEliminatedException;
-import org.example.Excepciones.OffLimitsException;
 import org.example.Main;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -35,94 +27,138 @@ public class GestionRuta {
     public GestionRuta() {
         this.rutas = new HashSet<>();
     }
+    //Constructor
 
+    //Getter
     public Set<Ruta> getRutas() {
         return rutas;
     }
+    //Getter
 
-
-
+    //Mostrar
     public String toString() {
-        StringBuilder sb = new StringBuilder("\n");
+        StringBuilder sb = new StringBuilder();
         for(Ruta r: this.rutas) {
             sb.append(r);
         }
         return sb.toString();
     }
+    //Mostrar
 
+    //Alta
+    /**
+     * Agrega una ruta.
+     * @param ruta Ruta a agregar.
+     * @return true si se pudo agregar la ruta sin problemas.
+     * @throws ElementAlreadyExistsException si el elemento ya existe.
+     */
     public boolean agregarRuta(Ruta ruta) {
         if(!this.rutas.add(ruta)) {
             throw new ElementAlreadyExistsException();
         }
         return true;
     }
+    //Alta
 
+    //Baja
+    /**
+     * Elimina una ruta.
+     * @param ruta Ruta a eliminar.
+     * @return true si se pudo eliminar la ruta sin problemas.
+     * @throws NoSuchElementException si la ruta no existe.
+     */
     public boolean eliminarRuta (Ruta ruta) {
-        if(!this.rutas.remove(ruta)) {
+        if(!this.rutas.contains(ruta) || !ruta.isEstado()) {
             throw new NoSuchElementException();
+        } else {
+            this.rutas.remove(ruta);
+            ruta.setEstado(false);
+            this.agregarRuta(ruta);
+            return true;
+        }
+    }
+    //Baja
+
+    //Modificacion
+
+    /**
+     * Modifica una ruta.
+     * @param rutaVieja La ruta a modificar.
+     * @param rutaNueva La ruta modificada.
+     * @return true si se pudo modificar la ruta sin problemas.
+     * @throws NoSuchElementException si la ruta no existe.
+     */
+    public boolean modificarRuta (Ruta rutaVieja, Ruta rutaNueva) {
+        if(!this.rutas.contains(rutaVieja) || !rutaNueva.isEstado()) {
+            throw new NoSuchElementException();
+        } else {
+            this.rutas.remove(rutaVieja);
+            this.agregarRuta(rutaNueva);
         }
         return true;
     }
+    //Modificacion
 
-    public boolean modificarRuta (Ruta rutaVieja, Ruta rutaNueva) {
-        if(!this.rutas.remove(rutaVieja)) {
-            throw new NoSuchElementException();
-        }
-        return this.agregarRuta(rutaNueva);
-    }
-
+    //JSON
+    /**
+     * Convierte al gestor en un JSONArray.
+     * @return Un JSONArray con los datos del gestor.
+     */
     public JSONArray convertirAJSONArray () {
         JSONArray json = new JSONArray();
-        for(Ruta r: this.rutas) {
-            json.put(r.convertirAJSONObject());
+        try {
+            for(Ruta r: this.rutas) {
+                json.put(r.convertirAJSONObject());
+            }
+        } catch (JSONException e) {
+            return null;
         }
         return json;
     }
 
-    public static GestionRuta getJSONArray(JSONArray json) {
-        GestionRuta rutini = new GestionRuta();
+    /**
+     * Convierte a un JSONArray en un gestor de rutas.
+     * @param json El JSONArray a deserializar.
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @return Un gestor de rutas con los datos del JSONArray.
+     */
+    public static GestionRuta getJSONArray(JSONArray json, Function<JSONObject, Tren> tipoTren) {
+        GestionRuta gr = new GestionRuta();
 
-        for (int i = 0; i < json.length(); i++) {
-            JSONObject jsonObject = json.getJSONObject(i);
-
-            // Determina el tipo de tren a partir del JSON
-            Function<JSONObject, Tren> trenConverter = jsonObj -> {
-                if (jsonObj.has("vagones")) { // Solo se espera que tenga "vagones"
-                    JSONArray vagones = jsonObj.getJSONArray("vagones");
-                    if (vagones.length() > 0 && vagones.getJSONObject(0).has("tipo")) {
-                        String tipoVagon = vagones.getJSONObject(0).getString("tipo");
-                        if ("comercial".equals(tipoVagon)) {
-                            return TrenComercial.getJSONObject(jsonObj);
-                        } else if ("carga".equals(tipoVagon)) {
-                            return TrenDeCarga.getJSONObject(jsonObj);
-                        }
-                    }
-                }
-                return null;
-            };
-            Ruta ruta = Ruta.JSONxRuta(jsonObject, trenConverter);
-            if (ruta != null) {
-                rutini.rutas.add(ruta);
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), tipoTren));
             }
+        } catch (JSONException e) {
+            return null;
         }
-        return rutini;
-    };
+        return gr;
+    }
+    //JSON
 
-    public static boolean agregarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+    //Archivos
+    /**
+     * Agrega una ruta al archivo.
+     * @param ruta La ruta a agregar.
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @param archivo El archivo a utilizar.
+     * @return true si se pudo cargar el registro sin problemas.
+     */
+    public static boolean agregarRegistro (Ruta ruta, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
         try {
             if (new File(archivo).length() > 0) {
-                for (Ruta r: gu.rutas) {
-                    gu.agregarRuta(r);
+                for (Ruta r: gr.rutas) {
+                    gr.agregarRuta(r);
                 }
             }
         } catch (FileDoesntExistException e) {
             Main.crearArchivo(archivo);
         }
-        gu.agregarRuta(ruta);
+        gr.agregarRuta(ruta);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            bf.write(gu.convertirAJSONArray().toString(2));
+            bf.write(gr.convertirAJSONArray().toString(2));
         }
         catch (IOException e) {
             return false;
@@ -130,10 +166,18 @@ public class GestionRuta {
         return true;
     }
 
-    public static boolean modificarRegistro (Ruta rutaVieja, Ruta rutaNueva, String archivo) {
+    /**
+     * Modifica una ruta del archivo.
+     * @param rutaVieja La ruta a modificar.
+     * @param rutaNueva La ruta modificada.
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @param archivo El archivo a utilizar.
+     * @return true si se pudo modificar el archivo sin problemas.
+     */
+    public static boolean modificarRegistro (Ruta rutaVieja, Ruta rutaNueva, Function<JSONObject, Tren> tipoTren, String archivo) {
         GestionRuta gr = new GestionRuta();
 
-        for(Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getRutas()) {
+        for(Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getRutas()) {
             gr.agregarRuta(r);
         }
         gr.modificarRuta(rutaVieja, rutaNueva);
@@ -146,39 +190,41 @@ public class GestionRuta {
         return true;
     }
 
-    public static boolean eliminarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+    /**
+     * Elimina una ruta del archivo.
+     * @param ruta La ruta a eliminar.
+     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
+     * @param archivo El archivo a utilizar.
+     * @return true si se pudo eliminar el archivo sin problemas.
+     */
+    public static boolean eliminarRegistro (Ruta ruta, Function<JSONObject, Tren> tipoTren, String archivo) {
+        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
 
-        for (Ruta r: gu.rutas) {
-            gu.agregarRuta(r);
+        for (Ruta r: gr.rutas) {
+            gr.agregarRuta(r);
         }
-        gu.eliminarRuta(ruta);
+        gr.eliminarRuta(ruta);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            bf.write(gu.convertirAJSONArray().toString(2));
+            bf.write(gr.convertirAJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }
         return true;
     }
-
-    public Ruta verificarRuta(Ruta ruta, String archivo) {
-        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
-        for (Ruta r: gu.rutas) {
-            if (Objects.equals(ruta, r)){
+    //Archivos
+    /**
+     * Verifica que la ruta exista en el gestor.
+     * @param id el id de la ruta
+     * @return Si encuentra a la ruta la devuelve con todos sus datos.
+     * @throws NoSuchElementException Si no encuentra a la ruta.
+     */
+    public Ruta verificarRuta(int id) {
+        for (Ruta r: this.rutas) {
+            if (Objects.equals(id, r.getId())){
                 return r;
             }
         }
-        throw new NullPointerException();
-    }
-
-    public Ruta verificarRutaID(String id, String archivo) {
-        GestionRuta gu = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
-        for (Ruta r: gu.rutas) {
-            if (Objects.equals(id, r.getContadorID())){
-                return r;
-            }
-        }
-        throw new NullPointerException();
+        throw new NoSuchElementException("Ruta inexistente");
     }
 }
