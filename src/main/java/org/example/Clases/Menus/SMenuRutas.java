@@ -1,7 +1,6 @@
 package org.example.Clases.Menus;
 
 import org.example.Clases.FamiliaPersona.GestionMaquinista;
-import org.example.Clases.FamiliaPersona.Maquinista;
 import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
@@ -80,96 +79,69 @@ public class SMenuRutas {
         System.out.println("Llegada: ");
         r.setLlegada(sc.nextLine());
         System.out.println("Fecha: ");
-        r.setFecha(sc.nextInt());
+        r.setFecha(sc.nextLine());
         return r;
-    }
-
-    //Baja
-    public static boolean eliminarRuta (String archivo) {
-        Scanner sc = new Scanner(System.in);
-        GestionRuta gr;
-        try {
-                gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getRutas())));
-                System.out.println(gr);
-                System.out.println("ID: ");
-                return GestionRuta.eliminarRegistro(gr.verificarRutaID(sc.nextLine(), almacenamiento.getRutas()), almacenamiento.getRutas());
-        } catch (FileDoesntExistException e) {
-            System.out.println("El archivo no existe.");
-        } catch (NullPointerException e) {
-            System.out.println("ID invalido");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Opcion incorrecta.");
-        }
-        return false;
     }
     //Baja
 
     //Modificacion
-
     /**
      * Modifica la ruta
-     * @param op
-     * @param almacenamiento
-     * @return
+     * @param op La opcion a entrar en el switch.
+     * @return true si se pudo modificar los datos sin problema.
      */
-    public static boolean modificarRuta (int op, Almacenamiento almacenamiento) {
+    public static boolean modificarRuta (int op, Ruta ruta, Almacenamiento almacenamiento) {
         Scanner sc = new Scanner(System.in);
-        GestionRuta gr;
-        Ruta rutaModificada = new Ruta();
+        GestionRuta gr = leerRutas(almacenamiento.getRutas());
+        GestionMaquinista gm = GestionMaquinista.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getMaquinistas())));
+        GestionTren<Tren> gt;
+        System.out.println(gr);
 
-        switch(op) {
-            case 0:
-                break;
-            case 1:
-                try {
-                        if (new File(almacenamiento.getRutas()).length() > 0) {
-                            gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getRutas())));
-                            System.out.println(gr);
-                            System.out.println("Salida: ");
-                            StringBuilder sb = new StringBuilder(sc.nextLine());
-                            rutaModificada.setSalida(sb);
-                            System.out.println(rutaModificada.equals(gr.verificarRuta(rutaModificada, almacenamiento.getRutas())));
-                            return GestionRuta.modificarRegistro(gr.verificarRuta(rutaModificada, almacenamiento.getRutas()), rutaModificada, almacenamiento.getRutas());
-                        }
-                } catch (FileDoesntExistException e) {
-                    System.out.println("El archivo no existe");
-                } catch (NullPointerException e) {
-                    System.out.println("ID invalido");
-                }
-            case 2:
-                try {
-                    if (new File(almacenamiento.getRutas()).length() > 0) {
-                        gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getRutas())));
-                        System.out.println(gr);
-                        System.out.println("Llegada: ");
-                        StringBuilder sb = new StringBuilder(sc.nextLine());
-                        rutaModificada.setLlegada(sb);
-                        System.out.println(rutaModificada.equals(gr.verificarRuta(rutaModificada, almacenamiento.getRutas())));
-                        return GestionRuta.modificarRegistro(gr.verificarRuta(rutaModificada, almacenamiento.getRutas()), rutaModificada, almacenamiento.getRutas());
+        if(new File(almacenamiento.getRutas()).length() > 0) {
+            switch(op) {
+                case 0:
+                    break;
+                case 1:
+                    System.out.println("Salida: ");
+                    ruta.setSalida(sc.nextLine());
+                    break;
+                case 2:
+                    System.out.println("Llegada: ");
+                    ruta.setLlegada(sc.nextLine());
+                    break;
+                case 3:
+                    System.out.println("Fecha: ");
+                    ruta.setFecha(sc.nextLine());
+                    break;
+                case 4:
+                    if(ruta.getTren() instanceof TrenDeCarga) {
+                        gt = SMenuTrenes.leerTrenes(TrenDeCarga::getJSONObject, almacenamiento.getTrenesDeCarga());
+                    } else {
+                        gt = SMenuTrenes.leerTrenes(TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
                     }
-                } catch (FileDoesntExistException e) {
-                    System.out.println("El archivo no existe");
-                } catch (NullPointerException e) {
-                    System.out.println("ID invalido");
-                }
-                break;
-            case 3:
-                try {
-                    if (new File(almacenamiento.getRutas()).length() > 0) {
-                        gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getRutas())));
-                        System.out.println(gr);
-                        System.out.println("Fecha: ");
-                        rutaModificada.setFecha(sc.nextInt());
-                        System.out.println(rutaModificada.equals(gr.verificarRuta(rutaModificada, almacenamiento.getRutas())));
-                        return GestionRuta.modificarRegistro(gr.verificarRuta(rutaModificada, almacenamiento.getRutas()), rutaModificada, almacenamiento.getRutas());
+                    System.out.println(gt);
+                    System.out.println("Patente: ");
+                    try {
+                        ruta.setTren(gt.verificarTren(sc.nextLine()));
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Patente invalida");
+                        return false;
                     }
-                } catch (FileDoesntExistException e) {
-                    System.out.println("El archivo no existe");
-                } catch (NullPointerException e) {
-                    System.out.println("ID invalido");
-                }
-            default:
-                throw new IllegalArgumentException("Opcion no valida.");
+                    break;
+                case 5:
+                    System.out.println(gm);
+                    System.out.println("ID: ");
+                    try {
+                        ruta.setMaquinista(gm.verificarMaquinista(sc.nextLine()));
+                    } catch (NoSuchElementException e) {
+                        System.out.println("ID invalido.");
+                        return false;
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("Opcion no valida.");
+            }
+            return GestionRuta.modificarRegistro(gr.verificarRuta(ruta.getId()), ruta, almacenamiento.getRutas());
         }
         return false;
     }
@@ -177,18 +149,30 @@ public class SMenuRutas {
 
     /**
      * Permite agregar rutas, modificarlas y eliminarlas
-     * @param op
-     * @param almacenamiento
+     * @param op La opcion en la que va a entrar en el switch
+     * @param almacenamiento El objeto que contiene los nombres de todos los archivos del sistema.
      */
     public static void administrarRutas (int op, Almacenamiento almacenamiento) {
         int subOp;
         Scanner sc = new Scanner(System.in);
+        GestionRuta gr = leerRutas(almacenamiento.getRutas());
+        Ruta r = null;
+        if(op > 1 && op < 4) {
+            System.out.println(gr);
+            System.out.println("ID: ");
+            try {
+               r = gr.verificarRuta(sc.nextInt());
+            } catch (NoSuchElementException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
         switch (op) {
             case 0:
                 break;
             case 1:
                 try {
-                    if(agregarRuta(almacenamiento)) {
+                    if(GestionRuta.agregarRegistro(ingresarRuta(almacenamiento), almacenamiento.getRutas())) {
                         System.out.println("El vagon se agrego exitosamente");
                     }
                 } catch (ElementAlreadyExistsException e) {
@@ -200,7 +184,7 @@ public class SMenuRutas {
                     System.out.println(Menu.modificarRuta());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
-                        if(modificarRuta(subOp, almacenamiento)) {
+                        if(modificarRuta(subOp, r, almacenamiento)) {
                             System.out.println("La ruta se modifico exitosamente");
                         }
                         else {
@@ -209,12 +193,12 @@ public class SMenuRutas {
                 } while (subOp != 0);
                 break;
             case 3:
-                if (eliminarRuta(almacenamiento)) {
+                if (GestionRuta.eliminarRegistro(r, almacenamiento.getRutas())) {
                     System.out.println("El vagon se elimino con exito");
                 }
                 break;
             case 4:
-                System.out.println(mostrarRutas(almacenamiento));
+                System.out.println(gr);
                 break;
         }
     }

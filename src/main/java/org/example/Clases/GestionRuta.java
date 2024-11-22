@@ -1,6 +1,8 @@
 package org.example.Clases;
 
 import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Main;
@@ -119,15 +121,18 @@ public class GestionRuta {
     /**
      * Convierte a un JSONArray en un gestor de rutas.
      * @param json El JSONArray a deserializar.
-     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
      * @return Un gestor de rutas con los datos del JSONArray.
      */
-    public static GestionRuta getJSONArray(JSONArray json, Function<JSONObject, Tren> tipoTren) {
+    public static GestionRuta getJSONArray(JSONArray json) {
         GestionRuta gr = new GestionRuta();
 
         try {
             for (int i = 0; i < json.length(); i++) {
-                gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), tipoTren));
+                if(json.getJSONObject(i).get("tren") instanceof TrenDeCarga) {
+                    gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), TrenDeCarga::getJSONObject));
+                } else {
+                    gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), TrenComercial::getJSONObject));
+                }
             }
         } catch (JSONException e) {
             return null;
@@ -140,12 +145,11 @@ public class GestionRuta {
     /**
      * Agrega una ruta al archivo.
      * @param ruta La ruta a agregar.
-     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
      * @param archivo El archivo a utilizar.
      * @return true si se pudo cargar el registro sin problemas.
      */
-    public static boolean agregarRegistro (Ruta ruta, Function<JSONObject, Tren> tipoTren, String archivo) {
-        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
+    public static boolean agregarRegistro (Ruta ruta, String archivo) {
+        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
         try {
             if (new File(archivo).length() > 0) {
                 for (Ruta r: gr.rutas) {
@@ -170,14 +174,13 @@ public class GestionRuta {
      * Modifica una ruta del archivo.
      * @param rutaVieja La ruta a modificar.
      * @param rutaNueva La ruta modificada.
-     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
      * @param archivo El archivo a utilizar.
      * @return true si se pudo modificar el archivo sin problemas.
      */
-    public static boolean modificarRegistro (Ruta rutaVieja, Ruta rutaNueva, Function<JSONObject, Tren> tipoTren, String archivo) {
+    public static boolean modificarRegistro (Ruta rutaVieja, Ruta rutaNueva, String archivo) {
         GestionRuta gr = new GestionRuta();
 
-        for(Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren).getRutas()) {
+        for(Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getRutas()) {
             gr.agregarRuta(r);
         }
         gr.modificarRuta(rutaVieja, rutaNueva);
@@ -197,8 +200,8 @@ public class GestionRuta {
      * @param archivo El archivo a utilizar.
      * @return true si se pudo eliminar el archivo sin problemas.
      */
-    public static boolean eliminarRegistro (Ruta ruta, Function<JSONObject, Tren> tipoTren, String archivo) {
-        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
+    public static boolean eliminarRegistro (Ruta ruta, String archivo) {
+        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
 
         for (Ruta r: gr.rutas) {
             gr.agregarRuta(r);
