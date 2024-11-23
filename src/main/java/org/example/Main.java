@@ -20,7 +20,6 @@ public class Main {
         Almacenamiento almacenamiento = new Almacenamiento("trenesDeCarga.json", "trenesComerciales.json",
                 "vagonesDeCarga.json", "vagonesComerciales.json",
                 "rutas.json", "maquinistas.json", "usuarios.json");
-
         //Utilidades
         Scanner sc = new Scanner(System.in);
         int op;
@@ -135,7 +134,7 @@ public class Main {
         contrasenia = teclado.nextLine();
         System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
         try {
-            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario);
+            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario, contrasenia);
         } catch (NullPointerException e) {
             System.out.println("Nombre de usuario o clave incorrecta.");
         }
@@ -172,10 +171,9 @@ public class Main {
         try {
             json = new JSONTokener(new BufferedReader(new FileReader(archivo)));
         } catch (FileNotFoundException e) {
-            throw new FileDoesntExistException();
+            throw new FileDoesntExistException("No existe el archivo");
         }
         return json;
     }
     //Archivos
 }
-

@@ -200,7 +200,7 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     /**
      * Convierte a un JSONObject en un trenComercial.
      * @param json el JSONObject a convertir.
-     * @return un TrenComercial con los datos de un JSONObject.
+     * @return un TrenDeCarga con los datos de un JSONObject.
      * @throws IllegalArgumentException si el JSONObject no es del tipo correcto.
      */
     public static TrenDeCarga getJSONObject (JSONObject json) {

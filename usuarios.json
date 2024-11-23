@@ -34,5 +34,14 @@
     "nombreUsuario": "rivato",
     "nombre": "Tomas",
     "dni": "44336431"
+  },
+  {
+    "estado": true,
+    "apellido": "Gomez",
+    "contrasenia": "123",
+    "tipoUsuario": "TAQUILLERO",
+    "nombreUsuario": "user",
+    "nombre": "Ricardo",
+    "dni": "33213456"
   }
 ]

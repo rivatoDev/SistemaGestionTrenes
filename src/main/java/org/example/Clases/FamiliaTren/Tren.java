@@ -1,6 +1,6 @@
 package org.example.Clases.FamiliaTren;
 
-import org.example.Clases.Ruta;
+import org.example.Clases.FamiliaRuta.Ruta;
 import org.example.Excepciones.LowCapacityException;
 import org.json.JSONObject;
 
@@ -141,13 +141,13 @@ public abstract class Tren {
      * @return true si el JSONObject es del tipo correcto, sino false.
      */
     public static boolean verificarJSON(JSONObject json) {
-        return json.has("estado") &&
-                json.has("modelo") &&
+        return  json.has("modelo") &&
                 json.has("patente") &&
                 json.has("ubicacion") &&
                 json.has("capacidad") &&
                 json.has("estadoViaje") &&
-                json.has("vagones");
+                json.has("vagones") &&
+                json.has("estado");
     }
     //JSON
 

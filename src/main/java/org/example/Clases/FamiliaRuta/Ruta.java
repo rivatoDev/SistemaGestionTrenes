@@ -1,7 +1,9 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaRuta;
 
 import org.example.Clases.FamiliaPersona.Maquinista;
 import org.example.Clases.FamiliaTren.Tren;
+import org.example.Clases.FamiliaTren.TrenComercial;
+import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -127,11 +129,19 @@ public class Ruta {
      */
     public JSONObject convertirAJSONObject() {
         JSONObject json = new JSONObject();
+
+        if(this.tren instanceof TrenDeCarga) {
+            TrenDeCarga t = (TrenDeCarga) tren;
+            json.put("trenDeCarga", t.convertirAJSONObject());
+        } else {
+            TrenComercial t = (TrenComercial) tren;
+            json.put("trenComercial", t.convertirAJSONObject());
+        }
+
         json.put("id", this.id);
-        json.put("tren", this.tren);
         json.put("salida", this.salida);
         json.put("llegada", this.llegada);
-        json.put("maquinista", this.maquinista);
+        json.put("maquinista", this.maquinista.convertirAJSONObject());
         json.put("fecha", this.fecha);
         return json;
     }
@@ -142,7 +152,7 @@ public class Ruta {
      * @return true si el JSONObject es del tipo correcto.
      */
     public static boolean verificarJSON (JSONObject json) {
-        return json.has("tren") &&
+        return (json.has("trenDeCarga") || json.has("trenComercial")) &&
                 json.has("salida") &&
                 json.has("llegada") &&
                 json.has("maquinista") &&
@@ -155,6 +165,7 @@ public class Ruta {
      * @param json el JSONObject a deserializar.
      * @param trenConverter Function con el metodo de GETJSONObject del tipo de tren.
      * @return Una ruta con los datos del JSONObject.
+     * @throws IllegalArgumentException si el json no es del tipo correcto.
      */
     public static Ruta JSONxRuta(JSONObject json, Function<JSONObject, Tren> trenConverter) {
         Ruta t;

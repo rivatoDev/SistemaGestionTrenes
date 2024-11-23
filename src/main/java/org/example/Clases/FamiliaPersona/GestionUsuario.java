@@ -236,13 +236,29 @@ public class GestionUsuario {
 
     /**
      * Verifica si un usuario existe en la clase gestora.
+     * Metodo hecho solo para buscar a un usuario, y para eso solo necesitamos saber su nombre de usuario.
      * @param nombreDeUsuario el nombre de usuario.
-     * @param contrasenia la contrasenia del usuario.
      * @return si el usuario existe lo devuelve con todos sus datos, caso contrario null.
      */
     public Usuario verificarUsuario(String nombreDeUsuario) {
         for (Usuario usuario : usuarios) {
             if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario)) {
+                return usuario;
+            }
+        }
+        throw new NoSuchElementException("Usuario inexistente");
+    }
+
+    /**
+     * Verifica si un usuario existe en la clase gestora.
+     * Metodo hecho para iniciar sesion, por lo que necesitamos saber el nombre de usuario y tambien la contrasenia.
+     * @param nombreDeUsuario el nombre de usuario.
+     * @param contrasenia Clave del usuario.
+     * @return si el usuario existe lo devuelve con todos sus datos, caso contrario null.
+     */
+    public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
+        for (Usuario usuario : usuarios) {
+            if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario) && Objects.equals(usuario.getContrasenia(), contrasenia)) {
                 return usuario;
             }
         }

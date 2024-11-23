@@ -1,0 +1,22 @@
+[{
+  "fecha": "2025/01/12",
+  "trenDeCarga": {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Pinamar",
+    "modelo": "Lenovo",
+    "vagones": [],
+    "patente": "123",
+    "capacidad": 400.4
+  },
+  "llegada": "Mar del Plata",
+  "maquinista": {
+    "estado": true,
+    "apellido": "Suarez",
+    "nombre": "Valentin",
+    "idMaquinista": "0",
+    "dni": "30456876"
+  },
+  "id": "0",
+  "salida": "Miramar"
+}]

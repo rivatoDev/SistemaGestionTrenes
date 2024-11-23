@@ -5,11 +5,11 @@ import org.example.Clases.FamiliaTren.GestionTren;
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
-import org.example.Clases.GestionRuta;
+import org.example.Clases.FamiliaRuta.GestionRuta;
 import org.example.Clases.Menus.Administrador.SMenuTrenes;
 import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
-import org.example.Clases.Ruta;
+import org.example.Clases.FamiliaRuta.Ruta;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Main;
@@ -59,7 +59,11 @@ public class SMenuRutas {
         Function<JSONObject, Tren> tipoTren;
         Ruta r = new Ruta();
         GestionTren<Tren> gt;
-        GestionMaquinista gm = GestionMaquinista.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getMaquinistas())));
+        GestionMaquinista gm;
+
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        System.out.println("ID: ");
+        r.setId(sc.nextLine());
 
         if (SMenuTrenes.seleccionarTipo() instanceof TrenDeCarga) {
             tipoTren = TrenDeCarga::getJSONObject;
@@ -68,16 +72,19 @@ public class SMenuRutas {
             tipoTren = TrenComercial::getJSONObject;
             archivo = almacenamiento.getTrenesComerciales();
         }
-        gt = GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
-        System.out.println(gt);
-
-        System.out.println("----------------------------------------------------------------------------------------------------");
-        System.out.println("ID: ");
-        r.setId(sc.nextLine());
         try {
+            gt = GestionTren.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoTren);
+            gm = GestionMaquinista.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getMaquinistas())));
+        } catch (FileDoesntExistException e) {
+            return null;
+        }
+
+        try {
+            System.out.println(gt);
             System.out.println("Patente del Tren: ");
             r.setTren(gt.verificarTren(sc.nextLine()));
 
+            System.out.println(gm);
             System.out.println("ID del Maquinista: ");
             r.setMaquinista(gm.verificarMaquinista(sc.nextLine()));
         } catch (NoSuchElementException e) {
@@ -184,10 +191,10 @@ public class SMenuRutas {
             case 1:
                 try {
                     if(GestionRuta.agregarRegistro(ingresarRuta(almacenamiento), almacenamiento.getRutas())) {
-                        System.out.println("El vagon se agrego exitosamente");
+                        System.out.println("La ruta se agrego exitosamente");
                     }
                 } catch (ElementAlreadyExistsException e) {
-                    System.out.println("El Vagon ya existe");
+                    System.out.println("La ruta ya existe");
                 }
                 break;
             case 2:
@@ -205,7 +212,7 @@ public class SMenuRutas {
                 break;
             case 3:
                 if (GestionRuta.eliminarRegistro(r, almacenamiento.getRutas())) {
-                    System.out.println("El vagon se elimino con exito");
+                    System.out.println("La ruta se elimino con exito");
                 }
                 break;
             case 4:

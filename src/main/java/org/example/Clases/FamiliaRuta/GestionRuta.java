@@ -1,4 +1,4 @@
-package org.example.Clases;
+package org.example.Clases.FamiliaRuta;
 
 import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public class GestionRuta {
     //Atributos
@@ -127,7 +128,7 @@ public class GestionRuta {
 
         try {
             for (int i = 0; i < json.length(); i++) {
-                if(json.getJSONObject(i).get("tren") instanceof TrenDeCarga) {
+                if(json.getJSONObject(i).has("trenDeCarga")) {
                     gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), TrenDeCarga::getJSONObject));
                 } else {
                     gr.agregarRuta(Ruta.JSONxRuta(json.getJSONObject(i), TrenComercial::getJSONObject));
@@ -148,10 +149,10 @@ public class GestionRuta {
      * @return true si se pudo cargar el registro sin problemas.
      */
     public static boolean agregarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+        GestionRuta gr = new GestionRuta();
         try {
             if (new File(archivo).length() > 0) {
-                for (Ruta r: gr.rutas) {
+                for (Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getRutas()) {
                     gr.agregarRuta(r);
                 }
             }
@@ -199,9 +200,9 @@ public class GestionRuta {
      * @return true si se pudo eliminar el archivo sin problemas.
      */
     public static boolean eliminarRegistro (Ruta ruta, String archivo) {
-        GestionRuta gr = GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo)));
+        GestionRuta gr = new GestionRuta();
 
-        for (Ruta r: gr.rutas) {
+        for (Ruta r: GestionRuta.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getRutas()) {
             gr.agregarRuta(r);
         }
         gr.eliminarRuta(ruta);

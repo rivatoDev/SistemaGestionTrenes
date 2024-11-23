@@ -91,8 +91,6 @@ public final class Maquinista extends Persona{
                 json.has("nombre") &&
                 json.has("apellido") &&
                 json.has("idMaquinista") &&
-                json.has("contrasenia") &&
-                json.has("tipoUsuario") &&
                 json.has("estado");
     }
 
@@ -102,7 +100,7 @@ public final class Maquinista extends Persona{
      */
     public static Maquinista JSONxMaquinista(JSONObject json) {
         try {
-            if (json.getBoolean("estado") && Usuario.verificarJSON(json)) {
+            if (Maquinista.verificarJSON(json)) {
                 return new Maquinista(json.getString("dni"),
                         json.getString("nombre"),
                         json.getString("apellido"),
