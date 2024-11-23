@@ -114,7 +114,9 @@ public class Ruta {
     //Mostrar
     @Override
     public String toString() {
-       return this.tren.toString() +
+       return "-----------------------------------TREN-----------------------------------\n" +
+              this.tren.toString() +
+              "-----------------------------------TREN-----------------------------------\n" +
               this.maquinista.toString() +
               "Salida: " + this.salida + '\n' +
               "Llegada: " + this.llegada + '\n' +
@@ -169,8 +171,15 @@ public class Ruta {
      */
     public static Ruta JSONxRuta(JSONObject json, Function<JSONObject, Tren> trenConverter) {
         Ruta t;
+        JSONObject tren;
+        if(json.has("trenDeCarga")) {
+            tren = json.getJSONObject("trenDeCarga");
+        } else {
+            tren = json.getJSONObject("trenComercial");
+        }
+
         if (Ruta.verificarJSON(json)) {
-            t = new Ruta(trenConverter.apply(json),
+            t = new Ruta(trenConverter.apply(tren),
                          json.getString("salida"),
                          json.getString("llegada"),
                          Maquinista.JSONxMaquinista(json.getJSONObject("maquinista")),
