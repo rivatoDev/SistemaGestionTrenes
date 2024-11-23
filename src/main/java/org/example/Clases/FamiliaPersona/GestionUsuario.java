@@ -81,7 +81,7 @@ public class GestionUsuario {
             if(!this.usuarios.remove(usuario) || !usuario.isEstado()) {
                 throw new NoSuchElementException();
             } else {
-                usuario.setEstado();
+                usuario.setEstado(false);
                 this.agregarUsuario(usuario);
             }
             return true;
@@ -240,12 +240,12 @@ public class GestionUsuario {
      * @param contrasenia la contrasenia del usuario.
      * @return si el usuario existe lo devuelve con todos sus datos, caso contrario null.
      */
-    public Usuario verificarUsuario(String nombreDeUsuario, String contrasenia) {
+    public Usuario verificarUsuario(String nombreDeUsuario) {
         for (Usuario usuario : usuarios) {
-            if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario) && Objects.equals(usuario.getContrasenia(), contrasenia)) {
+            if (Objects.equals(usuario.getNombreUsuario(), nombreDeUsuario)) {
                 return usuario;
             }
         }
-        return null;
+        throw new NoSuchElementException("Usuario inexistente");
     }
 }

@@ -1,6 +1,7 @@
 package org.example.Clases.FamiliaPersona;
 
 import org.example.Excepciones.JSONObjectEliminatedException;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -26,8 +27,8 @@ public final class Maquinista extends Persona{
     //Constructor
 
     //Getter
-    public StringBuilder getIdMaquinista() {
-        return idMaquinista;
+    public String getIdMaquinista() {
+        return idMaquinista.toString();
     }
     //Getter
 
@@ -44,7 +45,7 @@ public final class Maquinista extends Persona{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Maquinista that = (Maquinista) o;
-        return Objects.equals(idMaquinista.toString(), that.idMaquinista.toString());
+        return Objects.equals(this.idMaquinista.toString(), that.getIdMaquinista());
     }
 
     @Override
@@ -70,8 +71,13 @@ public final class Maquinista extends Persona{
      */
     @Override
     public JSONObject convertirAJSONObject() {
-        JSONObject json = super.convertirAJSONObject();
-        json.put("idMaquinista", this.idMaquinista);
+        JSONObject json;
+        try {
+            json = super.convertirAJSONObject();
+            json.put("idMaquinista", this.idMaquinista);
+        } catch (JSONException e) {
+            return null;
+        }
         return json;
     }
 
@@ -94,16 +100,20 @@ public final class Maquinista extends Persona{
      * Transforma al un JSONObject con los datos de un Maquinista.
      * @return El JSONObject como un Maquinista.
      */
-    public static Maquinista JSONxMaquinista(JSONObject json) throws JSONObjectEliminatedException {
-        if (json.getBoolean("estado") && Usuario.verificarJSON(json)) {
-            return new Maquinista(json.getString("dni"),
-                    json.getString("nombre"),
-                    json.getString("apellido"),
-                    json.getString("idMaquinista"));
-        } else if (!json.getBoolean("estado")) {
-            throw new JSONObjectEliminatedException();
-        } else {
-            throw new IllegalArgumentException();
+    public static Maquinista JSONxMaquinista(JSONObject json) {
+        try {
+            if (json.getBoolean("estado") && Usuario.verificarJSON(json)) {
+                return new Maquinista(json.getString("dni"),
+                        json.getString("nombre"),
+                        json.getString("apellido"),
+                        json.getString("idMaquinista"));
+            } else if (!json.getBoolean("estado")) {
+                throw new JSONObjectEliminatedException();
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (JSONException e) {
+            return null;
         }
     }
     //JSON

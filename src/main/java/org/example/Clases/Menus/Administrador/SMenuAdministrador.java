@@ -1,6 +1,14 @@
-package org.example.Clases.Menus;
+package org.example.Clases.Menus.Administrador;
 
+import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.Menus.*;
+import org.example.Enums.TipoUsuario;
+import org.example.Excepciones.FileDoesntExistException;
+import org.example.Main;
+import org.json.JSONArray;
+
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -19,6 +27,14 @@ public class SMenuAdministrador {
     public static void usuarioAdministrador (int op, Usuario usuario, Almacenamiento almacenamiento) {
         int subOp = 0;
         Scanner sc = new Scanner(System.in);
+        GestionUsuario gu = null;
+
+        try {
+            gu = GestionUsuario.getJSONArray(new JSONArray(Main.leerArchivo(almacenamiento.getUsuarios())));
+        } catch (FileDoesntExistException e) {
+            System.out.println("El archivo no existe");
+            op = 0;
+        }
         switch (op) {
             case 0:
                 break;
@@ -38,15 +54,28 @@ public class SMenuAdministrador {
                     SMenuVagones.administrarVagones(subOp, almacenamiento);
                 } while (subOp != 0);
                 break;
-            /*case 3:
-                do {
-                    System.out.println(Menu.menuRutas());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
-                    SMenuRutas.administrarRutas(subOp, almacenamiento);
-                } while (subOp != 0);
-                break;*/
+            case 3:
+                if (Main.crearUsuario(TipoUsuario.TAQUILLERO, almacenamiento.getUsuarios())) {
+                    System.out.println("El usuario se ha creado con exito");
+                }
+                break;
             case 4:
+                if (Main.crearUsuario(TipoUsuario.ADMINISTRADOR, almacenamiento.getUsuarios())) {
+                    System.out.println("El usuario se ha creado con exito");
+                }
+                break;
+            case 5:
+                System.out.println(gu);
+                System.out.println("Nombre de Usuario");
+                try {
+                    if(GestionUsuario.eliminarRegistro(gu.verificarUsuario(sc.nextLine()), almacenamiento.getUsuarios())) {
+                        System.out.println("Se elimino el usuario con exito");
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 6:
                 do {
                     System.out.println(Menu.configuracion());
                     System.out.println("Opcion: ");
@@ -54,6 +83,7 @@ public class SMenuAdministrador {
                     sc.nextLine();
                     SMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
                 } while (subOp != 0);
+                break;
             default:
                 System.out.println("Opcion no valida");
                 break;

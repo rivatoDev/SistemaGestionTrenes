@@ -1,4 +1,4 @@
-package org.example.Clases.Menus;
+package org.example.Clases.Menus.Taquillero;
 
 import org.example.Clases.FamiliaPersona.GestionMaquinista;
 import org.example.Clases.FamiliaTren.GestionTren;
@@ -6,6 +6,9 @@ import org.example.Clases.FamiliaTren.Tren;
 import org.example.Clases.FamiliaTren.TrenComercial;
 import org.example.Clases.FamiliaTren.TrenDeCarga;
 import org.example.Clases.GestionRuta;
+import org.example.Clases.Menus.Administrador.SMenuTrenes;
+import org.example.Clases.Menus.Almacenamiento;
+import org.example.Clases.Menus.Menu;
 import org.example.Clases.Ruta;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
@@ -23,6 +26,11 @@ public class SMenuRutas {
     }
 
     //Mostrar
+    /**
+     * Lee las rutas de un archivo.
+     * @param archivo El archivo a leer.
+     * @return Un gestor que contiene todas las rutas del archivo.
+     */
     public static GestionRuta leerRutas (String archivo) {
         GestionRuta gt;
         try {
@@ -64,6 +72,8 @@ public class SMenuRutas {
         System.out.println(gt);
 
         System.out.println("----------------------------------------------------------------------------------------------------");
+        System.out.println("ID: ");
+        r.setId(sc.nextLine());
         try {
             System.out.println("Patente del Tren: ");
             r.setTren(gt.verificarTren(sc.nextLine()));
@@ -80,6 +90,7 @@ public class SMenuRutas {
         r.setLlegada(sc.nextLine());
         System.out.println("Fecha: ");
         r.setFecha(sc.nextLine());
+        System.out.println("----------------------------------------------------------------------------------------------------");
         return r;
     }
     //Baja
@@ -161,7 +172,7 @@ public class SMenuRutas {
             System.out.println(gr);
             System.out.println("ID: ");
             try {
-               r = gr.verificarRuta(sc.nextInt());
+               r = gr.verificarRuta(sc.nextLine());
             } catch (NoSuchElementException e) {
                 System.out.println(e.getMessage());
             }

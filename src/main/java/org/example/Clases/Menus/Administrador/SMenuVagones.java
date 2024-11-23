@@ -1,9 +1,11 @@
-package org.example.Clases.Menus;
+package org.example.Clases.Menus.Administrador;
 
 import org.example.Clases.FamiliaVagon.GestionVagon;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Clases.FamiliaVagon.VagonDeCarga;
+import org.example.Clases.Menus.Almacenamiento;
+import org.example.Clases.Menus.Menu;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.FileDoesntExistException;
 import org.example.Excepciones.LowCapacityException;

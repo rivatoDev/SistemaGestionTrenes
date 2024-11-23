@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 
 public class GestionRuta {
     //Atributos
@@ -196,7 +195,6 @@ public class GestionRuta {
     /**
      * Elimina una ruta del archivo.
      * @param ruta La ruta a eliminar.
-     * @param tipoTren Function con el metodo de getJSONObject del tipo de tren.
      * @param archivo El archivo a utilizar.
      * @return true si se pudo eliminar el archivo sin problemas.
      */
@@ -222,7 +220,7 @@ public class GestionRuta {
      * @return Si encuentra a la ruta la devuelve con todos sus datos.
      * @throws NoSuchElementException Si no encuentra a la ruta.
      */
-    public Ruta verificarRuta(int id) {
+    public Ruta verificarRuta(String id) {
         for (Ruta r: this.rutas) {
             if (Objects.equals(id, r.getId())){
                 return r;

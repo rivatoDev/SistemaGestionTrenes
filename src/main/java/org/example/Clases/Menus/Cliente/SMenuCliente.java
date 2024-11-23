@@ -1,7 +1,9 @@
-package org.example.Clases.Menus;
+package org.example.Clases.Menus.Cliente;
 
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaVagon.VagonComercial;
+import org.example.Clases.Menus.Menu;
+import org.example.Clases.Menus.SMenuPrincipal;
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.WrongUserException;

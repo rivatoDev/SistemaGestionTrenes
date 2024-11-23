@@ -42,8 +42,10 @@ public class Menu {
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------\n" +
                         "1. Gestionar Trenes" + '\n' +
                         "2. Gestionar Vagones" + '\n' +
-                        "3. Gestionar Rutas" + "\n" +
-                        "4. Configuracion" + '\n' +
+                        "3. Crear Taquillero" + "\n" +
+                        "4. Crear Administrador" + "\n" +
+                        "5. Eliminar Usuario" + "\n" +
+                        "6. Configuracion" + '\n' +
                         "0. Cerrar Sesion" + '\n' +
                 "--------------------------------------------------ADMINISTRADOR--------------------------------------------------";
     }
@@ -112,6 +114,7 @@ public class Menu {
         return "--------------------------------------------------TAQUILLERO--------------------------------------------------\n" +
                 "1. Rutas." + '\n' +
                 "2. Maquinistas." + '\n' +
+                "3. Configuracion." + '\n' +
                 "0. Volver." + '\n' +
                "--------------------------------------------------TAQUILLERO--------------------------------------------------";
     }

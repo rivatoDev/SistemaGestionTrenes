@@ -3,6 +3,9 @@ package org.example;
 import org.example.Clases.FamiliaPersona.GestionUsuario;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.Menus.*;
+import org.example.Clases.Menus.Administrador.SMenuAdministrador;
+import org.example.Clases.Menus.Cliente.SMenuCliente;
+import org.example.Clases.Menus.Taquillero.SMenuTaquillero;
 import org.example.Enums.TipoUsuario;
 import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
@@ -132,7 +135,7 @@ public class Main {
         contrasenia = teclado.nextLine();
         System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
         try {
-            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario, contrasenia);
+            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario);
         } catch (NullPointerException e) {
             System.out.println("Nombre de usuario o clave incorrecta.");
         }
@@ -141,7 +144,6 @@ public class Main {
     //Usuario
 
     //Archivos
-
     /**
      * Crea un archivo de texto.
      * @param nombre Nombre del archivo.

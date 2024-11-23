@@ -235,7 +235,7 @@ public class GestionMaquinista {
      */
     public Maquinista verificarMaquinista(String idMaquinista) {
         for (Maquinista m : this.maquinistas) {
-            if (Objects.equals(m.getIdMaquinista().toString(), idMaquinista)) {
+            if (Objects.equals(m.getIdMaquinista(), idMaquinista)) {
                 return m;
             }
         }

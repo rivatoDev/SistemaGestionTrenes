@@ -60,7 +60,7 @@ public final class Usuario extends Persona {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return this.estado && usuario.isEstado() && Objects.equals(nombreUsuario.toString(), usuario.nombreUsuario.toString());
+        return Objects.equals(nombreUsuario.toString(), usuario.nombreUsuario.toString());
     }
 
     @Override
@@ -73,6 +73,7 @@ public final class Usuario extends Persona {
     @Override
     public String toString() {
         return  "Nombre de Usuario: " + this.nombreUsuario + '\n' +
+                "Tipo de Usuario: " + this.tipoUsuario.toString() + '\n' +
                 super.toString();
     }
     //Mostrar
