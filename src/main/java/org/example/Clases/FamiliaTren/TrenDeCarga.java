@@ -1,9 +1,13 @@
 package org.example.Clases.FamiliaTren;
 
+import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaVagon.Cargamento;
+import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
+import org.example.Excepciones.WrongUserException;
 import org.example.Interfaces.GestionCarga;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -88,6 +92,22 @@ public class TrenDeCarga extends Tren implements GestionCarga {
             this.vagones.addLast(vagon);
             return true;
         }
+    }
+
+    public boolean agregarCargamento(Cargamento cargamento) {
+        Iterator<VagonDeCarga> it = this.vagones.iterator();
+        boolean flag;
+        do {
+            try {
+                it.next().agregarCargamento(cargamento);
+                flag = false;
+            } catch (JSONObjectEliminatedException | WrongUserException e) {
+                throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
+            }  catch (OffLimitsException e) {
+                flag = it.hasNext();
+            }
+        } while (flag);
+        return true;
     }
     //Alta
 

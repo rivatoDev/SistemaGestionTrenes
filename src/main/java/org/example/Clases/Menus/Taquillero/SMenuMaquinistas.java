@@ -98,6 +98,8 @@ public class SMenuMaquinistas {
                 sc.nextLine();
             }
 
+            System.out.println("----------");
+            System.out.println(maquinista);
             return GestionMaquinista.modificarRegistro(gm.verificarMaquinista(maquinista.getIdMaquinista()), maquinista, archivo);
         }
         return false;
@@ -112,54 +114,59 @@ public class SMenuMaquinistas {
     public static void administrarMaquinistas(int op, String archivo) {
         int subOp;
         Scanner sc = new Scanner(System.in);
-        Maquinista m;
+        Maquinista m = null;
         GestionMaquinista gm = leerMaquinistas(archivo);
 
         if (op > 1 && op < 4) {
-            System.out.println("ID: ");
             try {
+                System.out.println(gm);
+                System.out.println("ID: ");
                 m = gm.verificarMaquinista(sc.nextLine());
-
-                switch (op) {
-                    case 0:
-                        break;
-                    case 1:
-                        try {
-                            if (GestionMaquinista.agregarRegistro(ingresarMaquinista(), archivo)) {
-                                System.out.println("Se agrego el maquinista exitosamente");
-                            }
-                        } catch (ElementAlreadyExistsException e) {
-                            System.out.println("El maquinista ya existe.");
-                        }
-                        break;
-                    case 2:
-                        do {
-                            System.out.println(Menu.modificarMaquinista());
-                            System.out.println("Opcion: ");
-                            subOp = sc.nextInt();
-                            if(modificarMaquinista(subOp, m, archivo)) {
-                                System.out.println("El maquinista se modifico exitosamente");
-                            }
-                            else {
-                                System.out.println("Ocurrio un error");
-                            }
-                        } while (subOp != 0);
-                        break;
-                    case 3:
-                        if(GestionMaquinista.eliminarRegistro(m, archivo)) {
-                            System.out.println("Se elimino el maquinista con exito");
-                        }
-                        break;
-                    case 4:
-                        System.out.println(gm);
-                        break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("La opcion debe ser un numero entero.");
-                sc.nextLine();
             } catch (NoSuchElementException e) {
                 System.out.println(e.getMessage());
             }
+        }
+
+        try {
+            switch (op) {
+                case 0:
+                    break;
+                case 1:
+                    System.out.println("Hola");
+                    try {
+                        if (GestionMaquinista.agregarRegistro(ingresarMaquinista(), archivo)) {
+                            System.out.println("Se agrego el maquinista exitosamente");
+                        } else {
+                            System.out.println("Ocurrio un error");
+                        }
+                    } catch (ElementAlreadyExistsException e) {
+                        System.out.println("El maquinista ya existe.");
+                    }
+                    break;
+                case 2:
+                    do {
+                        System.out.println(Menu.modificarMaquinista());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        if(modificarMaquinista(subOp, m, archivo)) {
+                            System.out.println("El maquinista se modifico exitosamente");
+                        }
+                        else {
+                            System.out.println("Ocurrio un error");
+                        }
+                    } while (subOp != 0);
+                    break;
+                case 3:
+                    if(GestionMaquinista.eliminarRegistro(m, archivo)) {
+                        System.out.println("Se elimino el maquinista con exito");
+                    }
+                    break;
+                case 4:
+                    System.out.println(gm);
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Opcion invalida");
         }
     }
 }

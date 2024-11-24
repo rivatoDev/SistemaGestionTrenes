@@ -167,7 +167,7 @@ public abstract class Tren {
         } else if (!this.equals(ruta.getTren())) {
             throw new IllegalArgumentException();
         } else
-            if (!Objects.equals(this.ubicacion.toString(), ruta.getSalida().toString())) {
+            if (!Objects.equals(this.ubicacion.toString(), ruta.getSalida())) {
                 throw new NoSuchElementException();
             } else {
                 this.estadoViaje = true;

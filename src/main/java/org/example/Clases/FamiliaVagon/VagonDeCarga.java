@@ -71,7 +71,7 @@ public class VagonDeCarga extends Vagon {
      * @throws OffLimitsException si el peso total supera al pesoMax del vagon.
      */
     public boolean agregarCargamento (Cargamento cargamento) throws OffLimitsException {
-        if (cargamento.CalcularPeso() > (double)this.capacidad - this.calcularPesoTotal()) {
+        if (cargamento.CalcularPeso() > Double.parseDouble(this.capacidad.toString()) - this.calcularPesoTotal()) {
             throw new OffLimitsException();
         }
         return this.contenido.add(cargamento);

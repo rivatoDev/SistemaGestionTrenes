@@ -125,7 +125,9 @@ public class Menu {
                 "1. Añadir ruta." + "\n" +
                 "2. Modificar ruta."+ "\n" +
                 "3. Eliminar ruta." + "\n" +
-                "4. Ver rutas" + "\n" +
+                "4. Iniciar Viaje." + "\n" +
+                "5. Finalizar Viaje." + "\n" +
+                "6. Ver rutas" + "\n" +
                 "0. Volver" + "\n" +
                "--------------------------------------------------RUTAS---------------------------------------------------";
     }
@@ -158,6 +160,7 @@ public class Menu {
                 "1. DNI." + '\n' +
                 "2. Nombre." + '\n' +
                 "3. Apellido." + '\n' +
+                "4. Salir." + '\n' +
                "--------------------------------------------------MODIFICAR--------------------------------------------------";
     }
     //Maquinista
@@ -167,7 +170,7 @@ public class Menu {
     public static String menuCliente () {
         return
                 "--------------------------------------------------CLIENTE--------------------------------------------------\n" +
-                        "1. Sacar Entrada" + '\n' +
+                        "1. Pagar Viaje" + '\n' +
                         "2. Configuracion" + '\n' +
                         "0. Cerrar Sesion" + '\n' +
                         "--------------------------------------------------CLIENTE--------------------------------------------------";

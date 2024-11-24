@@ -219,7 +219,7 @@ public class GestionMaquinista {
         }
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
-            bf.write(gm.convertirAJSONArray().toString());
+            bf.write(gm.convertirAJSONArray().toString(2));
         } catch (IOException e) {
             return false;
         }

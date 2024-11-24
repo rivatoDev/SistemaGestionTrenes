@@ -114,8 +114,10 @@ public class Ruta {
     //Mostrar
     @Override
     public String toString() {
-       return "-----------------------------------TREN-----------------------------------\n" +
+       return "ID Ruta: " + this.id + '\n' +
+              "-----------------------------------TREN-----------------------------------\n" +
               this.tren.toString() +
+              "Tipo: " + this.tren.getClass().getSimpleName() + '\n' +
               "-----------------------------------TREN-----------------------------------\n" +
               this.maquinista.toString() +
               "Salida: " + this.salida + '\n' +

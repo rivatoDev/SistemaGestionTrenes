@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
+import org.example.Clases.FamiliaPersona.Maquinista;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.Menus.*;
 import org.example.Clases.Menus.Administrador.SMenuAdministrador;
@@ -13,6 +14,7 @@ import org.json.JSONTokener;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -65,7 +67,7 @@ public class Main {
                                     System.out.println("Opcion: ");
                                     subOp = sc.nextInt();
                                     sc.nextLine();
-                                    SMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
+                                    SMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento);
                                 } while (subOp != 0);
                             }
                         }
@@ -141,7 +143,7 @@ public class Main {
         System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
         try {
             return gu.verificarUsuario(nombreUsuario, contrasenia);
-        } catch (NullPointerException e) {
+        } catch (NoSuchElementException e) {
             System.out.println("Nombre de usuario o clave incorrecta.");
         }
         return null;

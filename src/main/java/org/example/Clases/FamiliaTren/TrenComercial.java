@@ -1,9 +1,12 @@
 package org.example.Clases.FamiliaTren;
 
+import org.example.Clases.FamiliaPersona.Usuario;
+import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
+import org.example.Excepciones.WrongUserException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +15,7 @@ import java.util.*;
 /**
  * Clase que hereda de Tren y representa a los trenes que llevan pasajeros.
  */
-public class    TrenComercial extends Tren {
+    public class TrenComercial extends Tren {
     //Atributos
     private final LinkedHashSet<VagonComercial> vagones;
     //Atributos
@@ -87,6 +90,22 @@ public class    TrenComercial extends Tren {
             this.vagones.addLast(vagon);
             return true;
         }
+    }
+
+    public boolean agregarPasajero(Usuario pasajero) {
+        Iterator<VagonComercial> it = this.vagones.iterator();
+        boolean flag;
+        do {
+            try {
+                return it.next().cargarPasajero(pasajero, UUID.randomUUID().toString());
+            } catch (JSONObjectEliminatedException | WrongUserException e) {
+                throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
+            }  catch (OffLimitsException e) {
+                //flag es el valor contrario de hasNext para que en caso de que no se pueda agregar el pasajero en ningun valor develva false.
+                flag = !it.hasNext();
+            }
+        } while (!flag);
+        throw new OffLimitsException("No hay lugar para el pasajero en el tren.");
     }
     //Alta
 

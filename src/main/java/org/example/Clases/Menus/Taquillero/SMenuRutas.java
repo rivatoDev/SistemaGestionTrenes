@@ -181,7 +181,7 @@ public class SMenuRutas {
         Scanner sc = new Scanner(System.in);
         GestionRuta gr = leerRutas(almacenamiento.getRutas());
         Ruta r = null;
-        if(op > 1 && op < 4) {
+        if(op > 1 && op < 6) {
             System.out.println(gr);
             System.out.println("ID: ");
             try {
@@ -223,6 +223,34 @@ public class SMenuRutas {
                     }
                     break;
                 case 4:
+                    try {
+                        r.getTren().iniciarViaje(r);
+                        if(GestionRuta.modificarRegistro(gr.verificarRuta(r.getId()), r, almacenamiento.getRutas())) {
+                            System.out.println("Se inicio el viaje.");
+                        } else {
+                            System.out.println("Ocurrio un error.");
+                        }
+                    } catch (IllegalStateException e) {
+                        System.out.println("El tren ya esta viajando en este momento");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Tren incorrecto");
+                    } catch (NoSuchElementException e) {
+                        System.out.println("El tren no se encuentra en la ubicacion inicial de la ruta.");
+                    }
+                    break;
+                case 5:
+                    try {
+                        r.getTren().finalizarViaje();
+                        if(GestionRuta.modificarRegistro(gr.verificarRuta(r.getId()), r, almacenamiento.getRutas())) {
+                            System.out.println("Se inicio el viaje.");
+                        } else {
+                            System.out.println("Ocurrio un error.");
+                        }
+                    } catch (IllegalStateException e) {
+                        System.out.println("El tren no esta viajando en este momento");
+                    }
+                    break;
+                case 6:
                     System.out.println(gr);
                     break;
                 default:
