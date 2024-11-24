@@ -1,6 +1,15 @@
 [
   {
     "estado": true,
+    "apellido": "Ortega",
+    "contrasenia": "123",
+    "tipoUsuario": "TAQUILLERO",
+    "nombreUsuario": "pampita",
+    "nombre": "Joaquin",
+    "dni": "44535612"
+  },
+  {
+    "estado": true,
     "apellido": "dido",
     "contrasenia": "password",
     "tipoUsuario": "CLIENTE",

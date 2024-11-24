@@ -1,29 +1,98 @@
+
 [
-  {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "Pinamar",
-    "modelo": "Lenovo",
-    "vagones": [],
-    "patente": "123",
-    "capacidad": 400.5
-  },
-  {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "CABA",
-    "modelo": "A-Train",
-    "vagones": [],
-    "patente": "234",
-    "capacidad": 120
-  },
-  {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "Miramar",
-    "modelo": "Tren Infinito",
-    "vagones": [],
-    "patente": "789w",
-    "capacidad": 234.7
-  }
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Pinamar",
+"modelo": "Lenovo",
+"vagones": [],
+"patente": "123",
+"capacidad": 400.4
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "CABA",
+"modelo": "A-Train",
+"vagones": [],
+"patente": "234",
+"capacidad": 120
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "MADRID",
+"modelo": "Arcane",
+"vagones": [],
+"patente": "777ASD",
+"capacidad": 250
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Mar del Plata",
+"modelo": "Carnival",
+"vagones": [],
+"patente": "JIAD412",
+"capacidad": 230
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Miramar",
+"modelo": "Tren Infinito",
+"vagones": [],
+"patente": "789w",
+"capacidad": 234.7
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Puerto Rico",
+"modelo": "Badbunny",
+"vagones": [],
+"patente": "IO1232",
+"capacidad": 175
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Finlandia",
+"modelo": "Fireaway",
+"vagones": [],
+"patente": "MFK987",
+"capacidad": 200
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "CHACO",
+"modelo": "SCANIA",
+"vagones": [],
+"patente": "JMV111",
+"capacidad": 175
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "TRINIDAD",
+"modelo": "RAINBOW",
+"vagones": [],
+"patente": "HR2555",
+"capacidad": 300
+},
+{
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Lyon",
+"modelo": "Francetour",
+"vagones": [{
+"estado": false,
+"contenido": [],
+"idVagon": "009",
+"capacidad": 100
+}],
+"patente": "RJI231",
+"capacidad": 90
+}
 ]

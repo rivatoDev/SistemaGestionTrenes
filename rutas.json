@@ -1,22 +1,116 @@
-[{
-  "fecha": "2025/01/13",
-  "trenDeCarga": {
-    "estadoViaje": false,
-    "estado": true,
-    "ubicacion": "Pinamar",
-    "modelo": "Lenovo",
-    "vagones": [],
-    "patente": "123",
-    "capacidad": 400.4
-  },
-  "llegada": "Mar del Plata",
-  "maquinista": {
-    "estado": true,
-    "apellido": "Suarez",
-    "nombre": "Valentin",
-    "idMaquinista": "0",
-    "dni": "30456876"
-  },
-  "id": "0",
-  "salida": "Miramar"
-}]
+[  {
+"fecha": "2025/01/12",
+"trenDeCarga": {
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Pinamar",
+"modelo": "Lenovo",
+"vagones": [],
+"patente": "123",
+"capacidad": 400.4
+},
+"llegada": "Mar del Plata",
+"maquinista": {
+"estado": true,
+"apellido": "Suarez",
+"nombre": "Valentin",
+"idMaquinista": "0",
+"dni": "30456876"
+},
+"id": "0",
+"salida": "Miramar"
+},
+{
+"fecha": "2024/12/12",
+"trenComercial": {
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Turquia",
+"modelo": "Miramon",
+"vagones": [],
+"patente": "pes106",
+"capacidad": 75
+},
+"llegada": "Burkina Faso",
+"maquinista": {
+"estado": true,
+"apellido": "Ronaldo",
+"nombre": "Cristiano",
+"idMaquinista": "7",
+"dni": "77231041"
+},
+"id": "1",
+"salida": "Francia"
+},
+{
+"fecha": "2025/03/09",
+"trenDeCarga": {
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "TRINIDAD",
+"modelo": "RAINBOW",
+"vagones": [],
+"patente": "HR2555",
+"capacidad": 300
+},
+"llegada": "Escocia",
+"maquinista": {
+"estado": true,
+"apellido": "Gonzalez",
+"nombre": "Ramiro",
+"idMaquinista": "3",
+"dni": "49192043"
+},
+"id": "3",
+"salida": "Uganda"
+},
+{
+"fecha": "2024/11/27",
+"trenComercial": {
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Chad",
+"modelo": "Vanguardia",
+"vagones": [],
+"patente": "qrs009",
+"capacidad": 240
+},
+"llegada": "Botsuana",
+"maquinista": {
+"estado": true,
+"apellido": "Suarez",
+"nombre": "Valentin",
+"idMaquinista": "0",
+"dni": "30456876"
+},
+"id": "4",
+"salida": "Nigeria"
+},
+{
+"fecha": "2025/02/01",
+"trenDeCarga": {
+"estadoViaje": false,
+"estado": true,
+"ubicacion": "Lyon",
+"modelo": "Francetour",
+"vagones": [{
+"estado": false,
+"contenido": [],
+"idVagon": "009",
+"capacidad": 100
+}],
+"patente": "RJI231",
+"capacidad": 90
+},
+"llegada": "Italia",
+"maquinista": {
+"estado": true,
+"apellido": "Prime",
+"nombre": "Joselucas",
+"idMaquinista": "95",
+"dni": "32999014"
+},
+"id": "5",
+"salida": "Francia"
+}
+]

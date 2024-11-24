@@ -1,6 +1,61 @@
-[{
+[ {
   "estado": true,
   "pasajeros": [],
   "idVagon": "678",
   "capacidad": 123
-}]
+},
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "345",
+    "capacidad": 102
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "900",
+    "capacidad": 172.2
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "194",
+    "capacidad": 114
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "000",
+    "capacidad": 234
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "145",
+    "capacidad": 235.5
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "800",
+    "capacidad": 121.2
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "023",
+    "capacidad": 129
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "414",
+    "capacidad": 142
+  },
+  {
+    "estado": true,
+    "pasajeros": [],
+    "idVagon": "750",
+    "capacidad": 189.1
+  }
+]

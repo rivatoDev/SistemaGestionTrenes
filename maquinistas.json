@@ -1,7 +1,72 @@
-[{
-  "estado": true,
-  "apellido": "Suarez",
-  "nombre": "valen",
-  "idMaquinista": "0",
-  "dni": "30456876"
-}]
+[
+  {
+    "estado": true,
+    "apellido": "Suarez",
+    "nombre": "Valentin",
+    "idMaquinista": "0",
+    "dni": "30456876"
+  },
+  {
+    "estado": true,
+    "apellido": "Pinturillo",
+    "nombre": "Hernan",
+    "idMaquinista": "313",
+    "dni": "0320392"
+  },
+  {
+    "estado": true,
+    "apellido": "Panama",
+    "nombre": "Chicho",
+    "idMaquinista": "1",
+    "dni": "1230912"
+  },
+  {
+    "estado": true,
+    "apellido": "Ferragamo",
+    "nombre": "Nicolas",
+    "idMaquinista": "250",
+    "dni": "55939123"
+  },
+  {
+    "estado": true,
+    "apellido": "Fichini",
+    "nombre": "Javier",
+    "idMaquinista": "910",
+    "dni": "30456876"
+  },
+  {
+    "estado": true,
+    "apellido": "Martegani",
+    "nombre": "Martin",
+    "idMaquinista": "22",
+    "dni": "41239204"
+  },
+  {
+    "estado": true,
+    "apellido": "Fungi",
+    "nombre": " Francisco",
+    "idMaquinista": "132",
+    "dni": "99040123"
+  },
+  {
+    "estado": true,
+    "apellido": "Prime",
+    "nombre": "Joselucas",
+    "idMaquinista": "95",
+    "dni": "32999014"
+  },
+  {
+    "estado": true,
+    "apellido": "Gonzalez",
+    "nombre": "Ramiro",
+    "idMaquinista": "3",
+    "dni": "49192043"
+  },
+  {
+    "estado": true,
+    "apellido": "Ronaldo",
+    "nombre": "Cristiano",
+    "idMaquinista": "7",
+    "dni": "77231041"
+  }
+]

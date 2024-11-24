@@ -11,4 +11,86 @@
   }],
   "patente": "qw12",
   "capacidad": 150
-}]
+},
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Rivadavia",
+    "modelo": "Hamilton",
+    "vagones": [],
+    "patente": "qwerty1",
+    "capacidad": 100
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Malasia",
+    "modelo": "Runaway",
+    "vagones": [],
+    "patente": "fan555",
+    "capacidad": 90
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Libia",
+    "modelo": "Fangio",
+    "vagones": [],
+    "patente": "sss111",
+    "capacidad": 100
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Riffini",
+    "modelo": "Vivibelt",
+    "vagones": [],
+    "patente": "pin844",
+    "capacidad": 125
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Groenlandia",
+    "modelo": "Fancy",
+    "vagones": [],
+    "patente": "ryu000",
+    "capacidad": 200
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Pinocho",
+    "modelo": "Panamericano",
+    "vagones": [],
+    "patente": "qwerty1",
+    "capacidad": 125
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Turquia",
+    "modelo": "Miramon",
+    "vagones": [],
+    "patente": "pes106",
+    "capacidad": 75
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Chad",
+    "modelo": "Vanguardia",
+    "vagones": [],
+    "patente": "qrs009",
+    "capacidad": 240
+  },
+  {
+    "estadoViaje": false,
+    "estado": true,
+    "ubicacion": "Mongolia",
+    "modelo": "Pistarini",
+    "vagones": [],
+    "patente": "cap666",
+    "capacidad": 190
+  }
+]

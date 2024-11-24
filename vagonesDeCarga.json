@@ -1,6 +1,62 @@
-[{
-  "estado": true,
-  "contenido": [],
-  "idVagon": "456",
-  "capacidad": 123.5
-}]
+[
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "123",
+    "capacidad": 123
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "222",
+    "capacidad": 145.5
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "111",
+    "capacidad": 111
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "861",
+    "capacidad": 125.5
+  },
+  {
+    "estado": false,
+    "contenido": [],
+    "idVagon": "009",
+    "capacidad": 100
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "666",
+    "capacidad": 150
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "456",
+    "capacidad": 123.5
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "500",
+    "capacidad": 200
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "777",
+    "capacidad": 172.4
+  },
+  {
+    "estado": true,
+    "contenido": [],
+    "idVagon": "942",
+    "capacidad": 321.2
+  }
+]
