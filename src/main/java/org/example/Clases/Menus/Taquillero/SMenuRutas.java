@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -116,48 +117,53 @@ public class SMenuRutas {
         System.out.println(gr);
 
         if(new File(almacenamiento.getRutas()).length() > 0) {
-            switch(op) {
-                case 0:
-                    break;
-                case 1:
-                    System.out.println("Salida: ");
-                    ruta.setSalida(sc.nextLine());
-                    break;
-                case 2:
-                    System.out.println("Llegada: ");
-                    ruta.setLlegada(sc.nextLine());
-                    break;
-                case 3:
-                    System.out.println("Fecha: ");
-                    ruta.setFecha(sc.nextLine());
-                    break;
-                case 4:
-                    if(ruta.getTren() instanceof TrenDeCarga) {
-                        gt = SMenuTrenes.leerTrenes(TrenDeCarga::getJSONObject, almacenamiento.getTrenesDeCarga());
-                    } else {
-                        gt = SMenuTrenes.leerTrenes(TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
-                    }
-                    System.out.println(gt);
-                    System.out.println("Patente: ");
-                    try {
-                        ruta.setTren(gt.verificarTren(sc.nextLine()));
-                    } catch (NoSuchElementException e) {
-                        System.out.println("Patente invalida");
-                        return false;
-                    }
-                    break;
-                case 5:
-                    System.out.println(gm);
-                    System.out.println("ID: ");
-                    try {
-                        ruta.setMaquinista(gm.verificarMaquinista(sc.nextLine()));
-                    } catch (NoSuchElementException e) {
-                        System.out.println("ID invalido.");
-                        return false;
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Opcion no valida.");
+            try {
+                switch(op) {
+                    case 0:
+                        break;
+                    case 1:
+                        System.out.println("Salida: ");
+                        ruta.setSalida(sc.nextLine());
+                        break;
+                    case 2:
+                        System.out.println("Llegada: ");
+                        ruta.setLlegada(sc.nextLine());
+                        break;
+                    case 3:
+                        System.out.println("Fecha: ");
+                        ruta.setFecha(sc.nextLine());
+                        break;
+                    case 4:
+                        if(ruta.getTren() instanceof TrenDeCarga) {
+                            gt = SMenuTrenes.leerTrenes(TrenDeCarga::getJSONObject, almacenamiento.getTrenesDeCarga());
+                        } else {
+                            gt = SMenuTrenes.leerTrenes(TrenComercial::getJSONObject, almacenamiento.getTrenesComerciales());
+                        }
+                        System.out.println(gt);
+                        System.out.println("Patente: ");
+                        try {
+                            ruta.setTren(gt.verificarTren(sc.nextLine()));
+                        } catch (NoSuchElementException e) {
+                            System.out.println("Patente invalida");
+                            return false;
+                        }
+                        break;
+                    case 5:
+                        System.out.println(gm);
+                        System.out.println("ID: ");
+                        try {
+                            ruta.setMaquinista(gm.verificarMaquinista(sc.nextLine()));
+                        } catch (NoSuchElementException e) {
+                            System.out.println("ID invalido.");
+                            return false;
+                        }
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Opcion no valida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
             return GestionRuta.modificarRegistro(gr.verificarRuta(ruta.getId()), ruta, almacenamiento.getRutas());
         }
@@ -185,39 +191,47 @@ public class SMenuRutas {
             }
         }
 
-        switch (op) {
-            case 0:
-                break;
-            case 1:
-                try {
-                    if(GestionRuta.agregarRegistro(ingresarRuta(almacenamiento), almacenamiento.getRutas())) {
-                        System.out.println("La ruta se agrego exitosamente");
+        try {
+            switch (op) {
+                case 0:
+                    break;
+                case 1:
+                    try {
+                        if(GestionRuta.agregarRegistro(ingresarRuta(almacenamiento), almacenamiento.getRutas())) {
+                            System.out.println("La ruta se agrego exitosamente");
+                        }
+                    } catch (ElementAlreadyExistsException e) {
+                        System.out.println("La ruta ya existe");
                     }
-                } catch (ElementAlreadyExistsException e) {
-                    System.out.println("La ruta ya existe");
-                }
-                break;
-            case 2:
-                do {
-                    System.out.println(Menu.modificarRuta());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
+                    break;
+                case 2:
+                    do {
+                        System.out.println(Menu.modificarRuta());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
                         if(modificarRuta(subOp, r, almacenamiento)) {
                             System.out.println("La ruta se modifico exitosamente");
                         }
                         else {
                             System.out.println("Ocurrio un error");
                         }
-                } while (subOp != 0);
-                break;
-            case 3:
-                if (GestionRuta.eliminarRegistro(r, almacenamiento.getRutas())) {
-                    System.out.println("La ruta se elimino con exito");
-                }
-                break;
-            case 4:
-                System.out.println(gr);
-                break;
+                    } while (subOp != 0);
+                    break;
+                case 3:
+                    if (GestionRuta.eliminarRegistro(r, almacenamiento.getRutas())) {
+                        System.out.println("La ruta se elimino con exito");
+                    }
+                    break;
+                case 4:
+                    System.out.println(gr);
+                    break;
+                default:
+                    System.out.println("Opcion incorrecta");
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("La opcion debe ser un numero entero.");
+            sc.nextLine();
         }
     }
 }

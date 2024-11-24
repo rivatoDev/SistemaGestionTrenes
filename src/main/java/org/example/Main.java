@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -22,57 +23,62 @@ public class Main {
                 "rutas.json", "maquinistas.json", "usuarios.json");
         //Utilidades
         Scanner sc = new Scanner(System.in);
-        int op;
+        int op = -1;
         int subOp;
         Usuario usuarioActivo;
         //Utilidades
 
         do {
-            System.out.println(Menu.MenuPrincipal());
-            System.out.println("Opcion");
-            op = sc.nextInt();
-            sc.nextLine();
-            switch (op) {
-                case 0:
-                    System.out.println("--------------------------------------------------FIN--------------------------------------------------");
-                    break;
-                case 1:
-                    usuarioActivo = iniciarSesion(almacenamiento.getUsuarios());
-                    if(usuarioActivo != null) {
-                        if (usuarioActivo.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                            do {
-                                System.out.println(Menu.menuAdministrador());
-                                System.out.println("Opcion: ");
-                                subOp = sc.nextInt();
-                                sc.nextLine();
+            try {
+                System.out.println(Menu.MenuPrincipal());
+                System.out.println("Opcion");
+                op = sc.nextInt();
+                sc.nextLine();
+                switch (op) {
+                    case 0:
+                        System.out.println("--------------------------------------------------FIN--------------------------------------------------");
+                        break;
+                    case 1:
+                        usuarioActivo = iniciarSesion(almacenamiento.getUsuarios());
+                        if(usuarioActivo != null) {
+                            if (usuarioActivo.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
+                                do {
+                                    System.out.println(Menu.menuAdministrador());
+                                    System.out.println("Opcion: ");
+                                    subOp = sc.nextInt();
+                                    sc.nextLine();
 
-                                SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamiento);
-                            } while (subOp != 0);
-                        } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.TAQUILLERO) {
-                            do {
-                                System.out.println(Menu.menuTaquillero());
-                                System.out.println("Opcion: ");
-                                subOp = sc.nextInt();
-                                sc.nextLine();
+                                    SMenuAdministrador.usuarioAdministrador(subOp, usuarioActivo, almacenamiento);
+                                } while (subOp != 0);
+                            } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.TAQUILLERO) {
+                                do {
+                                    System.out.println(Menu.menuTaquillero());
+                                    System.out.println("Opcion: ");
+                                    subOp = sc.nextInt();
+                                    sc.nextLine();
 
-                                SMenuTaquillero.usuarioTaquillero(subOp, usuarioActivo, almacenamiento);
-                            } while (subOp != 0);
-                        } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
-                            do {
-                                System.out.println(Menu.menuCliente());
-                                System.out.println("Opcion: ");
-                                subOp = sc.nextInt();
-                                sc.nextLine();
-                                SMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
-                            } while (subOp != 0);
+                                    SMenuTaquillero.usuarioTaquillero(subOp, usuarioActivo, almacenamiento);
+                                } while (subOp != 0);
+                            } else if (usuarioActivo.getTipoUsuario() == TipoUsuario.CLIENTE) {
+                                do {
+                                    System.out.println(Menu.menuCliente());
+                                    System.out.println("Opcion: ");
+                                    subOp = sc.nextInt();
+                                    sc.nextLine();
+                                    SMenuCliente.usuarioCliente(subOp, usuarioActivo, almacenamiento.getUsuarios());
+                                } while (subOp != 0);
+                            }
                         }
-                    }
-                    break;
-                case 2:
-                       if (crearUsuario(TipoUsuario.CLIENTE, almacenamiento.getUsuarios())) {
-                           System.out.println("El usuario se ha creado con exito");
-                       }
-                    break;
+                        break;
+                    case 2:
+                        if (crearUsuario(TipoUsuario.CLIENTE, almacenamiento.getUsuarios())) {
+                            System.out.println("El usuario se ha creado con exito");
+                        }
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
         } while(op != 0);
 
@@ -134,7 +140,7 @@ public class Main {
         contrasenia = teclado.nextLine();
         System.out.println("--------------------------------------------------INICIO DE SESION--------------------------------------------------");
         try {
-            return Objects.requireNonNull(gu).verificarUsuario(nombreUsuario, contrasenia);
+            return gu.verificarUsuario(nombreUsuario, contrasenia);
         } catch (NullPointerException e) {
             System.out.println("Nombre de usuario o clave incorrecta.");
         }

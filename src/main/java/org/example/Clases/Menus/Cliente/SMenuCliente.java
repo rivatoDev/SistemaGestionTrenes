@@ -24,7 +24,7 @@ public class SMenuCliente {
      * @param archivo nombre del archivo a usar.
      */
     public static void usuarioCliente (int op, Usuario usuario, String archivo) {
-        int subOp = 0;
+        int subOp;
         Scanner sc = new Scanner(System.in);
         switch (op) {
             case 0:

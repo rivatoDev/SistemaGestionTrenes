@@ -5,6 +5,7 @@ import org.example.Clases.Menus.Almacenamiento;
 import org.example.Clases.Menus.Menu;
 import org.example.Clases.Menus.SMenuPrincipal;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class SMenuTaquillero {
@@ -18,38 +19,43 @@ public class SMenuTaquillero {
      * @param almacenamiento Objeto que contiene los nombres de todos los archivos del sistema.
      */
     public static void usuarioTaquillero(int op, Usuario usuario, Almacenamiento almacenamiento) {
-        int subOp = 0;
+        int subOp;
         Scanner sc = new Scanner(System.in);
 
-        switch (op) {
-            case 0:
-                break;
-            case 1:
-                do {
-                    System.out.println(Menu.menuRutas());
+        try {
+            switch (op) {
+                case 0:
+                    break;
+                case 1:
+                    do {
+                        System.out.println(Menu.menuRutas());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        SMenuRutas.administrarRutas(subOp, almacenamiento);
+                    } while (subOp != 0);
+                    break;
+                case 2:
+                    System.out.println(Menu.menuMaquinistas());
                     System.out.println("Opcion: ");
                     subOp = sc.nextInt();
-                    SMenuRutas.administrarRutas(subOp, almacenamiento);
-                } while (subOp != 0);
-                break;
-            case 2:
-                System.out.println(Menu.menuMaquinistas());
-                System.out.println("Opcion: ");
-                subOp = sc.nextInt();
-                SMenuMaquinistas.administrarMaquinistas(subOp, almacenamiento.getMaquinistas());
-                break;
-            case 3:
-                do {
-                    System.out.println(Menu.configuracion());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
-                    sc.nextLine();
-                    SMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
-                } while (subOp != 0);
-                break;
-            default:
-                System.out.println("Opcion no valida");
-                break;
+                    SMenuMaquinistas.administrarMaquinistas(subOp, almacenamiento.getMaquinistas());
+                    break;
+                case 3:
+                    do {
+                        System.out.println(Menu.configuracion());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        sc.nextLine();
+                        SMenuPrincipal.configuracion(subOp, usuario, almacenamiento.getUsuarios());
+                    } while (subOp != 0);
+                    break;
+                default:
+                    System.out.println("Opcion no valida");
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("La opcion debe ser un numero entero.");
+            sc.nextLine();
         }
     }
 }

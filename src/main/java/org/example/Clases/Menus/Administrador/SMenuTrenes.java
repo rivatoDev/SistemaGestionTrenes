@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -41,15 +42,21 @@ public class SMenuTrenes {
             System.out.println(Menu.menuTipoTren());
             System.out.println("Opcion: ");
             int input = sc.nextInt();
-            switch (input) {
-                case 1:
-                    tren = new TrenDeCarga();
-                    break;
-                case 2:
-                    tren = new TrenComercial();
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+            sc.nextLine();
+            try {
+                switch (input) {
+                    case 1:
+                        tren = new TrenDeCarga();
+                        break;
+                    case 2:
+                        tren = new TrenComercial();
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Intente de nuevo.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
         }
         return tren;
@@ -77,7 +84,7 @@ public class SMenuTrenes {
 
     //Alta
     /**
-     * Carga un treen.
+     * Carga un tren.
      * @param tren Tren cuya unica funcion es poder saber que tipo de tren se va a cargar.
      * @return el tren con los datos cargados.
      */
@@ -145,48 +152,54 @@ public class SMenuTrenes {
         System.out.println(gt.verificarTren(tren.getPatente()));
 
         if(new File(trenes).length() > 0) {
-            switch(op) {
-                case 0:
-                    break;
-                case 1:
-                    System.out.println("Nuevo Modelo: ");
-                    tren.setModelo(sc.nextLine());
-                    break;
-                case 2:
-                    System.out.println("Ubicacion: ");
-                    tren.setUbicacion(sc.nextLine());
-                    break;
-                case 3:
-                    System.out.println("Capacidad: ");
-                    if (tren instanceof TrenDeCarga) {
-                        capacidad = sc.nextDouble();
-                    } else {
-                        capacidad = sc.nextInt();
-                    }
-                    try {
-                        tren.setCapacidad(capacidad);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Entrada no válida. Por favor ingrese un número válido.");
-                    } catch (LowCapacityException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 4:
-                    System.out.println(gv);
-                    System.out.println("ID: ");
-                    v = gv.verificarVagon(sc.nextLine());
-                    tipoAcoplarVagon.apply(v);
-                    GestionVagon.eliminarRegistro(v, tipogetJSONObject, vagones);
-                    break;
-                case 5:
-                    System.out.println("ID: ");
-                    v = gv.verificarVagon(sc.nextLine());
-                    tipoQuitarVagon.apply(v);
-                    GestionVagon.reactivarRegistro(v.getIdVagon(), tipogetJSONObject, vagones);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Opcion no valida.");
+            try {
+                switch(op) {
+                    case 0:
+                        break;
+                    case 1:
+                        System.out.println("Nuevo Modelo: ");
+                        tren.setModelo(sc.nextLine());
+                        break;
+                    case 2:
+                        System.out.println("Ubicacion: ");
+                        tren.setUbicacion(sc.nextLine());
+                        break;
+                    case 3:
+                        System.out.println("Capacidad: ");
+                        if (tren instanceof TrenDeCarga) {
+                            capacidad = sc.nextDouble();
+                        } else {
+                            capacidad = sc.nextInt();
+                        }
+                        try {
+                            tren.setCapacidad(capacidad);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Entrada no válida. Por favor ingrese un número válido.");
+                        } catch (LowCapacityException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case 4:
+                        System.out.println(gv);
+                        System.out.println("ID: ");
+                        v = gv.verificarVagon(sc.nextLine());
+                        tipoAcoplarVagon.apply(v);
+                        GestionVagon.eliminarRegistro(v, tipogetJSONObject, vagones);
+                        break;
+                    case 5:
+                        System.out.println("ID: ");
+                        v = gv.verificarVagon(sc.nextLine());
+                        tipoQuitarVagon.apply(v);
+                        GestionVagon.reactivarRegistro(v.getIdVagon(), tipogetJSONObject, vagones);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Opcion no valida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
+
             return GestionTren.modificarRegistro(gt.verificarTren(tren.getPatente()), tren, tipoTren, trenes);
         }
         return false;
@@ -205,55 +218,60 @@ public class SMenuTrenes {
         int subOp;
         Scanner sc = new Scanner(System.in);
 
-        switch (op) {
-            case 0:
-                break;
-            case 1:
-                try {
-                    if(GestionTren.agregarRegistro(ingresarTren(tren), tipoTren, trenes)) {
-                        System.out.println("El tren se agrego exitosamente");
-                    }
-                } catch (ElementAlreadyExistsException e) {
-                    System.out.println("El tren ya existe");
-                }
-                break;
-            case 2:
-                if (GestionTren.reactivarRegistro(tren.getPatente(), tipoTren, trenes)) {
-                    System.out.println("El tren se recupero exitosamente");
-                } else {
-                    System.out.println("Patente inexistente");
-                }
-                break;
-            case 3:
-                do {
-                    System.out.println(Menu.modificarTren());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
-                    sc.nextLine();
+        try {
+            switch (op) {
+                case 0:
+                    break;
+                case 1:
                     try {
-                        if(subOp != 0) {
-                            if(modificarTren(subOp, tren, tipoTren, trenes, vagones)) {
-                                System.out.println("El tren se modifico exitosamente");
-                            }
-                            else {
-                                System.out.println("Ocurrio un error");
-                            }
+                        if(GestionTren.agregarRegistro(ingresarTren(tren), tipoTren, trenes)) {
+                            System.out.println("El tren se agrego exitosamente");
                         }
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
+                    } catch (ElementAlreadyExistsException e) {
+                        System.out.println("El tren ya existe");
                     }
-                } while (subOp != 0);
-                break;
-            case 4:
-                if (GestionTren.eliminarRegistro(gestor.verificarTren(tren.getPatente()), tipoTren, trenes)) {
-                    System.out.println("El tren se elimino con exito");
-                } else {
-                    System.out.println("No se encontró");
-                }
-                break;
-            case 5:
-                System.out.println(gestor);
-                break;
+                    break;
+                case 2:
+                    if (GestionTren.reactivarRegistro(tren.getPatente(), tipoTren, trenes)) {
+                        System.out.println("El tren se recupero exitosamente");
+                    } else {
+                        System.out.println("Patente inexistente");
+                    }
+                    break;
+                case 3:
+                    do {
+                        System.out.println(Menu.modificarTren());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        sc.nextLine();
+                        try {
+                            if(subOp != 0) {
+                                if(modificarTren(subOp, tren, tipoTren, trenes, vagones)) {
+                                    System.out.println("El tren se modifico exitosamente");
+                                }
+                                else {
+                                    System.out.println("Ocurrio un error");
+                                }
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } while (subOp != 0);
+                    break;
+                case 4:
+                    if (GestionTren.eliminarRegistro(gestor.verificarTren(tren.getPatente()), tipoTren, trenes)) {
+                        System.out.println("El tren se elimino con exito");
+                    } else {
+                        System.out.println("No se encontró");
+                    }
+                    break;
+                case 5:
+                    System.out.println(gestor);
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("La opcion debe ser un numero entero.");
+            sc.nextLine();
         }
     }
 

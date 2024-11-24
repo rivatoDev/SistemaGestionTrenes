@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.function.Function;
 
@@ -38,23 +39,29 @@ public class SMenuVagones {
             System.out.println(Menu.menuTipoVagon());
             System.out.println("Opcion: ");
             int op = sc.nextInt();
-            switch (op) {
-                case 1:
-                    vagon = new VagonDeCarga();
-                    break;
-                case 2:
-                    vagon = new VagonComercial();
-                    break;
-                default:
-                    System.out.println("Opcion no valida");
-                    flag = false;
+            sc.nextLine();
+
+            try {
+                switch (op) {
+                    case 1:
+                        vagon = new VagonDeCarga();
+                        break;
+                    case 2:
+                        vagon = new VagonComercial();
+                        break;
+                    default:
+                        System.out.println("Opcion no valida");
+                        flag = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
         } while (!flag);
         return vagon;
     }
 
     //Mostrar
-
     /**
      * Lee todos los vagones de un archivo.
      * @param tipoVagon Function con el metodo getJSONObject del tipo de vagon.
@@ -123,26 +130,31 @@ public class SMenuVagones {
         System.out.println(gv.verificarVagon(vagon.getIdVagon()));
 
         if (new File(archivo).length() > 0) {
-            switch(op) {
-                case 0:
-                    break;
-                case 1:
-                    System.out.println("Capacidad: ");
-                    try {
-                        if(vagon instanceof VagonDeCarga) {
-                            capacidad = sc.nextDouble();
-                        } else {
-                            capacidad = sc.nextInt();
+            try {
+                switch(op) {
+                    case 0:
+                        break;
+                    case 1:
+                        System.out.println("Capacidad: ");
+                        try {
+                            if(vagon instanceof VagonDeCarga) {
+                                capacidad = sc.nextDouble();
+                            } else {
+                                capacidad = sc.nextInt();
+                            }
+                            vagon.setCapacidad(capacidad);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Entrada no válida. Por favor ingrese un número válido.");
+                        } catch (LowCapacityException e) {
+                            System.out.println(e.getMessage());
                         }
-                        vagon.setCapacidad(capacidad);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Entrada no válida. Por favor ingrese un número válido.");
-                    } catch (LowCapacityException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Opcion no valida.");
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Opcion no valida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opcion debe ser un numero entero.");
+                sc.nextLine();
             }
             return GestionVagon.modificarRegistro(gv.verificarVagon(vagon.getIdVagon()), vagon, tipoVagon, archivo);
         }
@@ -162,53 +174,58 @@ public class SMenuVagones {
         int subOp;
         Scanner sc = new Scanner(System.in);
 
-        switch (op) {
-            case 0:
-                break;
-            case 1:
-                try {
-                    if (GestionVagon.agregarRegistro(ingresarVagon(vagon), tipoVagon, archivo)) {
-                        System.out.println("El vagon se agrego exitosamente");
-                    }
-                } catch (ElementAlreadyExistsException e) {
-                    System.out.println("El Vagon ya existe");
-                }
-                break;
-            case 2:
-                if(GestionVagon.reactivarRegistro(vagon.getIdVagon(), tipoVagon, archivo)) {
-                    System.out.println("El vagon se recupero exitosamente");
-                } else {
-                    System.out.println("Vagon inexistente");
-                }
-                break;
-            case 3:
-                do {
-                    System.out.println(Menu.modificarVagon());
-                    System.out.println("Opcion: ");
-                    subOp = sc.nextInt();
+        try {
+            switch (op) {
+                case 0:
+                    break;
+                case 1:
                     try {
-                        if(subOp != 0) {
-                            if (modificarVagon(subOp, vagon, tipoVagon, archivo)) {
-                                System.out.println("El Vagon se modifico exitosamente");
-                            } else {
-                                System.out.println("Ocurrio un error");
-                            }
+                        if (GestionVagon.agregarRegistro(ingresarVagon(vagon), tipoVagon, archivo)) {
+                            System.out.println("El vagon se agrego exitosamente");
                         }
                     } catch (ElementAlreadyExistsException e) {
                         System.out.println("El Vagon ya existe");
                     }
-                } while (subOp != 0);
-                break;
-            case 4:
-                if (GestionVagon.eliminarRegistro(gestor.verificarVagon(vagon.getIdVagon()), tipoVagon, archivo)) {
-                    System.out.println("El vagon se elimino con exito");
-                } else {
-                    System.out.println("No se encontro.");
-                }
-                break;
-            case 5:
-                System.out.println(gestor);
-                break;
+                    break;
+                case 2:
+                    if(GestionVagon.reactivarRegistro(vagon.getIdVagon(), tipoVagon, archivo)) {
+                        System.out.println("El vagon se recupero exitosamente");
+                    } else {
+                        System.out.println("Vagon inexistente");
+                    }
+                    break;
+                case 3:
+                    do {
+                        System.out.println(Menu.modificarVagon());
+                        System.out.println("Opcion: ");
+                        subOp = sc.nextInt();
+                        try {
+                            if(subOp != 0) {
+                                if (modificarVagon(subOp, vagon, tipoVagon, archivo)) {
+                                    System.out.println("El Vagon se modifico exitosamente");
+                                } else {
+                                    System.out.println("Ocurrio un error");
+                                }
+                            }
+                        } catch (ElementAlreadyExistsException e) {
+                            System.out.println("El Vagon ya existe");
+                        }
+                    } while (subOp != 0);
+                    break;
+                case 4:
+                    if (GestionVagon.eliminarRegistro(gestor.verificarVagon(vagon.getIdVagon()), tipoVagon, archivo)) {
+                        System.out.println("El vagon se elimino con exito");
+                    } else {
+                        System.out.println("No se encontro.");
+                    }
+                    break;
+                case 5:
+                    System.out.println(gestor);
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("La opcion debe ser un numero entero.");
+            sc.nextLine();
         }
     }
 
