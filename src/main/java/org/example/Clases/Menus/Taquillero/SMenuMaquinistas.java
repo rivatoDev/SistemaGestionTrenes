@@ -148,11 +148,13 @@ public class SMenuMaquinistas {
                         System.out.println(Menu.modificarMaquinista());
                         System.out.println("Opcion: ");
                         subOp = sc.nextInt();
-                        if(modificarMaquinista(subOp, m, archivo)) {
-                            System.out.println("El maquinista se modifico exitosamente");
-                        }
-                        else {
-                            System.out.println("Ocurrio un error");
+                        if(subOp != 0) {
+                            if(modificarMaquinista(subOp, m, archivo)) {
+                                System.out.println("El maquinista se modifico exitosamente");
+                            }
+                            else {
+                                System.out.println("Ocurrio un error");
+                            }
                         }
                     } while (subOp != 0);
                     break;

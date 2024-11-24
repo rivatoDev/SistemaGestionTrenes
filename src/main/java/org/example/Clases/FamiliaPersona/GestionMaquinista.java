@@ -93,15 +93,12 @@ public class GestionMaquinista {
      * @throws NoSuchElementException si el maquinista no existe.
      */
     public boolean modificarMaquinista (Maquinista maquinistaViejo, Maquinista maquinistaNuevo) {
-        try {
-            if(!this.maquinistas.contains(maquinistaViejo) || !maquinistaNuevo.isEstado()) {
-                throw new NoSuchElementException();
-            }
-            this.maquinistas.remove(maquinistaViejo);
-            this.agregarMaquinista(maquinistaNuevo);
-        } catch (Exception e) {
-            return false;
+        if(!this.maquinistas.contains(maquinistaViejo) || !maquinistaNuevo.isEstado()) {
+            System.out.println("Entro mal");
+            throw new NoSuchElementException();
         }
+        this.maquinistas.remove(maquinistaViejo);
+        this.agregarMaquinista(maquinistaNuevo);
         return true;
     }
     //Modificacion
@@ -210,14 +207,15 @@ public class GestionMaquinista {
         GestionMaquinista gm = new GestionMaquinista();
 
         try {
-            for (Maquinista u: Objects.requireNonNull(GestionMaquinista.getJSONArray(new JSONArray(Main.leerArchivo(archivo)))).getMaquinistas()) {
+            for (Maquinista u: GestionMaquinista.getJSONArray(new JSONArray(Main.leerArchivo(archivo))).getMaquinistas()) {
                 gm.agregarMaquinista(u);
             }
             gm.modificarMaquinista(maquinistaViejo, maquinistaNuevo);
         } catch (NullPointerException e) {
             return false;
         }
-
+        System.out.println("-----");
+        System.out.println(gm);
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gm.convertirAJSONArray().toString(2));
         } catch (IOException e) {
