@@ -199,7 +199,7 @@ public class VagonComercial extends Vagon{
     public static HashMap<String, Usuario> getJSONArray (JSONArray json) {
         HashMap<String, Usuario> pasajeros = new HashMap<>();
         for(int i = 0; i < json.length(); i++) {
-            if(verificarJSON(json.getJSONObject(i))) {
+            if(Usuario.verificarJSON(json.getJSONObject(i))) {
                 pasajeros.put(json.getJSONObject(i).getString("idEntrada"),
                               Usuario.JSONxUsuario(json.getJSONObject(i)));
             } else {

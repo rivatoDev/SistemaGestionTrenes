@@ -42,7 +42,12 @@
       "estado": true,
       "ubicacion": "TRINIDAD",
       "modelo": "RAINBOW",
-      "vagones": [],
+      "vagones": [{
+        "estado": true,
+        "contenido": [],
+        "idVagon": "222",
+        "capacidad": 145.5
+      }],
       "patente": "HR2555",
       "capacidad": 300
     },
@@ -73,7 +78,12 @@
       "estado": true,
       "ubicacion": "Chad",
       "modelo": "Vanguardia",
-      "vagones": [],
+      "vagones": [{
+        "estado": true,
+        "pasajeros": [],
+        "idVagon": "345",
+        "capacidad": 102
+      }],
       "patente": "qrs009",
       "capacidad": 240
     },
@@ -115,21 +125,38 @@
       "modelo": "Lenovo",
       "vagones": [{
         "estado": true,
-        "contenido": [{
-          "tipo": "Comida",
-          "peso": 0.1,
-          "unidades": 2,
-          "nombre": "Manzana",
-          "titular": {
-            "estado": true,
-            "apellido": "Rivara",
-            "contrasenia": "tomatoli",
-            "tipoUsuario": "CLIENTE",
-            "nombreUsuario": "rivato",
-            "nombre": "Tomas",
-            "dni": "44336431"
+        "contenido": [
+          {
+            "tipo": "Comida",
+            "peso": 0.1,
+            "unidades": 2,
+            "nombre": "Manzana",
+            "titular": {
+              "estado": true,
+              "apellido": "Rivara",
+              "contrasenia": "tomatoli",
+              "tipoUsuario": "CLIENTE",
+              "nombreUsuario": "rivato",
+              "nombre": "Tomas",
+              "dni": "44336431"
+            }
+          },
+          {
+            "tipo": "Tecnologia",
+            "peso": 5.6,
+            "unidades": 1,
+            "nombre": "Playstation",
+            "titular": {
+              "estado": true,
+              "apellido": "Rivara",
+              "contrasenia": "tomatoli",
+              "tipoUsuario": "CLIENTE",
+              "nombreUsuario": "rivato",
+              "nombre": "Tomas",
+              "dni": "44336431"
+            }
           }
-        }],
+        ],
         "idVagon": "123",
         "capacidad": 123
       }],
