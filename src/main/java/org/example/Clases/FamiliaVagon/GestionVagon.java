@@ -195,11 +195,11 @@ public class GestionVagon<T extends Vagon> {
     public static boolean eliminarRegistro (Vagon vagon, Function<JSONObject, Vagon> tipoVagon, String archivo) {
         GestionVagon<Vagon> gv = new GestionVagon<>();
 
-
         for(Vagon v: GestionVagon.getJSONArray(new JSONArray(Main.leerArchivo(archivo)), tipoVagon).getVagones()) {
             gv.agregarVagon(v);
         }
 
+        System.out.println(vagon);
         gv.eliminarVagon(vagon);
 
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {

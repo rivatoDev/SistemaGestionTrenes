@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.Clases.FamiliaPersona.GestionUsuario;
-import org.example.Clases.FamiliaPersona.Maquinista;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.Menus.*;
 import org.example.Clases.Menus.Administrador.SMenuAdministrador;
@@ -12,6 +11,7 @@ import org.example.Excepciones.FileDoesntExistException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 import java.io.*;
+
 import java.nio.file.FileAlreadyExistsException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;

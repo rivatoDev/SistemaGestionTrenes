@@ -1,6 +1,15 @@
 [
   {
     "estado": true,
+    "apellido": "45t",
+    "contrasenia": "4t",
+    "tipoUsuario": "ADMINISTRADOR",
+    "nombreUsuario": "45t",
+    "nombre": "45t",
+    "dni": "4t5e"
+  },
+  {
+    "estado": true,
     "apellido": "Ortega",
     "contrasenia": "123",
     "tipoUsuario": "TAQUILLERO",
@@ -10,12 +19,39 @@
   },
   {
     "estado": true,
+    "apellido": "4ef",
+    "contrasenia": "erg",
+    "tipoUsuario": "TAQUILLERO",
+    "nombreUsuario": "rtg",
+    "nombre": "wefs",
+    "dni": "ref"
+  },
+  {
+    "estado": true,
     "apellido": "dido",
     "contrasenia": "password",
     "tipoUsuario": "CLIENTE",
     "nombreUsuario": "roni_123",
     "nombre": "roni",
     "dni": "21760346"
+  },
+  {
+    "estado": true,
+    "apellido": "erg",
+    "contrasenia": "egrdg",
+    "tipoUsuario": "TAQUILLERO",
+    "nombreUsuario": "erg",
+    "nombre": "ref",
+    "dni": "dfrlfvd"
+  },
+  {
+    "estado": true,
+    "apellido": "5rt",
+    "contrasenia": "345",
+    "tipoUsuario": "CLIENTE",
+    "nombreUsuario": "usuario",
+    "nombre": "5yrtf",
+    "dni": "RTGDFC"
   },
   {
     "estado": true,

@@ -50,13 +50,19 @@
   {
     "estado": true,
     "contenido": [],
-    "idVagon": "777",
-    "capacidad": 172.4
+    "idVagon": "942",
+    "capacidad": 300.4
   },
   {
     "estado": true,
     "contenido": [],
-    "idVagon": "942",
-    "capacidad": 321.2
+    "idVagon": "777",
+    "capacidad": 123.5
+  },
+  {
+    "estado": false,
+    "contenido": [],
+    "idVagon": "ehjkr",
+    "capacidad": 11000
   }
 ]

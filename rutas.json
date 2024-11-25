@@ -117,11 +117,33 @@
     "salida": "Francia"
   },
   {
-    "fecha": "2025/01/12",
+    "fecha": "2024/12/25",
     "trenDeCarga": {
       "estadoViaje": false,
       "estado": true,
-      "ubicacion": "Pinamar",
+      "ubicacion": "Puerto Rico",
+      "modelo": "Badbunny",
+      "vagones": [],
+      "patente": "IO1232",
+      "capacidad": 175
+    },
+    "llegada": "EEUU",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Prime",
+      "nombre": "Joselucas",
+      "idMaquinista": "95",
+      "dni": "32999014"
+    },
+    "id": "7",
+    "salida": "Puerto Rico"
+  },
+  {
+    "fecha": "2025/01/12",
+    "trenDeCarga": {
+      "estadoViaje": true,
+      "estado": true,
+      "ubicacion": "Miramar",
       "modelo": "Lenovo",
       "vagones": [{
         "estado": true,
@@ -154,6 +176,21 @@
               "nombreUsuario": "rivato",
               "nombre": "Tomas",
               "dni": "44336431"
+            }
+          },
+          {
+            "tipo": "Tecnologia",
+            "peso": 10.4,
+            "unidades": 3,
+            "nombre": "Computadoras",
+            "titular": {
+              "estado": true,
+              "apellido": "5rt",
+              "contrasenia": "345",
+              "tipoUsuario": "CLIENTE",
+              "nombreUsuario": "usuario",
+              "nombre": "5yrtf",
+              "dni": "RTGDFC"
             }
           }
         ],

@@ -259,10 +259,14 @@ public class SMenuTrenes {
                     } while (subOp != 0);
                     break;
                 case 4:
-                    if (GestionTren.eliminarRegistro(gestor.verificarTren(tren.getPatente()), tipoTren, trenes)) {
-                        System.out.println("El tren se elimino con exito");
-                    } else {
-                        System.out.println("No se encontró");
+                    try {
+                        if (GestionTren.eliminarRegistro(gestor.verificarTren(tren.getPatente()), tipoTren, trenes)) {
+                            System.out.println("El tren se elimino con exito");
+                        } else {
+                            System.out.println("No se encontró");
+                        }
+                    } catch (NoSuchElementException e) {
+                        System.out.println("No existe el elemento");
                     }
                     break;
                 case 5:
@@ -307,7 +311,7 @@ public class SMenuTrenes {
                     op = 0;
                 }
 
-                if(op < 4) {
+                if(op < 5) {
                     if(op == 2) {
                         System.out.println(gt.mostrarEliminados());
                     } else {

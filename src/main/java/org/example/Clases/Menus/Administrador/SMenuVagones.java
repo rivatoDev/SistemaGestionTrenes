@@ -213,6 +213,7 @@ public class SMenuVagones {
                     } while (subOp != 0);
                     break;
                 case 4:
+                    System.out.println(vagon);
                     if (GestionVagon.eliminarRegistro(gestor.verificarVagon(vagon.getIdVagon()), tipoVagon, archivo)) {
                         System.out.println("El vagon se elimino con exito");
                     } else {
@@ -257,7 +258,7 @@ public class SMenuVagones {
                     op = 0;
                 }
 
-                if (op < 4) {
+                if (op < 5) {
                     if(op == 2) {
                         System.out.println(gv.mostrarEliminados());
                     } else {
