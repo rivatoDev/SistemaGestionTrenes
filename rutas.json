@@ -1,116 +1,150 @@
-[  {
-"fecha": "2025/01/12",
-"trenDeCarga": {
-"estadoViaje": false,
-"estado": true,
-"ubicacion": "Pinamar",
-"modelo": "Lenovo",
-"vagones": [],
-"patente": "123",
-"capacidad": 400.4
-},
-"llegada": "Mar del Plata",
-"maquinista": {
-"estado": true,
-"apellido": "Suarez",
-"nombre": "Valentin",
-"idMaquinista": "0",
-"dni": "30456876"
-},
-"id": "0",
-"salida": "Miramar"
-},
-{
-"fecha": "2024/12/12",
-"trenComercial": {
-"estadoViaje": false,
-"estado": true,
-"ubicacion": "Turquia",
-"modelo": "Miramon",
-"vagones": [],
-"patente": "pes106",
-"capacidad": 75
-},
-"llegada": "Burkina Faso",
-"maquinista": {
-"estado": true,
-"apellido": "Ronaldo",
-"nombre": "Cristiano",
-"idMaquinista": "7",
-"dni": "77231041"
-},
-"id": "1",
-"salida": "Francia"
-},
-{
-"fecha": "2025/03/09",
-"trenDeCarga": {
-"estadoViaje": false,
-"estado": true,
-"ubicacion": "TRINIDAD",
-"modelo": "RAINBOW",
-"vagones": [],
-"patente": "HR2555",
-"capacidad": 300
-},
-"llegada": "Escocia",
-"maquinista": {
-"estado": true,
-"apellido": "Gonzalez",
-"nombre": "Ramiro",
-"idMaquinista": "3",
-"dni": "49192043"
-},
-"id": "3",
-"salida": "Uganda"
-},
-{
-"fecha": "2024/11/27",
-"trenComercial": {
-"estadoViaje": false,
-"estado": true,
-"ubicacion": "Chad",
-"modelo": "Vanguardia",
-"vagones": [],
-"patente": "qrs009",
-"capacidad": 240
-},
-"llegada": "Botsuana",
-"maquinista": {
-"estado": true,
-"apellido": "Suarez",
-"nombre": "Valentin",
-"idMaquinista": "0",
-"dni": "30456876"
-},
-"id": "4",
-"salida": "Nigeria"
-},
-{
-"fecha": "2025/02/01",
-"trenDeCarga": {
-"estadoViaje": false,
-"estado": true,
-"ubicacion": "Lyon",
-"modelo": "Francetour",
-"vagones": [{
-"estado": false,
-"contenido": [],
-"idVagon": "009",
-"capacidad": 100
-}],
-"patente": "RJI231",
-"capacidad": 90
-},
-"llegada": "Italia",
-"maquinista": {
-"estado": true,
-"apellido": "Prime",
-"nombre": "Joselucas",
-"idMaquinista": "95",
-"dni": "32999014"
-},
-"id": "5",
-"salida": "Francia"
-}
+[
+  {
+    "fecha": "2024/12/12",
+    "llegada": "Burkina Faso",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Ronaldo",
+      "nombre": "Cristiano",
+      "idMaquinista": "7",
+      "dni": "77231041"
+    },
+    "id": "1",
+    "trenComercial": {
+      "estadoViaje": false,
+      "estado": true,
+      "ubicacion": "Turquia",
+      "modelo": "Miramon",
+      "vagones": [{
+        "estado": true,
+        "pasajeros": [{
+          "estado": true,
+          "apellido": "Rivara",
+          "contrasenia": "tomatoli",
+          "tipoUsuario": "CLIENTE",
+          "nombreUsuario": "rivato",
+          "nombre": "Tomas",
+          "dni": "44336431",
+          "idEntrada": "da4eb173-ba59-4164-9157-ef45f3b0e08e"
+        }],
+        "idVagon": "678",
+        "capacidad": 123
+      }],
+      "patente": "pes106",
+      "capacidad": 75
+    },
+    "salida": "Francia"
+  },
+  {
+    "fecha": "2025/03/09",
+    "trenDeCarga": {
+      "estadoViaje": false,
+      "estado": true,
+      "ubicacion": "TRINIDAD",
+      "modelo": "RAINBOW",
+      "vagones": [],
+      "patente": "HR2555",
+      "capacidad": 300
+    },
+    "llegada": "Escocia",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Gonzalez",
+      "nombre": "Ramiro",
+      "idMaquinista": "3",
+      "dni": "49192043"
+    },
+    "id": "3",
+    "salida": "Uganda"
+  },
+  {
+    "fecha": "2024/11/27",
+    "llegada": "Botsuana",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Suarez",
+      "nombre": "Valentin",
+      "idMaquinista": "0",
+      "dni": "30456876"
+    },
+    "id": "4",
+    "trenComercial": {
+      "estadoViaje": false,
+      "estado": true,
+      "ubicacion": "Chad",
+      "modelo": "Vanguardia",
+      "vagones": [],
+      "patente": "qrs009",
+      "capacidad": 240
+    },
+    "salida": "Nigeria"
+  },
+  {
+    "fecha": "2025/02/01",
+    "trenDeCarga": {
+      "estadoViaje": false,
+      "estado": true,
+      "ubicacion": "Lyon",
+      "modelo": "Francetour",
+      "vagones": [{
+        "estado": false,
+        "contenido": [],
+        "idVagon": "009",
+        "capacidad": 100
+      }],
+      "patente": "RJI231",
+      "capacidad": 90
+    },
+    "llegada": "Italia",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Prime",
+      "nombre": "Joselucas",
+      "idMaquinista": "95",
+      "dni": "32999014"
+    },
+    "id": "5",
+    "salida": "Francia"
+  },
+  {
+    "fecha": "2025/01/12",
+    "trenDeCarga": {
+      "estadoViaje": false,
+      "estado": true,
+      "ubicacion": "Pinamar",
+      "modelo": "Lenovo",
+      "vagones": [{
+        "estado": true,
+        "contenido": [{
+          "tipo": "Comida",
+          "peso": 0.1,
+          "unidades": 2,
+          "nombre": "Manzana",
+          "titular": {
+            "estado": true,
+            "apellido": "Rivara",
+            "contrasenia": "tomatoli",
+            "tipoUsuario": "CLIENTE",
+            "nombreUsuario": "rivato",
+            "nombre": "Tomas",
+            "dni": "44336431"
+          }
+        }],
+        "idVagon": "123",
+        "capacidad": 123
+      }],
+      "patente": "123",
+      "capacidad": 400.4
+    },
+    "llegada": "Mar del Plata",
+    "maquinista": {
+      "estado": true,
+      "apellido": "Suarez",
+      "nombre": "Valentin",
+      "idMaquinista": "0",
+      "dni": "30456876"
+    },
+    "id": "0",
+    "salida": "Miramar"
+  }
 ]

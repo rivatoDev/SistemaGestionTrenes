@@ -84,8 +84,6 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     public boolean acoplarVagon(VagonDeCarga vagon) {
         if (this.vagones.contains(vagon)) {
             throw new ElementAlreadyExistsException();
-        } else if(!vagon.isEstado()){
-            throw new JSONObjectEliminatedException();
         } else  if (this.CalcularPeso() > Double.parseDouble(this.capacidad.toString())){
             throw new OffLimitsException();
         } else {
@@ -95,18 +93,20 @@ public class TrenDeCarga extends Tren implements GestionCarga {
     }
 
     public boolean agregarCargamento(Cargamento cargamento) {
-        Iterator<VagonDeCarga> it = this.vagones.iterator();
-        boolean flag;
-        do {
-            try {
-                it.next().agregarCargamento(cargamento);
-                flag = false;
-            } catch (JSONObjectEliminatedException | WrongUserException e) {
-                throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
-            }  catch (OffLimitsException e) {
-                flag = it.hasNext();
-            }
-        } while (flag);
+        boolean flag = true;
+        for(VagonDeCarga v: this.vagones) {
+            do {
+                try {
+                    if(v.agregarCargamento(cargamento)) {
+                        flag = true;
+                    }
+                } catch (JSONObjectEliminatedException | WrongUserException e) {
+                    throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
+                } catch (OffLimitsException e) {
+                    flag = false;
+                }
+            } while (!flag);
+        }
         return true;
     }
     //Alta

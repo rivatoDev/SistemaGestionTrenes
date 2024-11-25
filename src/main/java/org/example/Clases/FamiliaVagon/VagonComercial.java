@@ -6,6 +6,7 @@ import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
 import org.example.Excepciones.WrongUserException;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -145,8 +146,13 @@ public class VagonComercial extends Vagon{
      * @return el pasajero convertido en un JSONObject junto con su id de la entrada.
      */
     public JSONObject convertirPasajeroAJSONObject (String key) {
-        JSONObject json = this.pasajeros.get(key).convertirAJSONObject();
-        json.put("idEntrada", key);
+        JSONObject json;
+        try {
+            json = this.pasajeros.get(key).convertirAJSONObject();
+            json.put("idEntrada", key);
+        } catch (JSONException e) {
+            return null;
+        }
         return json;
     }
 
@@ -157,7 +163,7 @@ public class VagonComercial extends Vagon{
     public JSONArray convertirAJSONArray() {
         JSONArray json = new JSONArray();
         for(Map.Entry<String, Usuario> usuario: this.pasajeros.entrySet()) {
-            json.put(this.convertirPasajeroAJSONObject(usuario.getValue().toString()));
+            json.put(this.convertirPasajeroAJSONObject(usuario.getKey()));
         }
         return json;
     }

@@ -214,8 +214,6 @@ public class GestionMaquinista {
         } catch (NullPointerException e) {
             return false;
         }
-        System.out.println("-----");
-        System.out.println(gm);
         try (BufferedWriter bf = new BufferedWriter(new FileWriter(archivo))) {
             bf.write(gm.convertirAJSONArray().toString(2));
         } catch (IOException e) {

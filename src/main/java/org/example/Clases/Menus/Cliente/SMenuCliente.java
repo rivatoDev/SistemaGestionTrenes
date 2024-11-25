@@ -79,6 +79,7 @@ public class SMenuCliente {
 
             if (entradas > asientos) {
                 System.out.println("No hay suficiente espacio.");
+                return null;
             } else {
                 for (int i = 0; i < entradas; i++) {
                     t.agregarPasajero(usuario);
@@ -112,8 +113,10 @@ public class SMenuCliente {
                         r = gr.verificarRuta(sc.nextLine());
                         r.setTren(cargar(r.getTren(), usuario));
 
-                        if (GestionRuta.modificarRegistro(gr.verificarRuta(r.getId()), r, almacenamiento.getRutas())) {
-                            System.out.println("Se compro el pasaje con exito.");
+                        if(r.getTren() != null) {
+                            if (GestionRuta.modificarRegistro(gr.verificarRuta(r.getId()), r, almacenamiento.getRutas())) {
+                                System.out.println("Se compro el pasaje con exito.");
+                            }
                         }
                     } catch (JSONObjectEliminatedException e) {
                         System.out.println("El pasajero no existe");

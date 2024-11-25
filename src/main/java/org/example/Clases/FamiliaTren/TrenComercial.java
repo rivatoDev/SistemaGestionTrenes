@@ -3,6 +3,7 @@ package org.example.Clases.FamiliaTren;
 import org.example.Clases.FamiliaPersona.Usuario;
 import org.example.Clases.FamiliaVagon.Vagon;
 import org.example.Clases.FamiliaVagon.VagonComercial;
+import org.example.Clases.FamiliaVagon.VagonDeCarga;
 import org.example.Excepciones.ElementAlreadyExistsException;
 import org.example.Excepciones.JSONObjectEliminatedException;
 import org.example.Excepciones.OffLimitsException;
@@ -93,19 +94,21 @@ import java.util.*;
     }
 
     public boolean agregarPasajero(Usuario pasajero) {
-        Iterator<VagonComercial> it = this.vagones.iterator();
-        boolean flag;
-        do {
-            try {
-                return it.next().cargarPasajero(pasajero, UUID.randomUUID().toString());
-            } catch (JSONObjectEliminatedException | WrongUserException e) {
-                throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
-            }  catch (OffLimitsException e) {
-                //flag es el valor contrario de hasNext para que en caso de que no se pueda agregar el pasajero en ningun valor develva false.
-                flag = !it.hasNext();
-            }
-        } while (!flag);
-        throw new OffLimitsException("No hay lugar para el pasajero en el tren.");
+        boolean flag = true;
+        for(VagonComercial v: this.vagones) {
+            do {
+                try {
+                    if(v.cargarPasajero(pasajero, UUID.randomUUID().toString())) {
+                        flag = true;
+                    }
+                } catch (JSONObjectEliminatedException | WrongUserException e) {
+                    throw new IllegalArgumentException("El pasajero no existe o es del tipo incorrecto");
+                } catch (OffLimitsException e) {
+                    flag = false;
+                }
+            } while (!flag);
+        }
+        return true;
     }
     //Alta
 
@@ -168,7 +171,12 @@ import java.util.*;
     public double pesoActual () {
         double peso = 0;
         for(VagonComercial vc: this.vagones) {
-            peso += vc.contarAsientos() * 80;
+            if(vc.contarAsientos() == 0) {
+                System.out.println("Hola");
+                peso = (int)vc.getCapacidad() * 80;
+            } else {
+                peso += vc.contarAsientos() * 80;
+            }
         }
         return peso;
     }
